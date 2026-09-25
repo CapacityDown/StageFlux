@@ -1,0 +1,12 @@
+* text=auto
+.gitignore text eol=lf
+.gitattributes text eol=lf
+*.cs text eol=lf
+*.csproj text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.py text eol=lf
+*.ps1 text eol=crlf
+*.png binary
+*.jpg binary
+*.bundle binary

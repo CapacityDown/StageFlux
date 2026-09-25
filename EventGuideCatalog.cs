@@ -1,0 +1,56 @@
+namespace REPOJP.StagePhysicsEvents;
+
+// Player-facing descriptions match the release catalog; no game state is read here.
+internal static class EventGuideCatalog
+{
+    internal static string Description(StageEffect effect) => effect switch
+    {
+        StageEffect.Feather => "Makes selected stage targets lighter, easier to lift, and more buoyant.",
+        StageEffect.ZeroGravity => "Removes gravity from selected stage targets so they float more easily.",
+        StageEffect.Battery => "Repeatedly restores charge to battery-powered items during the event.",
+        StageEffect.Heal => "Repeatedly restores health to every living player during the event.",
+        StageEffect.Indestructible => "Prevents selected valuables and items from breaking during the event.",
+        StageEffect.Fragility => "Makes valuables extremely fragile, allowing light impacts to reduce their value.",
+        StageEffect.GumballHypnosis => "Adds a screen effect and pulls a holder's gaze toward the object being held.",
+        StageEffect.HealingAura => "Creates glowing areas at random stage locations that heal players who touch them.",
+        StageEffect.StarBarrage => "Launches dangerous star projectiles from random stage positions and directions.",
+        StageEffect.SpiderScare => "Triggers the vanilla spider screen effect for randomly selected players.",
+        StageEffect.TrafficShock => "Shocks and tumbles random players using the vanilla red traffic-light effect.",
+        StageEffect.DangerousValuables => "Activates compatible dangerous valuables that were already placed on the stage.",
+        StageEffect.Roll => "Violently rotates and moves targets. Players can steer toward their view direction.",
+        StageEffect.Void => "Creates multiple dangerous voids and moves them to new random locations repeatedly.",
+        StageEffect.Levitation => "Creates areas at random stage locations that lift objects and players.",
+        StageEffect.Shockwave => "Launches knockback grenades in random directions across the stage.",
+        StageEffect.StunBlast => "Launches grenades that stun nearby targets in random directions.",
+        StageEffect.ExplosionRain => "Launches explosive grenades into the stage from random positions and directions.",
+        StageEffect.EnemyWave => "Activates 1-3 additional enemies that are available for the current stage.",
+        StageEffect.Minefield => "Places armed vanilla mines and replenishes mines that trigger or are destroyed.",
+        StageEffect.Freeze => "Continuously freezes targeted enemies so they cannot move during the event.",
+        StageEffect.Stun => "Continuously stuns compatible enemies so they cannot act during the event.",
+        StageEffect.EnemyWarp => "Teleports enemies to different valid locations across the stage.",
+        StageEffect.EnemyHunt => "After all extractions, plays a lure sound in an occupied room and sends enemies there.",
+        StageEffect.EnemySpeedUp => "Increases movement and acceleration for all enemies, including later spawns.",
+        StageEffect.EnemySpeedDown => "Reduces movement and acceleration for all enemies, including later spawns.",
+        StageEffect.EnemyRegen => "Gradually restores health to every enemy while the event is active.",
+        StageEffect.EnemyPurge => "Gradually damages every enemy while the event is active.",
+        StageEffect.DamagePulse => "Repeatedly damages every living player while the event is active.",
+        StageEffect.SecondChance => "Revives players at their death position 2 seconds after they die during the event.",
+        StageEffect.Knockback => "Periodically launches every living player in a random direction.",
+        StageEffect.Flicker => "Repeatedly flashes a red light around every living player.",
+        StageEffect.Quake => "Shakes players and loose floor objects in random directions like an earthquake.",
+        StageEffect.DoorChaos => "Repeatedly opens and closes normal doors, large doors, and hinged objects.",
+        StageEffect.ValueSurge => "Raises the price of every valuable, including those in extraction, carts, and trucks.",
+        StageEffect.ValueCrash => "Lowers the price of every valuable, including those in extraction, carts, and trucks.",
+        StageEffect.Restoration => "Repairs damage to surviving valuables at regular intervals.",
+        StageEffect.BatteryDrain => "Repeatedly drains battery-powered items.",
+        StageEffect.HeavyCargo => "Makes selected valuables and items heavier to carry.",
+        StageEffect.Butterfingers => "Makes players periodically drop held valuables and items.",
+        StageEffect.EnemyBlindness => "Reduces enemy sight range without removing hearing or existing pursuit.",
+        StageEffect.EnemyArmor => "Reduces damage received by enemies.",
+        StageEffect.EnemyVulnerability => "Increases damage received by enemies.",
+        StageEffect.SupplyDrop => "Places useful standard health packs and equipment around the stage.",
+        StageEffect.PlayerSwap => "Exchanges two eligible living players' positions.",
+        StageEffect.SharedPain => "Shares part of one player's damage with other living players.",
+        _ => "No event."
+    };
+}

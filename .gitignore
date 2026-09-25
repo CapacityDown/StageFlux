@@ -1,0 +1,43 @@
+# Build output, deployment copies, temporary files, and release archives
+**/[Bb]in/
+**/[Oo]bj/
+/output/
+/outputs/
+/tmp/
+/release_*/
+*.zip
+*.pdf
+*.dll
+*.exe
+*.pdb
+
+# Local configuration, logs, credentials, and editor state
+.vs/
+.vscode/
+.idea/
+.tools/
+__pycache__/
+*.pyc
+*.user
+*.suo
+*.log
+*.tmp
+*.cfg
+.env
+.env.*
+*.pem
+*.pfx
+*.p12
+*.key
+Directory.Repo.props
+
+# Unapproved visual experiments and intermediate artwork
+/Assets/UIConcepts/
+/Assets/UI/Generated/
+/Assets/EventIcons/style-review-*/
+/Assets/EventIcons/contact-sheet*.png
+/Assets/EventIcons/*generation*.json
+/Assets/StageFlux_icon*.png
+!/Assets/StageFlux_icon_current_256.png
+!/Assets/StageFlux_icon_current_concept.png
+/Assets/Semibot_reference.png
