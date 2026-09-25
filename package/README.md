@@ -8,6 +8,12 @@ Stage Flux adds 46 configurable, random stage-wide events to R.E.P.O. Events can
 
 Only the host needs the mod for gameplay effects. Players without the mod are still affected and receive chat announcements. Players who also install the mod can use the event HUD.
 
+### Questions and bug reports
+
+For questions, bug reports, or feedback, please use [GitHub Issues](https://github.com/CapacityDown/StageFlux/issues). A GitHub account is required to submit an issue.
+
+In the game, open **Events → Tools → Report a Problem**. Use **Copy Report** or **Open Saved Report**, review the contents, and then select **Open GitHub Issues**. Describe what happened, what you expected, and the steps to reproduce it. Paste the reviewed report and attach screenshots if useful. Nothing is submitted automatically.
+
 ### Events menu
 
 Open **Events** in the lobby or the pause menu. If RoleShuffle is installed, the button appears below **Roles**.
@@ -16,7 +22,7 @@ Open **Events** in the lobby or the pause menu. If RoleShuffle is installed, the
 - **Event Guide** explains every event with its icon and risk level.
 - **Event Settings** lets the host turn events on or off. Changes affect future draws; active events and already selected stage plans stay unchanged. Players with the mod can view the host's selection. Detailed settings remain available in REPOConfig.
 - **Presets** offers Defaults, Low Risk, and All Off. Presets only change event ON/OFF.
-- **Tools** includes display refresh, a draggable HUD editor with Save/Cancel, and a local problem report you can copy or open. Use **Open GitHub Issues** to report problems on [GitHub Issues](https://github.com/CapacityDown/StageFlux/issues). Review your report before pasting it into an issue; nothing is uploaded automatically. Access to the repository is required.
+- **Tools** includes display refresh, a draggable HUD editor with Save/Cancel, and a local problem report you can copy or open. **Open GitHub Issues** takes you to the bug-report page. Reports are not uploaded automatically; review them before sharing.
 
 The HUD editor only changes your own display. It does not start events. Guests without the mod do not need this menu for gameplay effects.
 
@@ -537,6 +543,12 @@ Heavy Cargo also follows these filters, but cannot affect players, enemies or do
 
 ## 日本語
 
+### お問い合わせ・不具合報告
+
+ご質問、不具合報告、ご意見は [GitHub Issues](https://github.com/CapacityDown/StageFlux/issues) からお送りください。投稿にはGitHubアカウントが必要です。
+
+ゲーム内の **Events → Tools → Report a Problem** から **Copy Report** または **Open Saved Report** を選び、内容を確認してから **Open GitHub Issues** を開いてください。起きた問題、期待していた動作、再現手順を記載し、確認済みのレポートを貼り付けてください。必要に応じてスクリーンショットも添付できます。自動送信は行いません。
+
 ### Eventsメニュー
 
 ロビーまたはポーズメニューの **Events** から開きます。RoleShuffleを同時導入している場合は **Roles** の下に配置されます。
@@ -545,7 +557,7 @@ Heavy Cargo also follows these filters, but cannot affect players, enemies or do
 - **Event Guide**：全イベントのアイコン、説明、危険度を確認できます。
 - **Event Settings**：ホストが各イベントをON/OFFできます。今後の抽選に反映され、実行中のイベントや選択済みのステージ計画は変わりません。MOD導入済みの参加者はホストの選択を閲覧できます。詳細設定は引き続きREPOConfigで変更できます。
 - **Presets**：標準設定、低危険度のみ、すべてOFFから選択できます。変更するのはイベントのON/OFFのみです。
-- **Tools**：表示データの再取得、ドラッグ操作に対応したHUD編集、コピーまたは開くことができる不具合レポートを利用できます。**Open GitHub Issues** から [GitHub Issues](https://github.com/CapacityDown/StageFlux/issues) に不具合を報告してください。内容を確認してからレポートを貼り付けてください。自動送信は行いません。リポジトリへのアクセス権が必要です。
+- **Tools**：表示データの再取得、ドラッグ操作に対応したHUD編集、コピーまたは開くことができる不具合レポートを利用できます。**Open GitHub Issues** から不具合報告ページを開けます。自動送信は行いません。共有前に内容を確認してください。
 
 HUD編集は自分の表示のみを変更し、イベントを発動しません。保存せずにキャンセルすることもできます。ゲームプレイの効果を受けるために、参加者がこのメニューを導入する必要はありません。メニューの利用にはMenuLibが必要です。
 

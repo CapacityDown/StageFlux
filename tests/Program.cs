@@ -58,6 +58,11 @@ Check(reportSource.Contains("const string IssuesUrl = \"https://github.com/Capac
 Check(menuSource.Contains("\"OPEN GITHUB ISSUES\", () => Switch(View.Issues)"), "GitHub action opens the confirmation view first");
 Check(menuSource.Contains("Application.OpenURL(EventBugReport.IssuesUrl)"), "Confirmed action opens GitHub Issues");
 Check(!menuSource.Contains("thunderstore.io"), "Problem reports do not open Thunderstore");
+using (var manifest = System.Text.Json.JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "package/manifest.json"))))
+    Check(manifest.RootElement.GetProperty("website_url").GetString() == "https://github.com/CapacityDown/StageFlux/issues", "Manifest directs users to GitHub Issues");
+string playerReadme = File.ReadAllText(Path.Combine(root, "package/README.md"));
+Check(playerReadme.Contains("### Questions and bug reports"), "English guide explains where to report problems");
+Check(playerReadme.Contains("### お問い合わせ・不具合報告"), "Japanese guide explains where to report problems");
 Check(System.Text.RegularExpressions.Regex.Matches(guideSource, @"StageEffect\.\w+ =>").Count == 46, "Guide has all 46 event descriptions");
 string dll = Path.Combine(root, "bin/Release/netstandard2.1/StagePhysicsEvents.dll");
 using var pe = new PEReader(File.OpenRead(dll));
