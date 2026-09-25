@@ -53,6 +53,11 @@ string menuSource = File.ReadAllText(Path.Combine(root, "EventMenu.cs"));
 foreach (string action in new[] { "Events", "EVENT GUIDE", "EVENT SETTINGS", "REFRESH DISPLAY DATA", "HUD EDITOR", "REPORT A PROBLEM", "COPY REPORT", "OPEN SAVED REPORT" })
     Check(menuSource.Contains("\"" + action + "\""), "Events UI provides " + action);
 string guideSource = File.ReadAllText(Path.Combine(root, "EventGuideCatalog.cs"));
+string reportSource = File.ReadAllText(Path.Combine(root, "EventBugReport.cs"));
+Check(reportSource.Contains("const string IssuesUrl = \"https://github.com/CapacityDown/StageFlux/issues/new\""), "Problem report targets the Stage Flux new-issue page without report data in its URL");
+Check(menuSource.Contains("\"OPEN GITHUB ISSUES\", () => Switch(View.Issues)"), "GitHub action opens the confirmation view first");
+Check(menuSource.Contains("Application.OpenURL(EventBugReport.IssuesUrl)"), "Confirmed action opens GitHub Issues");
+Check(!menuSource.Contains("thunderstore.io"), "Problem reports do not open Thunderstore");
 Check(System.Text.RegularExpressions.Regex.Matches(guideSource, @"StageEffect\.\w+ =>").Count == 46, "Guide has all 46 event descriptions");
 string dll = Path.Combine(root, "bin/Release/netstandard2.1/StagePhysicsEvents.dll");
 using var pe = new PEReader(File.OpenRead(dll));

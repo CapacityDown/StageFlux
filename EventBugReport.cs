@@ -14,6 +14,7 @@ namespace REPOJP.StagePhysicsEvents;
 
 internal sealed class EventBugReport : ILogListener
 {
+    internal const string IssuesUrl = "https://github.com/CapacityDown/StageFlux/issues/new";
     private readonly object _gate = new();
     private readonly Queue<string> _logs = new();
     private readonly HashSet<string> _privateValues = new(StringComparer.Ordinal);

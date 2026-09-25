@@ -16,7 +16,7 @@ Open **Events** in the lobby or the pause menu. If RoleShuffle is installed, the
 - **Event Guide** explains every event with its icon and risk level.
 - **Event Settings** lets the host turn events on or off. Changes affect future draws; active events and already selected stage plans stay unchanged. Players with the mod can view the host's selection. Detailed settings remain available in REPOConfig.
 - **Presets** offers Defaults, Low Risk, and All Off. Presets only change event ON/OFF.
-- **Tools** includes display refresh, a draggable HUD editor with Save/Cancel, and a local problem report you can copy or open. Reports are not uploaded automatically; review them before sharing.
+- **Tools** includes display refresh, a draggable HUD editor with Save/Cancel, and a local problem report you can copy or open. Use **Open GitHub Issues** to report problems on [GitHub Issues](https://github.com/CapacityDown/StageFlux/issues). Review your report before pasting it into an issue; nothing is uploaded automatically. Access to the repository is required.
 
 The HUD editor only changes your own display. It does not start events. Guests without the mod do not need this menu for gameplay effects.
 
@@ -545,7 +545,7 @@ Heavy Cargo also follows these filters, but cannot affect players, enemies or do
 - **Event Guide**：全イベントのアイコン、説明、危険度を確認できます。
 - **Event Settings**：ホストが各イベントをON/OFFできます。今後の抽選に反映され、実行中のイベントや選択済みのステージ計画は変わりません。MOD導入済みの参加者はホストの選択を閲覧できます。詳細設定は引き続きREPOConfigで変更できます。
 - **Presets**：標準設定、低危険度のみ、すべてOFFから選択できます。変更するのはイベントのON/OFFのみです。
-- **Tools**：表示データの再取得、ドラッグ操作に対応したHUD編集、コピーまたは開くことができる不具合レポートを利用できます。レポートは自動送信されません。共有前に内容を確認してください。
+- **Tools**：表示データの再取得、ドラッグ操作に対応したHUD編集、コピーまたは開くことができる不具合レポートを利用できます。**Open GitHub Issues** から [GitHub Issues](https://github.com/CapacityDown/StageFlux/issues) に不具合を報告してください。内容を確認してからレポートを貼り付けてください。自動送信は行いません。リポジトリへのアクセス権が必要です。
 
 HUD編集は自分の表示のみを変更し、イベントを発動しません。保存せずにキャンセルすることもできます。ゲームプレイの効果を受けるために、参加者がこのメニューを導入する必要はありません。メニューの利用にはMenuLibが必要です。
 

@@ -4,6 +4,7 @@ A host-only R.E.P.O. mod with 46 configurable stage events and an in-game Events
 
 - [Player guide and complete event catalog (English / 日本語)](package/README.md)
 - [Changelog](package/CHANGELOG.md)
+- [Report a problem on GitHub Issues](https://github.com/CapacityDown/StageFlux/issues)
 - [Development and verification](DEVELOPMENT.md)
 - [Download on Thunderstore](https://thunderstore.io/c/repo/p/CapackMods/StageFlux/)
 

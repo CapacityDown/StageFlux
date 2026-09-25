@@ -10,7 +10,7 @@ Version remains 4.3.0. RoleShuffle source was read for UI behavior but not modif
 - Display-only host settings shared through versioned room data. Clients never mutate event settings; unsupported or stale-host data is shown as unavailable.
 - Display refresh, real-renderer HUD editing with a separate draft, Save/Cancel/defaults, and local bounded/redacted problem reports.
 - The HUD editor never starts events. It supports Graphical/Classic, orientation, anchor, alignment, position, scale, opacity, and local visibility.
-- Reports and support-page actions require a user click. No report upload occurs.
+- Reports and GitHub Issues actions require a user click. The confirmation page opens `https://github.com/CapacityDown/StageFlux/issues/new` without including report data in the URL. No report upload occurs. Private repositories require access before users can file an issue.
 - MenuLib is a shared dependency; RoleShuffle and Elite Enemy Variants remain optional. No new gameplay RPCs are required from vanilla clients.
 
 ## Automated checks

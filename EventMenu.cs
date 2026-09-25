@@ -167,7 +167,7 @@ internal sealed class EventMenu : MonoBehaviour
                 Button("REPORT A PROBLEM", () => Switch(View.Report));
                 break;
             case View.Report:
-                Text("Create a local report to copy or open. Personal information is partly masked. Review it before sharing. Nothing is uploaded automatically.");
+                Text("Copy or open a report, review it, then paste it into a new GitHub issue. Personal information is partly masked. Nothing is uploaded automatically.");
                 Button("COPY REPORT", () =>
                 {
                     EventBugReport report = StagePhysicsEventsPlugin.Instance.BugReport;
@@ -182,16 +182,16 @@ internal sealed class EventMenu : MonoBehaviour
                     Application.OpenURL(new Uri(report.LatestPath).AbsoluteUri);
                     _message = "Report saved. Add reproduction steps before sharing.";
                 });
-                Button("OPEN SUPPORT PAGE", () => Switch(View.Support));
+                Button("OPEN GITHUB ISSUES", () => Switch(View.Issues));
                 break;
-            case View.Support:
-                Text("Open the Stage Flux support page in your browser? Your report will not be sent automatically.");
-                Button("OPEN IN BROWSER", () => Application.OpenURL("https://thunderstore.io/c/repo/p/CapackMods/StageFlux/"));
+            case View.Issues:
+                Text("Open a new Stage Flux issue on GitHub in your browser? Your report will not be sent automatically. A GitHub account with access to the repository is required to submit an issue.");
+                Button("OPEN IN BROWSER", () => Application.OpenURL(EventBugReport.IssuesUrl));
                 Button("CANCEL", () => Switch(View.Report));
                 break;
         }
         _page.headerTMP.text = _view switch { View.Current => "Current Events", View.Guide => "Event Guide", View.Settings => "Event Settings",
-            View.Presets => "Event Presets", View.Tools => "Tools", View.Report => "Bug Report", _ => "Support" };
+            View.Presets => "Event Presets", View.Tools => "Tools", View.Report => "Bug Report", _ => "GitHub Issues" };
         Apply(entries);
         _signature = Signature();
     }
@@ -284,7 +284,7 @@ internal sealed class EventMenu : MonoBehaviour
     private void Close(REPOPopupPage page) { Forget(); page.ClosePage(closePagesAddedOnTop: true); }
     private void Forget() { _page = null; _rows.Clear(); _navigation.Clear(); }
     private void OnDestroy() { EventHudEditor.Instance?.Close(false); if (_page != null) _page.ClosePage(true); _icons.Dispose(); if (_instance == this) _instance = null; }
-    private enum View { Current, Guide, Settings, Presets, Tools, Report, Support }
+    private enum View { Current, Guide, Settings, Presets, Tools, Report, Issues }
     private sealed class Entry(string text, Action? click = null, StageEffect icon = StageEffect.None, bool control = false)
     { internal readonly string Text = text; internal readonly Action? Click = click; internal readonly StageEffect Icon = icon; internal readonly bool Control = control; }
     private sealed class Row(REPOButton button, REPOLabel label, REPOScrollViewElement element, RawImage icon, Image background, RectTransform focus)
