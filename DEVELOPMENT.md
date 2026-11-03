@@ -32,6 +32,20 @@ dotnet run --project tests/StageFlux.ExtendedEvents.Tests.csproj -c Release -- <
 
 The suite covers arithmetic, menu authority and display payloads, event resources, optional-mod references, and installed-game method signatures. The 0.5.0 audit also resolves Stage Flux/MenuLib member references, reflection targets, Harmony injection parameters, and vanilla RPC contracts against the original game DLLs. Additional dependency DLL paths can be appended to the test command. It does not replace Unity or multiplayer testing.
 
+The Events format follows the English Roles menu: selected navigation markers,
+outlined hover controls, disabled icons, fixed body rows, and three body lines
+per wheel notch. The independent native-wheel harness also exercises both peer
+patch orders without requiring RoleShuffle:
+
+```text
+dotnet run --project tools/EventMenuScrollChecks/EventMenuScrollChecks.csproj -c Release -- <REPO_Data/Managed/Assembly-CSharp.dll>
+```
+
+Custom presets store stable event names in a separate profile-local file, not
+REPOConfig entries. The optional guide snapshot is display-only and never calls
+event draws, RNG, or effect availability initialization. Eligibility is explicitly
+configuration-based; it does not promise live target/resource availability.
+
 Migration notes and the required in-game acceptance checks are in [docs/GAME_0_5_MIGRATION.md](docs/GAME_0_5_MIGRATION.md).
 
 Manual UI checks:
@@ -43,6 +57,16 @@ Manual UI checks:
 - Open the HUD editor in both lobby and stage at 1080p, 1440p, and another aspect ratio. Test drag, layout/style, opacity, Save, Cancel, Escape, and resolution changes. Cancel must not save drafts.
 - Refresh display data and create a report. Review its redaction; no report is uploaded automatically.
 - End a stage, leave a room, change host, and reopen the UI to check stale state handling.
+- Compare Roles and Events at 1080p and 1440p: navigation spacing, selected arrows,
+  control borders/hover colors, OFF icons, dividers, 56-unit guide icons, and body
+  wrapping. Events remains English; event-specific HUD controls remain unchanged.
+- Save/apply all three custom slots, confirm/cancel overwrites, restart the
+  profile, and verify only ON/OFF settings change. Guests must not save/apply
+  host selections. Test all-OFF, unknown older names, and unreadable preset files.
+- On a modded guest, compare Details with the host's REPOConfig. Change host or
+  join an older host and confirm unavailable details never use guest-local values.
+- Test the native GitHub dialog with confirm, cancel, and Escape; the underlying
+  Events page must remain open until explicitly closed.
 
 ## Release
 

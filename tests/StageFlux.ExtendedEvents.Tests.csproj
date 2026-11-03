@@ -10,5 +10,8 @@
     <Compile Include="../ExtendedEventPolicy.cs" Link="ExtendedEventPolicy.cs" />
     <Compile Include="../SunstoneEventPolicy.cs" Link="SunstoneEventPolicy.cs" />
     <Compile Include="../EventMenuPolicy.cs" Link="EventMenuPolicy.cs" />
+    <Compile Include="../EventMenuLayout.cs" Link="EventMenuLayout.cs" />
+    <Compile Include="../EventGuideSnapshot.cs" Link="EventGuideSnapshot.cs" />
+    <Compile Include="../CustomEventPresets.cs" Link="CustomEventPresets.cs" />
   </ItemGroup>
 </Project>

@@ -57,7 +57,6 @@ public sealed class StagePhysicsEventsPlugin : BaseUnityPlugin
             _harmony.PatchAll(typeof(ExtendedEventPatches));
             _harmony.PatchAll(typeof(RechargeCloudCarrierTargetsPatch));
             _harmony.PatchAll(typeof(DangerousSnakeCanHoldPatch));
-            _harmony.PatchAll(typeof(EventMenuScroll));
             SceneManager.activeSceneChanged += ActiveSceneChanged;
             Logger.LogInfo($"{PluginName} {PluginVersion} loaded.");
         }
@@ -67,6 +66,10 @@ public sealed class StagePhysicsEventsPlugin : BaseUnityPlugin
             _harmony.UnpatchSelf();
             Controller.enabled = false;
         }
+        // A future menu change must not disable gameplay effects. The scroll
+        // patch is independently validated against the installed native wheel IL.
+        try { _harmony.PatchAll(typeof(EventMenuScroll)); }
+        catch (Exception exception) { Logger.LogWarning("Events uses native scrolling: " + exception.Message); }
     }
 
     private void OnDestroy()

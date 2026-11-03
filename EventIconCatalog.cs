@@ -22,16 +22,17 @@ internal sealed class EventIconCatalog
     private Sprite? _panelSprite;
     private Sprite? _roundedSprite;
 
-    internal Texture2D Get(StageEffect effect)
+    internal Texture2D Get(StageEffect effect, bool grayedOut = false)
     {
         string name = effect == StageEffect.None ? "Waiting" : effect.ToString();
-        if (_textures.TryGetValue(name, out Texture2D texture))
+        string key = grayedOut ? name + "_Disabled" : name;
+        if (_textures.TryGetValue(key, out Texture2D texture))
         {
             return texture;
         }
 
-        texture = Load(EventResourcePrefix, name) ?? CreateFallback(name);
-        _textures[name] = texture;
+        texture = Load(EventResourcePrefix, name, grayedOut) ?? CreateFallback(name);
+        _textures[key] = texture;
         return texture;
     }
 
@@ -140,7 +141,7 @@ internal sealed class EventIconCatalog
         _roundedTexture = null;
     }
 
-    private static Texture2D? Load(string prefix, string name)
+    private static Texture2D? Load(string prefix, string name, bool grayedOut = false)
     {
         try
         {
@@ -168,7 +169,19 @@ internal sealed class EventIconCatalog
                 filterMode = FilterMode.Bilinear,
                 hideFlags = HideFlags.HideAndDontSave
             };
-            return texture.LoadImage(bytes) ? texture : null;
+            if (!texture.LoadImage(bytes)) { UnityEngine.Object.Destroy(texture); return null; }
+            if (grayedOut)
+            {
+                Color32[] pixels = texture.GetPixels32();
+                for (int i = 0; i < pixels.Length; i++)
+                {
+                    Color32 pixel = pixels[i];
+                    byte gray = (byte)((77 * pixel.r + 150 * pixel.g + 29 * pixel.b) * 7 / 2560);
+                    pixels[i] = new Color32(gray, gray, gray, pixel.a);
+                }
+                texture.SetPixels32(pixels); texture.Apply(false, true);
+            }
+            return texture;
         }
         catch (Exception exception)
         {

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../EventMenuScroll.cs" Link="EventMenuScroll.cs" />
+    <Reference Include="0Harmony">
+      <HintPath>$(NuGetPackageRoot)harmonyx/2.7.0/lib/netstandard2.0/0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>$(NuGetPackageRoot)mono.cecil/0.11.4/lib/netstandard2.0/Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.Utils">
+      <HintPath>$(NuGetPackageRoot)monomod.utils/21.12.13.1/lib/netstandard2.0/MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoMod.RuntimeDetour">
+      <HintPath>$(NuGetPackageRoot)monomod.runtimedetour/21.12.13.1/lib/netstandard2.0/MonoMod.RuntimeDetour.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

@@ -18,10 +18,10 @@ In the game, open **Events → Tools → Report a Problem**. Use **Copy Report**
 
 Open **Events** in the lobby or the pause menu. If RoleShuffle is installed, the button appears below **Roles**.
 
-- **Current Events** shows the current stage's events.
-- **Event Guide** explains every event with its icon and risk level.
+- **Current Events** shows the current stage's events and opens first from the pause menu. The lobby opens Event Guide instead.
+- **Event Guide** offers Overview, Details, and Draw eligibility. Overview explains every event with its icon and risk level; Details shows the host's current settings. Draw eligibility shows whether settings allow selection, not a prediction of the next draw. Stage conditions can still exclude an event. Unsupported hosts show details as unavailable.
 - **Event Settings** lets the host turn events on or off. Changes affect future draws; active events and already selected stage plans stay unchanged. Players with the mod can view the host's selection. Detailed settings remain available in REPOConfig.
-- **Presets** offers Defaults, Low Risk, and All Off. Presets only change event ON/OFF.
+- **Presets** offers Defaults, Low Risk, All Off, and three custom save slots. The host can save or apply a selection; replacing a saved slot requires confirmation. Custom presets remain available after restarting the same profile. Presets only change event ON/OFF, not probabilities or other settings.
 - **Tools** includes display refresh, a draggable HUD editor with Save/Cancel, and a local problem report you can copy or open. **Open GitHub Issues** takes you to the bug-report page. Reports are not uploaded automatically; review them before sharing.
 
 The HUD editor only changes your own display. It does not start events. Guests without the mod do not need this menu for gameplay effects.
@@ -586,10 +586,10 @@ Heavy Cargo also follows these filters, but cannot affect players, enemies or do
 
 ロビーまたはポーズメニューの **Events** から開きます。RoleShuffleを同時導入している場合は **Roles** の下に配置されます。
 
-- **Current Events**：現在のステージで発生しているイベントを確認できます。
-- **Event Guide**：全イベントのアイコン、説明、危険度を確認できます。
+- **Current Events**：現在のステージで発生しているイベントを確認できます。ポーズメニューではこのページが最初に開き、ロビーではEvent Guideが開きます。
+- **Event Guide**：Overview（概要）、Details（ホストの現在の設定）、Draw eligibility（設定上の抽選対象）を切り替えられます。全イベントのアイコンと危険度を確認でき、抽選対象でもステージの条件によって選ばれない場合があります。次回の抽選結果を予告するものではありません。未対応のホストでは詳細を未取得と表示します。
 - **Event Settings**：ホストが各イベントをON/OFFできます。今後の抽選に反映され、実行中のイベントや選択済みのステージ計画は変わりません。MOD導入済みの参加者はホストの選択を閲覧できます。詳細設定は引き続きREPOConfigで変更できます。
-- **Presets**：標準設定、低危険度のみ、すべてOFFから選択できます。変更するのはイベントのON/OFFのみです。
+- **Presets**：標準設定、低危険度のみ、すべてOFFに加え、カスタム保存3枠を利用できます。ホストが選択内容を保存・適用でき、保存済みの枠への上書きは確認が必要です。同じプロファイルなら再起動後も残ります。変更するのはイベントのON/OFFのみで、確率などの設定は変わりません。
 - **Tools**：表示データの再取得、ドラッグ操作に対応したHUD編集、コピーまたは開くことができる不具合レポートを利用できます。**Open GitHub Issues** から不具合報告ページを開けます。自動送信は行いません。共有前に内容を確認してください。
 
 HUD編集は自分の表示のみを変更し、イベントを発動しません。保存せずにキャンセルすることもできます。ゲームプレイの効果を受けるために、参加者がこのメニューを導入する必要はありません。メニューの利用にはMenuLibが必要です。

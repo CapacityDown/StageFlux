@@ -55,7 +55,9 @@ foreach (string action in new[] { "Events", "EVENT GUIDE", "EVENT SETTINGS", "RE
 string guideSource = File.ReadAllText(Path.Combine(root, "EventGuideCatalog.cs"));
 string reportSource = File.ReadAllText(Path.Combine(root, "EventBugReport.cs"));
 Check(reportSource.Contains("const string IssuesUrl = \"https://github.com/CapacityDown/StageFlux/issues/new\""), "Problem report targets the Stage Flux new-issue page without report data in its URL");
-Check(menuSource.Contains("\"OPEN GITHUB ISSUES\", () => Switch(View.Issues)"), "GitHub action opens the confirmation view first");
+Check(menuSource.Contains("\"OPEN GITHUB ISSUES\", ConfirmOpenIssues"), "GitHub action opens the native confirmation dialog first");
+Check(menuSource.Contains("MenuAPI.OpenPopup(\"OPEN EXTERNAL SITE\""), "External navigation uses the native modal confirmation");
+checks += EventMenuChecks.Run(root);
 Check(menuSource.Contains("Application.OpenURL(EventBugReport.IssuesUrl)"), "Confirmed action opens GitHub Issues");
 Check(!menuSource.Contains("thunderstore.io"), "Problem reports do not open Thunderstore");
 using (var manifest = System.Text.Json.JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "package/manifest.json"))))

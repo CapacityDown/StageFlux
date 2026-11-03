@@ -133,8 +133,9 @@ internal static class Game050Contracts
 
         Verify(FindType("MenuScrollBox")?.Fields.Any(f => f.Name == "scrollWheelStep" && f.FieldType.Name == "Single") == true,
             "Native wheel-step setting exists");
-        Verify(!File.ReadAllText(Path.Combine(root, "EventMenuScroll.cs")).Contains("HarmonyTranspiler"),
-            "Events scroll must not depend on the old menu IL pattern");
+        string scrollSource = File.ReadAllText(Path.Combine(root, "EventMenuScroll.cs"));
+        Verify(scrollSource.Contains("HarmonyTranspiler") && scrollSource.Contains("scrollWheelStep") &&
+            !scrollSource.Contains("scrollSpeed"), "Events scroll patches the current wheel-only expression, not the obsolete MenuLib hook");
         Verify(File.ReadAllText(Path.Combine(root, "VanillaEventNotifier.cs")).Contains("ChatMessageSend(message, \"en-US\")"),
             "Event announcements use English TTS independently of game language");
         Verify(File.ReadAllText(Path.Combine(root, "ExtendedEventAdapter.cs")).Contains("battery.BatteryFullPercentChange(battery.BatteryBarsGet(), false)"),

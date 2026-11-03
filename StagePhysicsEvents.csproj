@@ -57,6 +57,10 @@
     <Compile Include="EventMenuState.cs" />
     <Compile Include="EventMenuPolicy.cs" />
     <Compile Include="EventMenu.cs" />
+    <Compile Include="EventMenuLayout.cs" />
+    <Compile Include="EventMenuButtonVisual.cs" />
+    <Compile Include="EventGuideSnapshot.cs" />
+    <Compile Include="CustomEventPresets.cs" />
     <Compile Include="EventMenuButton.cs" />
     <Compile Include="EventMenuScroll.cs" />
     <Compile Include="EventHudEditor.cs" />
