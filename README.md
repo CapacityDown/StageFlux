@@ -1,16 +1,21 @@
 # Stage Flux
 
-A host-only R.E.P.O. mod with 46 configurable stage events and an in-game Events menu.
+A host-only R.E.P.O. mod with 49 configurable stage events and an in-game Events menu.
 
 - [Player guide and complete event catalog (English / 日本語)](package/README.md)
 - [Changelog](package/CHANGELOG.md)
 - [Report a problem on GitHub Issues](https://github.com/CapacityDown/StageFlux/issues)
 - [Development and verification](DEVELOPMENT.md)
+- [Git and deployment workflow](WORKFLOW.md)
 - [Download on Thunderstore](https://thunderstore.io/c/repo/p/CapackMods/StageFlux/)
 
 Only the host needs Stage Flux for gameplay effects. Players who install the mod can also use the event HUD and Events menu. RoleShuffle and Elite Enemy Variants remain optional.
 
 Source version: **5.0.0**, for **R.E.P.O. v0.5.0**.
+
+## Development branch
+
+Current development takes place on [`version/5.0.0`](https://github.com/CapacityDown/StageFlux/tree/version/5.0.0). Ongoing changes are committed and pushed to that version's branch. When development moves to a new version, the verified outgoing version is integrated into `main` before the next version branch is created. Existing history and release archives are preserved.
 
 ## Questions and bug reports / お問い合わせ・不具合報告
 

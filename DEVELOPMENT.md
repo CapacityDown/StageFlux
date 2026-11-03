@@ -1,5 +1,9 @@
 # Development
 
+## Source and GitHub
+
+Follow [WORKFLOW.md](WORKFLOW.md) for the version-branch workflow shared with RoleShuffle. Work in `StagePhysicsEvents` on `version/5.0.0`; commit and push current development to that branch rather than directly to `main`. The remote remains `https://github.com/CapacityDown/StageFlux.git`.
+
 ## Build
 
 1. Install the .NET SDK (the regression test runner targets .NET 9).
@@ -33,7 +37,7 @@ Migration notes and the required in-game acceptance checks are in [docs/GAME_0_5
 Manual UI checks:
 
 - With and without RoleShuffle, open the lobby and pause menus. Events must be below Roles when present, or in the top-right corner otherwise.
-- Open the event guide, scroll through all 46 entries, and verify text wrapping and icon direction.
+- Open the event guide, scroll through all 49 entries, and verify text wrapping and icon direction.
 - As host, toggle events and reopen REPOConfig. Confirm the same settings changed. As guest, confirm host settings are read-only.
 - Connect to a host without menu support: the guide and local tools remain available; unknown host settings must not appear as local defaults.
 - Open the HUD editor in both lobby and stage at 1080p, 1440p, and another aspect ratio. Test drag, layout/style, opacity, Save, Cancel, Escape, and resolution changes. Cancel must not save drafts.
@@ -45,5 +49,7 @@ Manual UI checks:
 Keep `StagePhysicsEventsPlugin.PluginVersion`, the project version, and `package/manifest.json` aligned. The Thunderstore package name is StageFlux; the DLL name remains StagePhysicsEvents.dll.
 
 After a clean Release build, update the package and the requested mod-manager profile. Preserve local configuration and back up any DLL being replaced. Verify identical SHA-256 hashes for build, package, and deployed DLLs. Do not publish a release merely because code was pushed to GitHub.
+
+The current deployment target is **SF_TEST**, following the user's override of Default. Do not modify Default or another active profile. If R.E.P.O. is running, identify its profile before deployment; defer replacement if it uses SF_TEST or its profile cannot be established. Do not stop the game automatically.
 
 Do not add compile-time references or mandatory dependencies for RoleShuffle or Elite Enemy Variants.
