@@ -112,10 +112,10 @@ internal sealed class EventMenuState : MonoBehaviourPunCallbacks
                 .Append("Simultaneous event limit: ").Append(_config.MaxSimultaneousEffects.Value);
             if (_config.Mode.Value is "PersistentForStage" or "AllMode")
                 text.Append("\nPersistent mode keeps its events active for the stage instead of using the duration and interval above.");
-            foreach (var setting in _file.Where(p => p.Key.Section == section).OrderBy(p => p.Key.Key, StringComparer.Ordinal))
+            foreach (var setting in StageFluxConfigMenu.OrderEntries(_file.Where(p => p.Key.Section == section).Select(p => p.Value)))
             {
-                string label = Regex.Replace(setting.Key.Key, "([a-z0-9])([A-Z])", "$1 $2");
-                object value = setting.Value.BoxedValue;
+                string label = Regex.Replace(setting.Definition.Key, "([a-z0-9])([A-Z])", "$1 $2");
+                object value = setting.BoxedValue;
                 text.Append('\n').Append(label).Append(": ").Append(value is bool on ? on ? "ON" : "OFF" : Convert.ToString(value, CultureInfo.InvariantCulture));
             }
             string eligibility = !_config.Enabled.Value ? "Not selected: Stage Flux events are disabled." :

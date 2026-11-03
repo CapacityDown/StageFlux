@@ -80,6 +80,8 @@
     <Compile Include="EventBugReport.cs" />
     <Compile Include="StagePhysicsEventsPlugin.cs" />
     <Compile Include="StagePhysicsConfig.cs" />
+    <Compile Include="EventConfigOrder.cs" />
+    <Compile Include="StageFluxConfigMenu.cs" />
     <Compile Include="ExtendedEventConfig.cs" />
     <Compile Include="SunstoneEventConfig.cs" />
     <Compile Include="SunstoneEventAdapter.cs" />

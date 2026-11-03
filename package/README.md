@@ -147,6 +147,8 @@ Update the required mods as well. Existing Stage Flux settings are retained; do 
 
 All settings are available through REPOConfig. Gameplay settings use the host's values. HUD layout settings are local to each player who has the mod installed.
 
+REPOConfig shows General, Timing, Targets, Safety, Notifications, and HUD first, followed by events in the same order as the in-game Event Guide. Each event starts with Enabled and Chance Percent, followed by its effect details, repetition interval, allowed types, and protection or end-of-event options where available. Event Guide Details uses the same setting order. Existing settings and defaults are unchanged.
+
 #### General
 
 | Key | Default | Range / Values | Description |
@@ -553,8 +555,8 @@ Heavy Cargo also follows these filters, but cannot affect players, enemies or do
 | `LayoutDirection` | `Vertical` | `Vertical`, `Horizontal` | Selects the graphical slot direction and sequential stop order. |
 | `Anchor` | `BottomRight` | `TopLeft`, `TopCenter`, `TopRight`, `MiddleLeft`, `MiddleCenter`, `MiddleRight`, `BottomLeft`, `BottomCenter`, `BottomRight` | Selects the HUD anchor. |
 | `Alignment` | `Right` | `Left`, `Center`, `Right` | Selects text alignment for the Classic HUD. |
-| `OffsetX` | `0` | `-3840`–`3840` | Horizontal offset from the anchor in pixels. |
-| `OffsetY` | `0` | `-2160`–`2160` | Vertical offset from the anchor in pixels. |
+| `OffsetX` | `0` | `-3840`–`3840` | Horizontal offset from the anchor, scaled with resolution. Positive values move right. |
+| `OffsetY` | `0` | `-2160`–`2160` | Vertical offset from the anchor, scaled with resolution. Positive values move up. |
 | `ScalePercent` | `70` | `50`–`200` | HUD scale percentage. |
 | `BackgroundOpacityPercent` | `50` | `0`–`100` | Graphical HUD background opacity. Icons and text remain fully visible. |
 
@@ -722,6 +724,8 @@ Stage Fluxは、R.E.P.O.のステージに49種類のランダムイベントを
 ### 設定
 
 すべての設定はREPOConfigから変更できます。ゲームプレイ設定にはホスト側の値を使用し、HUDの表示設定はMOD導入済みの各プレイヤーが個別に使用します。
+
+REPOConfigではGeneral、Timing、Targets、Safety、Notifications、HUDを先に表示し、続いてゲーム内のEvent Guideと同じ順番でイベントを表示します。各イベントはEnabled、Chance Percentを先頭に、効果の詳細、発生間隔、許可する種類、保護・終了時の設定を順に配置します（項目がある場合）。Event GuideのDetailsも同じ項目順です。保存済みの設定値やデフォルト値は変わりません。
 
 #### General
 
@@ -1129,8 +1133,8 @@ Heavy Cargoもこの設定に従いますが、プレイヤー、敵、扉には
 | `LayoutDirection` | `Vertical` | `Vertical`, `Horizontal` | グラフィカルHUDの並びと順次停止する方向を選択します。 |
 | `Anchor` | `BottomRight` | `TopLeft`, `TopCenter`, `TopRight`, `MiddleLeft`, `MiddleCenter`, `MiddleRight`, `BottomLeft`, `BottomCenter`, `BottomRight` | HUD位置の基準点を選択します。 |
 | `Alignment` | `Right` | `Left`, `Center`, `Right` | Classic HUDの文字列の揃え方を選択します。 |
-| `OffsetX` | `0` | `-3840`–`3840` | 基準点からの水平方向オフセット（ピクセル）です。 |
-| `OffsetY` | `0` | `-2160`–`2160` | 基準点からの垂直方向オフセット（ピクセル）です。 |
+| `OffsetX` | `0` | `-3840`–`3840` | 解像度に合わせて拡縮される水平方向の位置調整です。正の値で右へ移動します。 |
+| `OffsetY` | `0` | `-2160`–`2160` | 解像度に合わせて拡縮される垂直方向の位置調整です。正の値で上へ移動します。 |
 | `ScalePercent` | `70` | `50`–`200` | HUDの表示倍率（%）です。 |
 | `BackgroundOpacityPercent` | `50` | `0`–`100` | グラフィカルHUD背景の不透明度（%）です。アイコンと文字の不透明度には影響しません。 |
 

@@ -80,12 +80,12 @@ internal sealed partial class StagePhysicsConfig
         MaxSimultaneousEffects = BindInt(config, "General", "MaxSimultaneousEffects", 3, 1, 5, "Maximum number of effects that can be selected for one event. Successful effects above this limit are reduced randomly.");
         AllowDangerousCombinations = BindBool(config, "Safety", "AllowDangerousCombinations", false, "Allows combinations that can greatly increase player death, uncontrolled movement, enemy pressure, visual disruption, or valuable loss.");
         ConfigEntry<int> legacyHazardProtectionDelay = BindInt(config, "Safety", "HazardIndestructibleReleaseDelaySeconds", 2, 1, 5, "Legacy setting migrated to ValuableProtectionReleaseDelaySeconds.");
-        ValuableProtectionReleaseDelaySeconds = BindInt(config, "Safety", "ValuableProtectionReleaseDelaySeconds", legacyHazardProtectionDelay.Value, 1, 5, "Seconds to keep targeted valuables Indestructible after a hazard event ends.");
+        ValuableProtectionReleaseDelaySeconds = BindInt(config, "Safety", "ValuableProtectionReleaseDelaySeconds", legacyHazardProtectionDelay.Value, 1, 5, "Seconds to keep valuables protected after a protected event ends. Requires Targets.Valuables and that event's ProtectValuables setting. Does not prevent damage to players or enemies.");
 
         EffectDurationMinSeconds = BindInt(config, "Timing", "EffectDurationMinSeconds", 15, 10, 300, "Minimum effect duration in seconds.");
         EffectDurationMaxSeconds = BindInt(config, "Timing", "EffectDurationMaxSeconds", 30, 10, 300, "Maximum effect duration in seconds.");
-        IntervalMinSeconds = BindInt(config, "Timing", "IntervalMinSeconds", 45, 10, 300, "Minimum number of seconds before the next event roll.");
-        IntervalMaxSeconds = BindInt(config, "Timing", "IntervalMaxSeconds", 90, 10, 300, "Maximum number of seconds before the next event roll.");
+        IntervalMinSeconds = BindInt(config, "Timing", "IntervalMinSeconds", 45, 10, 300, "Minimum wait between events, in whole seconds. Also used before the first event. PersistentForStage does not use this wait. Repeating actions during an event use that event's own interval setting.");
+        IntervalMaxSeconds = BindInt(config, "Timing", "IntervalMaxSeconds", 90, 10, 300, "Maximum wait between events, in whole seconds. A value between the minimum and maximum is selected. PersistentForStage does not use this wait.");
 
         FeatherEnabled = BindBool(config, "Feather", "Enabled", legacyFeatherEnabled.Value, "Includes Feather in each event's independent rolls.");
         FeatherChance = BindInt(config, "Feather", "ChancePercent", legacyFeatherChance.Value, 0, 100, "Independent chance for Feather in each event.");
@@ -370,11 +370,11 @@ internal sealed partial class StagePhysicsConfig
         ValueSurgeEnabled = BindBool(config, "Value Surge", "Enabled", true, "Includes Value Surge in each event's independent rolls.");
         ValueSurgeChance = BindInt(config, "Value Surge", "ChancePercent", DefaultEventChancePercent, 0, 100, "Independent chance for Value Surge in each event.");
         ValueSurgeMultiplierPercent = BindInt(config, "Value Surge", "MultiplierPercent", 150, 1, 1000, "Temporary multiplier applied to all active valuable prices, including extraction, cart, and truck areas.");
-        ValueSurgeRestoreOnEnd = BindBool(config, "Value Surge", "RestoreOnEnd", true, "Restores surviving valuables to their saved prices when the event ends.");
+        ValueSurgeRestoreOnEnd = BindBool(config, "Value Surge", "RestoreOnEnd", true, "Removes this event's price multiplier when the event ends. Damage taken during the event is kept; this does not repair valuables.");
         ValueCrashEnabled = BindBool(config, "Value Crash", "Enabled", true, "Includes Value Crash in each event's independent rolls.");
         ValueCrashChance = BindInt(config, "Value Crash", "ChancePercent", DefaultEventChancePercent, 0, 100, "Independent chance for Value Crash in each event.");
         ValueCrashMultiplierPercent = BindInt(config, "Value Crash", "MultiplierPercent", 50, 1, 1000, "Temporary multiplier applied to all active valuable prices, including extraction, cart, and truck areas.");
-        ValueCrashRestoreOnEnd = BindBool(config, "Value Crash", "RestoreOnEnd", true, "Restores surviving valuables to their saved prices when the event ends.");
+        ValueCrashRestoreOnEnd = BindBool(config, "Value Crash", "RestoreOnEnd", true, "Removes this event's price multiplier when the event ends. Damage taken during the event is kept; this does not repair valuables.");
         BindBool(config, "Music Override", "Enabled", false, "Obsolete setting removed in 4.2.0.");
         BindInt(config, "Music Override", "ChancePercent", 5, 0, 100, "Obsolete setting removed in 4.2.0.");
         config.Bind("Music Override", "TrackSelection", "Random", "Obsolete setting removed in 4.2.0.");
@@ -404,11 +404,11 @@ internal sealed partial class StagePhysicsConfig
         ConfigEntry<bool> legacyCountdownEnabled = BindBool(config, "UI", "CountdownEnabled", true, "Legacy countdown setting migrated to the separate start and end settings.");
         ConfigEntry<bool> legacyStartCountdownEnabled = BindBool(config, "UI", "StartCountdownEnabled", legacyCountdownEnabled.Value, "Legacy notification setting.");
         ConfigEntry<bool> legacyEndCountdownEnabled = BindBool(config, "UI", "EndCountdownEnabled", legacyCountdownEnabled.Value, "Legacy notification setting.");
-        ChatAnnouncementsEnabled = BindBool(config, "Notifications", "ChatAnnouncementsEnabled", legacyChatEnabled.Value, "Broadcasts the stage summary, effect names, countdowns, and End through vanilla chat.");
+        ChatAnnouncementsEnabled = BindBool(config, "Notifications", "ChatAnnouncementsEnabled", legacyChatEnabled.Value, "Announces enabled stages, event names, countdowns, and End through player chat and speech. Stages without events are not announced. Other notification settings require this to be enabled.");
         StartCountdownEnabled = BindBool(config, "Notifications", "StartCountdownEnabled", legacyStartCountdownEnabled.Value, "Enables the five-second countdown during the final five seconds of the interval. When disabled, only the effect name is announced three seconds before the interval ends.");
         EndCountdownEnabled = BindBool(config, "Notifications", "EndCountdownEnabled", legacyEndCountdownEnabled.Value, "Enables the three-second countdown before an event ends. When disabled, End is announced when the effect ends.");
         EnemyReactionEnabled = BindBool(config, "Notifications", "EnemyReactionEnabled", false, "Allows enemies to investigate sounds generated by Stage Flux chat notifications. Ordinary voice chat and other sounds remain detectable.");
-        HudEnabled = BindBool(config, "HUD", "Enabled", legacyHudEnabled.Value, "Shows the synchronized event HUD on this client.");
+        HudEnabled = BindBool(config, "HUD", "Enabled", legacyHudEnabled.Value, "Shows the event HUD for this player only, during stages with events enabled. Does not change other players' displays.");
         HudStyle = config.Bind("HUD", "Style", "Graphical", new ConfigDescription(
             "Graphical shows the five-slot icon HUD. Classic restores the previous text-only HUD.",
             new AcceptableValueList<string>("Graphical", "Classic")));
@@ -419,10 +419,10 @@ internal sealed partial class StagePhysicsConfig
             "Anchor point used to position the HUD.",
             new AcceptableValueList<string>("TopLeft", "TopCenter", "TopRight", "MiddleLeft", "MiddleCenter", "MiddleRight", "BottomLeft", "BottomCenter", "BottomRight")));
         HudAlignment = config.Bind("HUD", "Alignment", legacyHudAlignment.Value, new ConfigDescription(
-            "Horizontal alignment of the HUD text.",
+            "Horizontal text alignment in the Classic HUD. Graphical slot labels keep their own layout.",
             new AcceptableValueList<string>("Left", "Center", "Right")));
-        HudOffsetX = BindInt(config, "HUD", "OffsetX", legacyHudOffsetX.Value, -3840, 3840, "Horizontal offset from the anchor in pixels.");
-        HudOffsetY = BindInt(config, "HUD", "OffsetY", legacyHudOffsetY.Value, -2160, 2160, "Vertical offset from the anchor in pixels.");
+        HudOffsetX = BindInt(config, "HUD", "OffsetX", legacyHudOffsetX.Value, -3840, 3840, "Horizontal offset from the anchor, scaled with screen resolution. Positive values move the HUD right.");
+        HudOffsetY = BindInt(config, "HUD", "OffsetY", legacyHudOffsetY.Value, -2160, 2160, "Vertical offset from the anchor, scaled with screen resolution. Positive values move the HUD up.");
         HudScalePercent = BindInt(config, "HUD", "ScalePercent", legacyHudScale.Value, 50, 200, "HUD scale percentage.");
         HudBackgroundOpacityPercent = BindInt(config, "HUD", "BackgroundOpacityPercent", 50, 0, 100, "Graphical HUD background opacity percentage. HUD icons and text remain fully visible.");
 
@@ -1314,8 +1314,14 @@ internal sealed partial class StagePhysicsConfig
     private static ConfigEntry<bool> BindBool(ConfigFile file, string section, string key, bool value, string description) =>
         file.Bind(section, key, value, description);
 
-    private static ConfigEntry<int> BindInt(ConfigFile file, string section, string key, int value, int min, int max, string description) =>
-        file.Bind(section, key, value, new ConfigDescription(description, new AcceptableValueRange<int>(min, max)));
+    private static ConfigEntry<int> BindInt(ConfigFile file, string section, string key, int value, int min, int max, string description)
+    {
+        if (key == "ChancePercent")
+            description = "Chance (%) for this event in each draw when enabled. Events are rolled independently; stage conditions, safe combinations, and the simultaneous-event limit can prevent selection. 0 disables selection; 100 does not bypass those limits.";
+        else if (key == "MinimumPlayerDistance")
+            description += " Distance is measured in meters.";
+        return file.Bind(section, key, value, new ConfigDescription(description, new AcceptableValueRange<int>(min, max)));
+    }
 
     private void MigrateSpawnCountDefaults(
         ConfigEntry<int> minimum,

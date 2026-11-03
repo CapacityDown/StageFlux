@@ -3,6 +3,7 @@
 - Added a Roles-style Events menu with event descriptions, host-controlled event toggles, and selection presets.
 - Matched the Events menu appearance to Roles and added translations that follow the game's language setting.
 - Added Overview, host-configured Details, and configuration-based Draw eligibility views.
+- Organized REPOConfig settings to match the Event Guide and clarified setting descriptions.
 - Added three custom event preset slots with overwrite confirmation.
 - Added a HUD editor, display refresh, and local problem reports with a link to GitHub Issues.
 - Placed the Events button below Roles when RoleShuffle is installed.

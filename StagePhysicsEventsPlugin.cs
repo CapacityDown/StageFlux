@@ -72,6 +72,13 @@ public sealed class StagePhysicsEventsPlugin : BaseUnityPlugin
         catch (Exception exception) { Logger.LogWarning("Events uses native scrolling: " + exception.Message); }
     }
 
+    private void Start()
+    {
+        // Chainloader completes all plugin Awake calls before Unity's first Start.
+        // REPOConfig need not load before Stage Flux, nor become a hard dependency.
+        if (_harmony != null) StageFluxConfigMenu.Install(_harmony, Config, Logger);
+    }
+
     private void OnDestroy()
     {
         EventHudEditor.Instance?.Close(false);
@@ -79,6 +86,7 @@ public sealed class StagePhysicsEventsPlugin : BaseUnityPlugin
         SceneManager.activeSceneChanged -= ActiveSceneChanged;
         Controller?.Shutdown();
         _harmony?.UnpatchSelf();
+        StageFluxConfigMenu.Clear();
         PhysGrabObjectRegistry.Clear();
         if (_controllerObject != null)
         {
