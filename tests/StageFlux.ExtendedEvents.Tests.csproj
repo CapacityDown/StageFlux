@@ -11,6 +11,10 @@
     <Compile Include="../SunstoneEventPolicy.cs" Link="SunstoneEventPolicy.cs" />
     <Compile Include="../EventMenuPolicy.cs" Link="EventMenuPolicy.cs" />
     <Compile Include="../EventMenuLayout.cs" Link="EventMenuLayout.cs" />
+    <Compile Include="../EventTextTokens.cs" Link="EventTextTokens.cs" />
+    <Compile Include="../EventLanguage.cs" Link="EventLanguage.cs" />
+    <Compile Include="../EventText.cs" Link="EventText.cs" />
+    <EmbeddedResource Include="../Assets/Localization/*.json" LogicalName="REPOJP.StagePhysicsEvents.Localization.%(Filename)%(Extension)" />
     <Compile Include="../EventGuideSnapshot.cs" Link="EventGuideSnapshot.cs" />
     <Compile Include="../CustomEventPresets.cs" Link="CustomEventPresets.cs" />
   </ItemGroup>

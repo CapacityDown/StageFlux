@@ -1,0 +1,1465 @@
+{
+  "schema": 1,
+  "description": "Main-project build invocations recovered from local execution records. Failed builds count; commands rejected before launch and test-only builds do not. No claim is made about unavailable external logs.",
+  "retrospectiveCount": 240,
+  "attempts": [
+    {
+      "number": 1,
+      "time": "2026-07-19T06:09:12.907Z",
+      "evidence": "55215204c34a4244",
+      "result": "failed"
+    },
+    {
+      "number": 2,
+      "time": "2026-07-19T06:09:18.655Z",
+      "evidence": "11ecce1abf9d108c",
+      "result": "failed"
+    },
+    {
+      "number": 3,
+      "time": "2026-07-19T06:09:42.332Z",
+      "evidence": "5cff1b40284bd0b1",
+      "result": "succeeded"
+    },
+    {
+      "number": 4,
+      "time": "2026-07-19T06:11:17.345Z",
+      "evidence": "bfed90583e7e4fa8",
+      "result": "succeeded"
+    },
+    {
+      "number": 5,
+      "time": "2026-07-19T06:12:22.547Z",
+      "evidence": "267cb76b5b304b66",
+      "result": "succeeded"
+    },
+    {
+      "number": 6,
+      "time": "2026-07-19T06:13:33.332Z",
+      "evidence": "1914d9615dbce54e",
+      "result": "failed"
+    },
+    {
+      "number": 7,
+      "time": "2026-07-19T06:14:04.461Z",
+      "evidence": "ec0b15c118870ed2",
+      "result": "succeeded"
+    },
+    {
+      "number": 8,
+      "time": "2026-07-19T06:19:28.119Z",
+      "evidence": "6d40f989d5f19080",
+      "result": "succeeded"
+    },
+    {
+      "number": 9,
+      "time": "2026-07-19T06:32:17.830Z",
+      "evidence": "f0479a83c881790c",
+      "result": "succeeded"
+    },
+    {
+      "number": 10,
+      "time": "2026-07-19T06:33:10.424Z",
+      "evidence": "b029b473389c47e0",
+      "result": "succeeded"
+    },
+    {
+      "number": 11,
+      "time": "2026-07-19T06:34:02.758Z",
+      "evidence": "bc8c38b1d2c2b182",
+      "result": "succeeded"
+    },
+    {
+      "number": 12,
+      "time": "2026-07-19T06:40:56.635Z",
+      "evidence": "0406c50c26d814f1",
+      "result": "succeeded"
+    },
+    {
+      "number": 13,
+      "time": "2026-07-19T06:51:02.681Z",
+      "evidence": "fa90505d86a644d8",
+      "result": "succeeded"
+    },
+    {
+      "number": 14,
+      "time": "2026-07-19T06:58:32.091Z",
+      "evidence": "816e2c9334c24891",
+      "result": "succeeded"
+    },
+    {
+      "number": 15,
+      "time": "2026-07-19T07:00:46.095Z",
+      "evidence": "33316b80a6cae7f6",
+      "result": "succeeded"
+    },
+    {
+      "number": 16,
+      "time": "2026-07-19T07:03:50.414Z",
+      "evidence": "30c1e3d60facec37",
+      "result": "succeeded"
+    },
+    {
+      "number": 17,
+      "time": "2026-07-19T07:05:13.662Z",
+      "evidence": "ad24f4756a90b9a5",
+      "result": "succeeded"
+    },
+    {
+      "number": 18,
+      "time": "2026-07-19T07:15:59.015Z",
+      "evidence": "b4503e33d4f2dc7e",
+      "result": "succeeded"
+    },
+    {
+      "number": 19,
+      "time": "2026-07-19T07:30:49.469Z",
+      "evidence": "7e96116b770af0d3",
+      "result": "succeeded"
+    },
+    {
+      "number": 20,
+      "time": "2026-07-19T07:32:26.112Z",
+      "evidence": "4147bf2e1028ae4f",
+      "result": "succeeded"
+    },
+    {
+      "number": 21,
+      "time": "2026-07-19T07:43:18.407Z",
+      "evidence": "a1e4ec56566c9b03",
+      "result": "succeeded"
+    },
+    {
+      "number": 22,
+      "time": "2026-07-19T07:52:43.390Z",
+      "evidence": "5452f32e52baa0a2",
+      "result": "succeeded"
+    },
+    {
+      "number": 23,
+      "time": "2026-07-19T07:59:15.628Z",
+      "evidence": "036441786b5d12c7",
+      "result": "succeeded"
+    },
+    {
+      "number": 24,
+      "time": "2026-07-19T08:06:02.498Z",
+      "evidence": "62751d311f3c045c",
+      "result": "succeeded"
+    },
+    {
+      "number": 25,
+      "time": "2026-07-19T08:11:26.572Z",
+      "evidence": "3c032b4ca20c0024",
+      "result": "succeeded"
+    },
+    {
+      "number": 26,
+      "time": "2026-07-19T08:29:14.390Z",
+      "evidence": "648e5bf1cc5bdf89",
+      "result": "failed"
+    },
+    {
+      "number": 27,
+      "time": "2026-07-19T08:29:29.676Z",
+      "evidence": "4d81b31167b82469",
+      "result": "succeeded"
+    },
+    {
+      "number": 28,
+      "time": "2026-07-19T08:51:53.489Z",
+      "evidence": "22f2229eb93836a1",
+      "result": "succeeded"
+    },
+    {
+      "number": 29,
+      "time": "2026-07-19T08:54:05.249Z",
+      "evidence": "a7bfe2075887301b",
+      "result": "succeeded"
+    },
+    {
+      "number": 30,
+      "time": "2026-07-19T09:41:48.505Z",
+      "evidence": "3b8cea5b3e3095a4",
+      "result": "succeeded"
+    },
+    {
+      "number": 31,
+      "time": "2026-07-19T09:46:49.507Z",
+      "evidence": "4a72b80d3eb3482c",
+      "result": "succeeded"
+    },
+    {
+      "number": 32,
+      "time": "2026-07-19T09:54:55.675Z",
+      "evidence": "51a8da5dfab29dc2",
+      "result": "succeeded"
+    },
+    {
+      "number": 33,
+      "time": "2026-07-19T10:13:39.481Z",
+      "evidence": "9e345ec1eb20eb1c",
+      "result": "succeeded"
+    },
+    {
+      "number": 34,
+      "time": "2026-07-19T10:16:31.847Z",
+      "evidence": "595ae36478fc9bfe",
+      "result": "succeeded"
+    },
+    {
+      "number": 35,
+      "time": "2026-07-19T11:48:14.110Z",
+      "evidence": "e7aa2c66f19d270e",
+      "result": "succeeded"
+    },
+    {
+      "number": 36,
+      "time": "2026-07-19T11:50:31.258Z",
+      "evidence": "8591ecc84df5fda3",
+      "result": "succeeded"
+    },
+    {
+      "number": 37,
+      "time": "2026-07-19T12:07:47.821Z",
+      "evidence": "65e79cd293ab279d",
+      "result": "succeeded"
+    },
+    {
+      "number": 38,
+      "time": "2026-07-19T12:09:36.408Z",
+      "evidence": "a68fb9dcad442abc",
+      "result": "succeeded"
+    },
+    {
+      "number": 39,
+      "time": "2026-07-19T12:33:37.365Z",
+      "evidence": "4fc9458c15e53f42",
+      "result": "succeeded"
+    },
+    {
+      "number": 40,
+      "time": "2026-07-19T12:42:28.169Z",
+      "evidence": "1e55528d49a332e0",
+      "result": "succeeded"
+    },
+    {
+      "number": 41,
+      "time": "2026-07-19T12:44:18.862Z",
+      "evidence": "f5e18e5612f354ae",
+      "result": "succeeded"
+    },
+    {
+      "number": 42,
+      "time": "2026-07-19T12:50:20.297Z",
+      "evidence": "b1e51bcf211dc7d8",
+      "result": "succeeded"
+    },
+    {
+      "number": 43,
+      "time": "2026-07-19T12:54:02.422Z",
+      "evidence": "91b42349f02b6bea",
+      "result": "succeeded"
+    },
+    {
+      "number": 44,
+      "time": "2026-07-19T16:43:45.965Z",
+      "evidence": "22742c2d62cddf02",
+      "result": "succeeded"
+    },
+    {
+      "number": 45,
+      "time": "2026-07-19T16:44:34.623Z",
+      "evidence": "78d9357b0aaad945",
+      "result": "succeeded"
+    },
+    {
+      "number": 46,
+      "time": "2026-07-19T18:14:09.915Z",
+      "evidence": "e7a8d586e5ad3468",
+      "result": "succeeded"
+    },
+    {
+      "number": 47,
+      "time": "2026-07-19T19:33:58.667Z",
+      "evidence": "caf8ae03784d97ec",
+      "result": "succeeded"
+    },
+    {
+      "number": 48,
+      "time": "2026-07-19T19:53:35.568Z",
+      "evidence": "db7dfe277f6b1521",
+      "result": "succeeded"
+    },
+    {
+      "number": 49,
+      "time": "2026-07-19T19:54:48.471Z",
+      "evidence": "4d690c800268ae81",
+      "result": "succeeded"
+    },
+    {
+      "number": 50,
+      "time": "2026-07-19T19:55:54.958Z",
+      "evidence": "245efda775572096",
+      "result": "succeeded"
+    },
+    {
+      "number": 51,
+      "time": "2026-07-19T19:59:22.445Z",
+      "evidence": "32e5ae619c15f339",
+      "result": "succeeded"
+    },
+    {
+      "number": 52,
+      "time": "2026-07-19T20:13:34.600Z",
+      "evidence": "84193bf22eb0711f",
+      "result": "succeeded"
+    },
+    {
+      "number": 53,
+      "time": "2026-07-19T20:18:04.388Z",
+      "evidence": "6cf4377f4d707df4",
+      "result": "succeeded"
+    },
+    {
+      "number": 54,
+      "time": "2026-07-19T20:24:19.581Z",
+      "evidence": "c6f032bbfd46a89b",
+      "result": "succeeded"
+    },
+    {
+      "number": 55,
+      "time": "2026-07-19T20:31:47.186Z",
+      "evidence": "bde0473bfa534add",
+      "result": "succeeded"
+    },
+    {
+      "number": 56,
+      "time": "2026-07-19T20:41:43.456Z",
+      "evidence": "f12b7f2d3d29abfd",
+      "result": "succeeded"
+    },
+    {
+      "number": 57,
+      "time": "2026-07-19T20:50:01.013Z",
+      "evidence": "886be9f436b84781",
+      "result": "succeeded"
+    },
+    {
+      "number": 58,
+      "time": "2026-07-20T03:09:16.211Z",
+      "evidence": "83aa1995b8bf3a27",
+      "result": "succeeded"
+    },
+    {
+      "number": 59,
+      "time": "2026-07-20T03:14:22.706Z",
+      "evidence": "f45798395ff77ad3",
+      "result": "succeeded"
+    },
+    {
+      "number": 60,
+      "time": "2026-07-20T03:22:11.537Z",
+      "evidence": "71c8f43b4abb3482",
+      "result": "succeeded"
+    },
+    {
+      "number": 61,
+      "time": "2026-07-20T03:23:14.699Z",
+      "evidence": "0d735d61208fb2d1",
+      "result": "succeeded"
+    },
+    {
+      "number": 62,
+      "time": "2026-07-20T03:25:31.916Z",
+      "evidence": "f81701017e2a9006",
+      "result": "succeeded"
+    },
+    {
+      "number": 63,
+      "time": "2026-07-20T03:27:20.006Z",
+      "evidence": "ec205ff52786c30e",
+      "result": "succeeded"
+    },
+    {
+      "number": 64,
+      "time": "2026-07-20T03:30:40.747Z",
+      "evidence": "ec48f79315ee889a",
+      "result": "succeeded"
+    },
+    {
+      "number": 65,
+      "time": "2026-07-20T03:35:21.053Z",
+      "evidence": "b9d87bcdcbebdae0",
+      "result": "succeeded"
+    },
+    {
+      "number": 66,
+      "time": "2026-07-20T03:38:04.439Z",
+      "evidence": "9b9b0f89fbaca444",
+      "result": "succeeded"
+    },
+    {
+      "number": 67,
+      "time": "2026-07-20T03:44:19.952Z",
+      "evidence": "b078b7200c90c551",
+      "result": "succeeded"
+    },
+    {
+      "number": 68,
+      "time": "2026-07-20T03:53:16.247Z",
+      "evidence": "7a578f490a48de6c",
+      "result": "succeeded"
+    },
+    {
+      "number": 69,
+      "time": "2026-07-20T04:00:48.680Z",
+      "evidence": "dc0e62fbff3f25b8",
+      "result": "succeeded"
+    },
+    {
+      "number": 70,
+      "time": "2026-07-20T04:01:09.600Z",
+      "evidence": "0ac881d9b86f08af",
+      "result": "succeeded"
+    },
+    {
+      "number": 71,
+      "time": "2026-07-20T04:16:02.925Z",
+      "evidence": "475d3b3dc40fe66e",
+      "result": "succeeded"
+    },
+    {
+      "number": 72,
+      "time": "2026-07-20T05:13:03.214Z",
+      "evidence": "9e0726757f90e074",
+      "result": "succeeded"
+    },
+    {
+      "number": 73,
+      "time": "2026-07-20T05:30:29.446Z",
+      "evidence": "7e873c30af5bf09a",
+      "result": "succeeded"
+    },
+    {
+      "number": 74,
+      "time": "2026-07-20T08:32:56.228Z",
+      "evidence": "819b135dd030da50",
+      "result": "failed"
+    },
+    {
+      "number": 75,
+      "time": "2026-07-20T08:33:03.114Z",
+      "evidence": "db152c966c81daad",
+      "result": "failed"
+    },
+    {
+      "number": 76,
+      "time": "2026-07-20T08:33:33.549Z",
+      "evidence": "96626cb308b042a0",
+      "result": "succeeded"
+    },
+    {
+      "number": 77,
+      "time": "2026-07-20T08:37:58.154Z",
+      "evidence": "c22d67fe6c5e1f37",
+      "result": "succeeded"
+    },
+    {
+      "number": 78,
+      "time": "2026-07-20T10:01:58.831Z",
+      "evidence": "5825d6f38e2d90a7",
+      "result": "succeeded"
+    },
+    {
+      "number": 79,
+      "time": "2026-07-20T10:04:58.998Z",
+      "evidence": "4ba8f1e420abeb73",
+      "result": "succeeded"
+    },
+    {
+      "number": 80,
+      "time": "2026-07-20T10:12:48.126Z",
+      "evidence": "b15aae778904b4d2",
+      "result": "succeeded"
+    },
+    {
+      "number": 81,
+      "time": "2026-07-20T17:03:05.747Z",
+      "evidence": "7886360912db7dbd",
+      "result": "succeeded"
+    },
+    {
+      "number": 82,
+      "time": "2026-07-20T17:33:20.502Z",
+      "evidence": "be72c632ee5d220f",
+      "result": "succeeded"
+    },
+    {
+      "number": 83,
+      "time": "2026-07-20T17:42:16.011Z",
+      "evidence": "506d430cc70de838",
+      "result": "succeeded"
+    },
+    {
+      "number": 84,
+      "time": "2026-07-20T17:47:08.368Z",
+      "evidence": "c0b3aea3180a204f",
+      "result": "succeeded"
+    },
+    {
+      "number": 85,
+      "time": "2026-07-20T17:49:39.157Z",
+      "evidence": "91d20b29f2648e97",
+      "result": "succeeded"
+    },
+    {
+      "number": 86,
+      "time": "2026-07-21T14:25:59.668Z",
+      "evidence": "4456a50655449932",
+      "result": "succeeded"
+    },
+    {
+      "number": 87,
+      "time": "2026-07-21T15:23:49.096Z",
+      "evidence": "6c172729790a150c",
+      "result": "succeeded"
+    },
+    {
+      "number": 88,
+      "time": "2026-07-21T15:25:45.196Z",
+      "evidence": "492a89753c26a710",
+      "result": "succeeded"
+    },
+    {
+      "number": 89,
+      "time": "2026-07-21T15:39:59.448Z",
+      "evidence": "0fae680050a316bc",
+      "result": "succeeded"
+    },
+    {
+      "number": 90,
+      "time": "2026-07-21T15:49:37.436Z",
+      "evidence": "c53b9fc8977e8fd2",
+      "result": "succeeded"
+    },
+    {
+      "number": 91,
+      "time": "2026-07-23T01:29:51.138Z",
+      "evidence": "81181ca09ec720dd",
+      "result": "succeeded"
+    },
+    {
+      "number": 92,
+      "time": "2026-07-23T01:30:45.242Z",
+      "evidence": "2bb58dae950309f3",
+      "result": "succeeded"
+    },
+    {
+      "number": 93,
+      "time": "2026-07-23T02:28:06.607Z",
+      "evidence": "bb32ee46f607b484",
+      "result": "failed"
+    },
+    {
+      "number": 94,
+      "time": "2026-07-23T02:28:12.278Z",
+      "evidence": "b903fa29db51070d",
+      "result": "succeeded"
+    },
+    {
+      "number": 95,
+      "time": "2026-07-23T06:26:03.139Z",
+      "evidence": "6fa417d74814ce05",
+      "result": "failed"
+    },
+    {
+      "number": 96,
+      "time": "2026-07-23T06:26:12.120Z",
+      "evidence": "6b2959372c49690f",
+      "result": "failed"
+    },
+    {
+      "number": 97,
+      "time": "2026-07-23T06:26:33.723Z",
+      "evidence": "778c83e06ad19f72",
+      "result": "succeeded"
+    },
+    {
+      "number": 98,
+      "time": "2026-07-23T18:00:39.963Z",
+      "evidence": "61ef83e21f5d9398",
+      "result": "succeeded"
+    },
+    {
+      "number": 99,
+      "time": "2026-07-23T18:03:49.065Z",
+      "evidence": "fcbf25f215858a2d",
+      "result": "succeeded"
+    },
+    {
+      "number": 100,
+      "time": "2026-07-23T18:22:10.013Z",
+      "evidence": "0853ef8e5ac7a7b7",
+      "result": "failed"
+    },
+    {
+      "number": 101,
+      "time": "2026-07-23T18:22:17.068Z",
+      "evidence": "7ec7c2d1d708f94a",
+      "result": "succeeded"
+    },
+    {
+      "number": 102,
+      "time": "2026-07-23T18:22:51.212Z",
+      "evidence": "d603a27712e076cd",
+      "result": "succeeded"
+    },
+    {
+      "number": 103,
+      "time": "2026-07-23T18:34:44.621Z",
+      "evidence": "bce240e479fd069e",
+      "result": "succeeded"
+    },
+    {
+      "number": 104,
+      "time": "2026-07-23T18:42:16.166Z",
+      "evidence": "d527adadca1af7f0",
+      "result": "succeeded"
+    },
+    {
+      "number": 105,
+      "time": "2026-07-23T18:46:52.444Z",
+      "evidence": "0c680e9d03c70613",
+      "result": "succeeded"
+    },
+    {
+      "number": 106,
+      "time": "2026-07-23T18:47:25.295Z",
+      "evidence": "819d92c3634e0efc",
+      "result": "succeeded"
+    },
+    {
+      "number": 107,
+      "time": "2026-07-23T18:54:52.065Z",
+      "evidence": "4f15b92deb4187f9",
+      "result": "succeeded"
+    },
+    {
+      "number": 108,
+      "time": "2026-07-23T18:59:27.422Z",
+      "evidence": "1c36cd9e8039e269",
+      "result": "succeeded"
+    },
+    {
+      "number": 109,
+      "time": "2026-07-23T19:00:20.616Z",
+      "evidence": "693c3c0a55837d6d",
+      "result": "succeeded"
+    },
+    {
+      "number": 110,
+      "time": "2026-07-23T19:14:53.410Z",
+      "evidence": "1bae8f54529e2cbe",
+      "result": "succeeded"
+    },
+    {
+      "number": 111,
+      "time": "2026-07-23T19:17:25.715Z",
+      "evidence": "f30ce8c4d0919b2e",
+      "result": "succeeded"
+    },
+    {
+      "number": 112,
+      "time": "2026-07-23T19:26:53.998Z",
+      "evidence": "0f4defe0288ff279",
+      "result": "succeeded"
+    },
+    {
+      "number": 113,
+      "time": "2026-07-23T19:37:34.120Z",
+      "evidence": "0cbe104e0b1dfb4f",
+      "result": "succeeded"
+    },
+    {
+      "number": 114,
+      "time": "2026-07-23T19:46:04.706Z",
+      "evidence": "4f90dc9347a522a7",
+      "result": "succeeded"
+    },
+    {
+      "number": 115,
+      "time": "2026-07-23T19:56:39.597Z",
+      "evidence": "550f72e879f65b74",
+      "result": "succeeded"
+    },
+    {
+      "number": 116,
+      "time": "2026-07-23T19:57:28.214Z",
+      "evidence": "697c46d1c5fc73b1",
+      "result": "succeeded"
+    },
+    {
+      "number": 117,
+      "time": "2026-07-23T20:08:44.046Z",
+      "evidence": "ca6f348611953717",
+      "result": "succeeded"
+    },
+    {
+      "number": 118,
+      "time": "2026-07-23T20:15:58.769Z",
+      "evidence": "e8ecee8ebc123991",
+      "result": "succeeded"
+    },
+    {
+      "number": 119,
+      "time": "2026-07-23T20:20:31.170Z",
+      "evidence": "b011bc258b475b2d",
+      "result": "succeeded"
+    },
+    {
+      "number": 120,
+      "time": "2026-07-23T20:26:16.611Z",
+      "evidence": "05a34157550964b2",
+      "result": "succeeded"
+    },
+    {
+      "number": 121,
+      "time": "2026-07-23T20:37:34.760Z",
+      "evidence": "8730c265be70b2e5",
+      "result": "succeeded"
+    },
+    {
+      "number": 122,
+      "time": "2026-07-23T20:47:00.231Z",
+      "evidence": "3eec7d22f8245f4f",
+      "result": "succeeded"
+    },
+    {
+      "number": 123,
+      "time": "2026-07-23T20:52:59.069Z",
+      "evidence": "b44897a84388e4f4",
+      "result": "succeeded"
+    },
+    {
+      "number": 124,
+      "time": "2026-07-23T21:24:39.232Z",
+      "evidence": "c56051e0130f33ac",
+      "result": "succeeded"
+    },
+    {
+      "number": 125,
+      "time": "2026-07-24T07:30:50.330Z",
+      "evidence": "12be4311ffa57157",
+      "result": "succeeded"
+    },
+    {
+      "number": 126,
+      "time": "2026-07-24T15:36:52.318Z",
+      "evidence": "7b12ac4643011248",
+      "result": "succeeded"
+    },
+    {
+      "number": 127,
+      "time": "2026-07-24T16:17:27.721Z",
+      "evidence": "a9eeb782bdad3788",
+      "result": "succeeded"
+    },
+    {
+      "number": 128,
+      "time": "2026-07-24T16:18:36.363Z",
+      "evidence": "4d10e8be36b20fa4",
+      "result": "succeeded"
+    },
+    {
+      "number": 129,
+      "time": "2026-07-24T17:02:43.855Z",
+      "evidence": "5c06fc648ccdb5e5",
+      "result": "succeeded"
+    },
+    {
+      "number": 130,
+      "time": "2026-07-24T17:05:17.350Z",
+      "evidence": "b2b4a4cd6e3581c7",
+      "result": "succeeded"
+    },
+    {
+      "number": 131,
+      "time": "2026-07-24T17:11:53.116Z",
+      "evidence": "3eea4720172dcb33",
+      "result": "failed"
+    },
+    {
+      "number": 132,
+      "time": "2026-07-24T17:12:29.348Z",
+      "evidence": "77962af9cbb60f85",
+      "result": "succeeded"
+    },
+    {
+      "number": 133,
+      "time": "2026-07-24T17:14:23.421Z",
+      "evidence": "66ccb1df9904555b",
+      "result": "succeeded"
+    },
+    {
+      "number": 134,
+      "time": "2026-07-24T17:37:48.344Z",
+      "evidence": "a2114c43ab9ea3a8",
+      "result": "succeeded"
+    },
+    {
+      "number": 135,
+      "time": "2026-07-24T18:03:23.970Z",
+      "evidence": "f76f169eabe7e5e3",
+      "result": "succeeded"
+    },
+    {
+      "number": 136,
+      "time": "2026-07-24T18:06:28.243Z",
+      "evidence": "ec5c8ce37aefd259",
+      "result": "succeeded"
+    },
+    {
+      "number": 137,
+      "time": "2026-07-24T20:11:08.307Z",
+      "evidence": "0d5208a16dc95d9e",
+      "result": "failed"
+    },
+    {
+      "number": 138,
+      "time": "2026-07-24T20:11:35.382Z",
+      "evidence": "23b971fe0f92d8ef",
+      "result": "failed"
+    },
+    {
+      "number": 139,
+      "time": "2026-07-24T20:11:51.923Z",
+      "evidence": "f99c4e6db1409ca5",
+      "result": "succeeded"
+    },
+    {
+      "number": 140,
+      "time": "2026-07-24T20:16:22.602Z",
+      "evidence": "0e7605587f325769",
+      "result": "succeeded"
+    },
+    {
+      "number": 141,
+      "time": "2026-07-25T03:49:52.477Z",
+      "evidence": "f11d0b56a4ef930c",
+      "result": "succeeded"
+    },
+    {
+      "number": 142,
+      "time": "2026-07-25T04:21:53.777Z",
+      "evidence": "186eea133136ae45",
+      "result": "failed"
+    },
+    {
+      "number": 143,
+      "time": "2026-07-25T04:22:04.910Z",
+      "evidence": "3d9996b1177b591c",
+      "result": "succeeded"
+    },
+    {
+      "number": 144,
+      "time": "2026-07-25T04:45:28.834Z",
+      "evidence": "bbba88585422fbc2",
+      "result": "succeeded"
+    },
+    {
+      "number": 145,
+      "time": "2026-07-25T04:51:38.537Z",
+      "evidence": "c38d85b8addc355e",
+      "result": "succeeded"
+    },
+    {
+      "number": 146,
+      "time": "2026-07-25T06:08:25.537Z",
+      "evidence": "ae02a5aa8f8bb67a",
+      "result": "succeeded"
+    },
+    {
+      "number": 147,
+      "time": "2026-07-25T06:11:16.414Z",
+      "evidence": "0b823a17f965e299",
+      "result": "succeeded"
+    },
+    {
+      "number": 148,
+      "time": "2026-07-25T06:26:00.529Z",
+      "evidence": "e81993776d41158b",
+      "result": "failed"
+    },
+    {
+      "number": 149,
+      "time": "2026-07-25T06:26:39.619Z",
+      "evidence": "6e92af9dea73a193",
+      "result": "succeeded"
+    },
+    {
+      "number": 150,
+      "time": "2026-07-25T06:41:58.718Z",
+      "evidence": "f25f30e2e6b844a8",
+      "result": "succeeded"
+    },
+    {
+      "number": 151,
+      "time": "2026-07-25T06:42:51.799Z",
+      "evidence": "2179094bdc02532f",
+      "result": "succeeded"
+    },
+    {
+      "number": 152,
+      "time": "2026-07-25T06:55:47.011Z",
+      "evidence": "c4fcf7f419320c7a",
+      "result": "succeeded"
+    },
+    {
+      "number": 153,
+      "time": "2026-07-25T07:18:32.340Z",
+      "evidence": "2032c4692f9a6f46",
+      "result": "succeeded"
+    },
+    {
+      "number": 154,
+      "time": "2026-07-25T08:32:14.370Z",
+      "evidence": "c30137333126759d",
+      "result": "succeeded"
+    },
+    {
+      "number": 155,
+      "time": "2026-07-25T08:33:42.843Z",
+      "evidence": "73d38cf437120024",
+      "result": "succeeded"
+    },
+    {
+      "number": 156,
+      "time": "2026-07-25T08:44:21.274Z",
+      "evidence": "7fb1f9289569011f",
+      "result": "succeeded"
+    },
+    {
+      "number": 157,
+      "time": "2026-07-25T08:53:16.912Z",
+      "evidence": "b4d27182c2cc98ca",
+      "result": "succeeded"
+    },
+    {
+      "number": 158,
+      "time": "2026-07-25T09:51:40.275Z",
+      "evidence": "3f76ce9f60b6f2f4",
+      "result": "succeeded"
+    },
+    {
+      "number": 159,
+      "time": "2026-07-25T09:59:26.926Z",
+      "evidence": "dcd06fb3a83aeafa",
+      "result": "succeeded"
+    },
+    {
+      "number": 160,
+      "time": "2026-07-25T11:41:28.064Z",
+      "evidence": "cab1ffe8d56c53c0",
+      "result": "succeeded"
+    },
+    {
+      "number": 161,
+      "time": "2026-07-25T12:27:28.427Z",
+      "evidence": "f0546f273250792a",
+      "result": "succeeded"
+    },
+    {
+      "number": 162,
+      "time": "2026-07-25T12:40:21.878Z",
+      "evidence": "92ac41b43cd1cdca",
+      "result": "succeeded"
+    },
+    {
+      "number": 163,
+      "time": "2026-07-25T12:45:35.494Z",
+      "evidence": "57e998e4fda23f54",
+      "result": "succeeded"
+    },
+    {
+      "number": 164,
+      "time": "2026-07-25T12:58:48.278Z",
+      "evidence": "3957ed4da2cd74e3",
+      "result": "failed"
+    },
+    {
+      "number": 165,
+      "time": "2026-07-25T12:59:17.299Z",
+      "evidence": "16411b98af3db400",
+      "result": "succeeded"
+    },
+    {
+      "number": 166,
+      "time": "2026-07-25T13:00:32.524Z",
+      "evidence": "436a35932078f470",
+      "result": "succeeded"
+    },
+    {
+      "number": 167,
+      "time": "2026-07-25T13:01:05.961Z",
+      "evidence": "078cbbfd9915439e",
+      "result": "succeeded"
+    },
+    {
+      "number": 168,
+      "time": "2026-07-25T20:16:19.070Z",
+      "evidence": "5c7cf8e93778cf6c",
+      "result": "succeeded"
+    },
+    {
+      "number": 169,
+      "time": "2026-07-26T04:29:44.199Z",
+      "evidence": "f13123a94f8c1bb5",
+      "result": "succeeded"
+    },
+    {
+      "number": 170,
+      "time": "2026-07-26T05:28:19.139Z",
+      "evidence": "31bc58c0955e5395",
+      "result": "succeeded"
+    },
+    {
+      "number": 171,
+      "time": "2026-07-26T05:53:46.936Z",
+      "evidence": "494d7a29676c9e3c",
+      "result": "succeeded"
+    },
+    {
+      "number": 172,
+      "time": "2026-07-26T06:51:34.946Z",
+      "evidence": "52a6f7bcd322341f",
+      "result": "succeeded"
+    },
+    {
+      "number": 173,
+      "time": "2026-07-26T07:01:08.129Z",
+      "evidence": "53559b45b6253654",
+      "result": "succeeded"
+    },
+    {
+      "number": 174,
+      "time": "2026-07-26T15:44:14.188Z",
+      "evidence": "1f8fff8993fc8117",
+      "result": "failed"
+    },
+    {
+      "number": 175,
+      "time": "2026-07-26T15:44:20.512Z",
+      "evidence": "ea98ba15c4a80f05",
+      "result": "succeeded"
+    },
+    {
+      "number": 176,
+      "time": "2026-07-26T16:15:49.346Z",
+      "evidence": "13e27e8585131872",
+      "result": "succeeded"
+    },
+    {
+      "number": 177,
+      "time": "2026-07-26T16:20:58.123Z",
+      "evidence": "b04e5b3d9ce3514f",
+      "result": "succeeded"
+    },
+    {
+      "number": 178,
+      "time": "2026-07-26T17:24:27.652Z",
+      "evidence": "9b2c67a6118d71fb",
+      "result": "succeeded"
+    },
+    {
+      "number": 179,
+      "time": "2026-07-27T09:55:49.681Z",
+      "evidence": "0c417a91b20fa653",
+      "result": "succeeded"
+    },
+    {
+      "number": 180,
+      "time": "2026-07-29T20:41:06.549Z",
+      "evidence": "de211cbacb52f90a",
+      "result": "succeeded"
+    },
+    {
+      "number": 181,
+      "time": "2026-07-29T20:41:53.453Z",
+      "evidence": "e3bbb33b149b68f5",
+      "result": "succeeded"
+    },
+    {
+      "number": 182,
+      "time": "2026-08-01T16:37:24.610Z",
+      "evidence": "3f3fba4739d94111",
+      "result": "succeeded"
+    },
+    {
+      "number": 183,
+      "time": "2026-08-02T02:38:08.480Z",
+      "evidence": "fb38d563b29f7cb5",
+      "result": "succeeded"
+    },
+    {
+      "number": 184,
+      "time": "2026-08-02T03:29:30.738Z",
+      "evidence": "4278d5f746710ea1",
+      "result": "succeeded"
+    },
+    {
+      "number": 185,
+      "time": "2026-08-02T03:31:34.516Z",
+      "evidence": "7ab18358afd9d75e",
+      "result": "succeeded"
+    },
+    {
+      "number": 186,
+      "time": "2026-08-02T03:33:59.545Z",
+      "evidence": "f86831d281a243d6",
+      "result": "succeeded"
+    },
+    {
+      "number": 187,
+      "time": "2026-08-02T03:40:49.625Z",
+      "evidence": "75ab71225935e164",
+      "result": "succeeded"
+    },
+    {
+      "number": 188,
+      "time": "2026-08-02T03:41:53.304Z",
+      "evidence": "e0c677a726a7263f",
+      "result": "succeeded"
+    },
+    {
+      "number": 189,
+      "time": "2026-08-02T03:44:24.004Z",
+      "evidence": "33386960486c3a22",
+      "result": "succeeded"
+    },
+    {
+      "number": 190,
+      "time": "2026-08-02T04:30:08.300Z",
+      "evidence": "c60aafcff89f3ad2",
+      "result": "succeeded"
+    },
+    {
+      "number": 191,
+      "time": "2026-08-02T04:31:34.945Z",
+      "evidence": "a94ddd48e898bb56",
+      "result": "failed"
+    },
+    {
+      "number": 192,
+      "time": "2026-08-02T04:31:41.440Z",
+      "evidence": "56fafcbeba9d5910",
+      "result": "succeeded"
+    },
+    {
+      "number": 193,
+      "time": "2026-08-02T04:32:35.253Z",
+      "evidence": "a6b3085983faeacc",
+      "result": "succeeded"
+    },
+    {
+      "number": 194,
+      "time": "2026-08-02T12:30:42.484Z",
+      "evidence": "076000f232ace7c4",
+      "result": "succeeded"
+    },
+    {
+      "number": 195,
+      "time": "2026-08-02T18:16:12.697Z",
+      "evidence": "10a2b612bcd06e91",
+      "result": "succeeded"
+    },
+    {
+      "number": 196,
+      "time": "2026-08-09T16:16:06.143Z",
+      "evidence": "90fb3a907a9902fa",
+      "result": "succeeded"
+    },
+    {
+      "number": 197,
+      "time": "2026-08-10T07:40:32.100Z",
+      "evidence": "b32c848046c14d6a",
+      "result": "succeeded"
+    },
+    {
+      "number": 198,
+      "time": "2026-08-10T07:48:12.422Z",
+      "evidence": "27e5bd528907a864",
+      "result": "failed"
+    },
+    {
+      "number": 199,
+      "time": "2026-08-10T07:48:18.300Z",
+      "evidence": "5ca907c3b2333f1c",
+      "result": "succeeded"
+    },
+    {
+      "number": 200,
+      "time": "2026-08-17T18:35:32.633Z",
+      "evidence": "7ea2bed24e89dd5f",
+      "result": "succeeded"
+    },
+    {
+      "number": 201,
+      "time": "2026-08-17T18:36:12.420Z",
+      "evidence": "8f3835cc8c11e733",
+      "result": "succeeded"
+    },
+    {
+      "number": 202,
+      "time": "2026-08-17T18:46:07.582Z",
+      "evidence": "23c708eeae8ff337",
+      "result": "succeeded"
+    },
+    {
+      "number": 203,
+      "time": "2026-08-17T18:53:44.983Z",
+      "evidence": "954c37b2a79c9a55",
+      "result": "failed"
+    },
+    {
+      "number": 204,
+      "time": "2026-08-17T18:53:51.636Z",
+      "evidence": "0441dfbdb14afa9e",
+      "result": "succeeded"
+    },
+    {
+      "number": 205,
+      "time": "2026-08-17T18:54:36.778Z",
+      "evidence": "445784d4b6a74b5d",
+      "result": "succeeded"
+    },
+    {
+      "number": 206,
+      "time": "2026-08-17T18:57:30.243Z",
+      "evidence": "321efa82cfa49d05",
+      "result": "succeeded"
+    },
+    {
+      "number": 207,
+      "time": "2026-08-17T19:24:47.764Z",
+      "evidence": "fcc414ce07a98a95",
+      "result": "succeeded"
+    },
+    {
+      "number": 208,
+      "time": "2026-08-17T19:26:49.617Z",
+      "evidence": "4e1c97e4acdafbc4",
+      "result": "succeeded"
+    },
+    {
+      "number": 209,
+      "time": "2026-08-17T19:47:46.273Z",
+      "evidence": "3037750d525cf241",
+      "result": "succeeded"
+    },
+    {
+      "number": 210,
+      "time": "2026-08-17T19:58:25.769Z",
+      "evidence": "ea24a55d1007ec6b",
+      "result": "succeeded"
+    },
+    {
+      "number": 211,
+      "time": "2026-08-17T20:01:58.737Z",
+      "evidence": "9a9e777f6bc678af",
+      "result": "succeeded"
+    },
+    {
+      "number": 212,
+      "time": "2026-08-17T20:14:29.642Z",
+      "evidence": "fbf7895c78904da0",
+      "result": "succeeded"
+    },
+    {
+      "number": 213,
+      "time": "2026-08-17T20:15:22.381Z",
+      "evidence": "d1a62767d56dd0d7",
+      "result": "failed"
+    },
+    {
+      "number": 214,
+      "time": "2026-08-17T20:15:29.998Z",
+      "evidence": "c5c3d5eb7e18f446",
+      "result": "succeeded"
+    },
+    {
+      "number": 215,
+      "time": "2026-08-18T11:30:05.216Z",
+      "evidence": "d8f6bf1f469c8051",
+      "result": "succeeded"
+    },
+    {
+      "number": 216,
+      "time": "2026-08-18T15:31:00.434Z",
+      "evidence": "fd57442b125d3d43",
+      "result": "succeeded"
+    },
+    {
+      "number": 217,
+      "time": "2026-09-23T11:54:11.594Z",
+      "evidence": "f60c5d11152a8966",
+      "result": "succeeded"
+    },
+    {
+      "number": 218,
+      "time": "2026-09-23T12:01:35.166Z",
+      "evidence": "a8107a541629606d",
+      "result": "succeeded"
+    },
+    {
+      "number": 219,
+      "time": "2026-09-23T12:10:38.118Z",
+      "evidence": "5fdcfdb737f1384e",
+      "result": "succeeded"
+    },
+    {
+      "number": 220,
+      "time": "2026-09-23T12:11:29.931Z",
+      "evidence": "744fc46df5b57988",
+      "result": "succeeded"
+    },
+    {
+      "number": 221,
+      "time": "2026-09-23T12:14:34.460Z",
+      "evidence": "94472c3f18365200",
+      "result": "succeeded"
+    },
+    {
+      "number": 222,
+      "time": "2026-09-25T18:41:57.814Z",
+      "evidence": "f7c4e8baac974ae9",
+      "result": "succeeded"
+    },
+    {
+      "number": 223,
+      "time": "2026-09-25T18:44:06.120Z",
+      "evidence": "a2cf26c227dcc73e",
+      "result": "succeeded"
+    },
+    {
+      "number": 224,
+      "time": "2026-09-25T18:48:26.953Z",
+      "evidence": "f1af057044a9c6d7",
+      "result": "succeeded"
+    },
+    {
+      "number": 225,
+      "time": "2026-09-25T18:52:44.922Z",
+      "evidence": "c0a29d0185f6cf71",
+      "result": "succeeded"
+    },
+    {
+      "number": 226,
+      "time": "2026-09-25T19:09:26.295Z",
+      "evidence": "1e05516c0c21f1c3",
+      "result": "succeeded"
+    },
+    {
+      "number": 227,
+      "time": "2026-11-03T08:20:33.729Z",
+      "evidence": "96307a18b073004b",
+      "result": "succeeded"
+    },
+    {
+      "number": 228,
+      "time": "2026-11-03T08:21:26.053Z",
+      "evidence": "91d4d29687d39532",
+      "result": "succeeded"
+    },
+    {
+      "number": 229,
+      "time": "2026-11-03T08:24:10.623Z",
+      "evidence": "aa3a146370a1edad",
+      "result": "succeeded"
+    },
+    {
+      "number": 230,
+      "time": "2026-11-03T08:26:59.344Z",
+      "evidence": "269aa010fdc02538",
+      "result": "succeeded"
+    },
+    {
+      "number": 231,
+      "time": "2026-11-03T08:29:46.119Z",
+      "evidence": "6e0c90bb7c47e946",
+      "result": "succeeded"
+    },
+    {
+      "number": 232,
+      "time": "2026-11-03T08:31:42.783Z",
+      "evidence": "2db445d459d3a9a6",
+      "result": "succeeded"
+    },
+    {
+      "number": 233,
+      "time": "2026-11-03T09:37:06.458Z",
+      "evidence": "ef307772fb1ab421",
+      "result": "succeeded"
+    },
+    {
+      "number": 234,
+      "time": "2026-11-03T09:38:43.516Z",
+      "evidence": "c4395848a1dec109",
+      "result": "succeeded"
+    },
+    {
+      "number": 235,
+      "time": "2026-11-03T09:42:20.336Z",
+      "evidence": "fe9732ec4d43aee4",
+      "result": "succeeded"
+    },
+    {
+      "number": 236,
+      "time": "2026-11-03T09:46:38.862Z",
+      "evidence": "5ed426b521f28989",
+      "result": "succeeded"
+    },
+    {
+      "number": 237,
+      "time": "2026-11-03T09:50:12.577Z",
+      "evidence": "f44ef9fbb029fc74",
+      "result": "succeeded"
+    },
+    {
+      "number": 238,
+      "time": "2026-11-03T11:17:49.376Z",
+      "evidence": "a24a9ef7b00e6ce6",
+      "result": "succeeded"
+    },
+    {
+      "number": 239,
+      "time": "2026-11-03T11:45:46.494Z",
+      "evidence": "952f82cde7a1e036",
+      "result": "succeeded"
+    },
+    {
+      "number": 240,
+      "time": "2026-11-03T11:48:38.516Z",
+      "evidence": "5ceac6b36f746d3f",
+      "result": "succeeded"
+    },
+    {
+      "number": 241,
+      "time": "2026-11-03T14:11:37.782Z",
+      "result": "succeeded",
+      "exitCode": 0
+    }
+  ],
+  "excludedBeforeLaunch": [
+    {
+      "time": "2026-07-24T20:30:20.040Z",
+      "evidence": "6f92b13eba26664a",
+      "reason": "Execution approval was rejected before the build could run."
+    },
+    {
+      "time": "2026-11-03T08:23:31.840Z",
+      "evidence": "b9f162fd071b22d3",
+      "reason": "A preceding edit failed, so the build command never ran."
+    }
+  ]
+}

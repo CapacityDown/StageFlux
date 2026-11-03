@@ -24,6 +24,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="EventBuildInfo.cs" />
+    <Compile Include="EventLanguage.cs" />
+    <Compile Include="EventText.cs" />
+    <Compile Include="EventTextLayout.cs" />
+    <Compile Include="EventTextTokens.cs" />
+    <Compile Include="EventGameLocalization.cs" />
+    <Compile Include="EventMenuFont.cs" />
+    <Compile Include="EventFontMaterial.cs" />
+    <EmbeddedResource Include="Assets\Localization\*.json" LogicalName="REPOJP.StagePhysicsEvents.Localization.%(Filename)%(Extension)" />
+    <EmbeddedResource Include="Assets\Fonts\Localization\*.otf" LogicalName="REPOJP.StagePhysicsEvents.Assets.Fonts.%(Filename)%(Extension)" />
+    <EmbeddedResource Include="Assets\Fonts\Localization\*.ttf" LogicalName="REPOJP.StagePhysicsEvents.Assets.Fonts.%(Filename)%(Extension)" />
+    <EmbeddedResource Include="Assets\Fonts\Localization\OFL*.txt" LogicalName="REPOJP.StagePhysicsEvents.Assets.Fonts.%(Filename)%(Extension)" />
+    <EmbeddedResource Include="Assets\Fonts\CheckpointRevenge.bundle" LogicalName="REPOJP.StagePhysicsEvents.Assets.Fonts.CheckpointRevenge" />
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
     <PackageReference Include="BepInEx.Core" Version="5.*" ExcludeAssets="runtime" />
     <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all" ExcludeAssets="contentFiles" />

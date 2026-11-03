@@ -25,6 +25,8 @@ internal sealed class EventMenu : MonoBehaviour
     private readonly EventIconCatalog _icons = new();
     private readonly Dictionary<View, REPOButton> _navigation = new();
     private View _view;
+    private EventLanguage _language;
+    internal static int UiBuildNumber => EventBuildInfo.Number;
     private string _signature = "", _message = "";
     private float _nextRefresh;
     private bool _currentEnabled;
@@ -66,6 +68,7 @@ internal sealed class EventMenu : MonoBehaviour
         REPOPopupPage page = MenuAPI.CreateREPOPopupPage("Events", REPOPopupPage.PresetSide.Right,
             shouldCachePage: false, pageDimmerVisibility: true, spacing: EventMenuLayout.RowSpacing);
         _page = page; _rows.Clear(); _navigation.Clear(); _message = "";
+        _language = EventGameLocalization.Language;
         _currentEnabled = currentEnabled; _guideView = GuideView.Overview; _presetOverwriteSlot = -1;
         var padding = page.maskPadding; padding.top = 24; padding.bottom = 0; page.maskPadding = padding;
         page.AddElement(parent =>
@@ -73,8 +76,8 @@ internal sealed class EventMenu : MonoBehaviour
             AddNavigation(View.Current, "CURRENT EVENTS", parent, EventMenuLayout.NavigationTop);
             AddNavigation(View.Guide, "EVENT GUIDE", parent, EventMenuLayout.NavigationTop - EventMenuLayout.NavigationStep);
             AddNavigation(View.Settings, "EVENT SETTINGS", parent, EventMenuLayout.NavigationTop - EventMenuLayout.NavigationStep * 2);
-            AddNavigation(View.Tools, "TOOLS", parent, EventMenuLayout.NavigationTop - EventMenuLayout.NavigationStep * 3);
-            REPOLabel version = MenuAPI.CreateREPOLabel("Stage Flux v" + StagePhysicsEventsPlugin.PluginVersion, parent, new Vector2(108, 54));
+            AddNavigation(View.Tools, "TOOLS", parent, EventMenuLayout.ToolsTop);
+            REPOLabel version = MenuAPI.CreateREPOLabel("Stage Flux v" + StagePhysicsEventsPlugin.PluginVersion + $"(build-{UiBuildNumber})", parent, new Vector2(108, 54));
             version.rectTransform.sizeDelta = version.labelTMP.rectTransform.sizeDelta = new Vector2(190, 24);
             version.labelTMP.fontSize = 16; version.labelTMP.alignment = TextAlignmentOptions.Left;
             version.labelTMP.color = new Color(0.72f, 0.72f, 0.72f, 0.9f);
@@ -112,6 +115,11 @@ internal sealed class EventMenu : MonoBehaviour
     {
         if (_page == null || EventHudEditor.Instance != null || _issuesDialog != null || Time.unscaledTime < _nextRefresh) return;
         _nextRefresh = Time.unscaledTime + 0.25f;
+        if (_language != EventGameLocalization.Language)
+        {
+            _language = EventGameLocalization.Language; _message = "";
+            _page.scrollView.SetScrollPosition(0); Refresh(); return;
+        }
         if (Signature() != _signature) Refresh();
     }
 
@@ -131,7 +139,7 @@ internal sealed class EventMenu : MonoBehaviour
         List<Entry> entries = new();
         void Text(string text, bool separate = false) => AddText(entries, text, separate);
         void Button(string text, Action action, bool allowed = true, StageEffect icon = StageEffect.None, bool off = false, bool separate = false) =>
-            entries.Add(new Entry((_view is View.Tools or View.Report ? "> " : "") + text, allowed ? action : null, icon, true,
+            entries.Add(new Entry((_view is View.Tools or View.Report ? "> " : "") + EventGameLocalization.Text(text), allowed ? action : null, icon, true,
                 off: off, separate: separate, fontSize: _view is View.Tools or View.Report ? 18 : 20));
         bool editable = EventMenuState.CanEdit;
         bool available = _settings.TryRead(out StageEffect enabled, out bool active);
@@ -143,8 +151,8 @@ internal sealed class EventMenu : MonoBehaviour
                     Text("No active stage event schedule. Events may be disabled for this stage, or a playable stage has not started.");
                 else
                 {
-                    Text("Phase: " + (state.State == EventRunState.Active ? "Active" : state.State == EventRunState.Countdown ? "Starting" : "Interval"));
-                    Text("Mode: " + state.Mode + " | Event slots: " + state.SlotLimit + "/5");
+                    Text(EventGameLocalization.Format("Phase: {0}", EventGameLocalization.Text(state.State == EventRunState.Active ? "Active" : state.State == EventRunState.Countdown ? "Starting" : "Interval")));
+                    Text(EventGameLocalization.Format("Mode: {0} | Event slots: {1}/5", state.Mode, state.SlotLimit));
                     // Keep unrevealed draws hidden, just like the HUD.
                     StageEffect shown = state.State != EventRunState.Waiting ? state.Effect :
                         state.RemainingSeconds <= 10 ? state.PreviewEffect : StageEffect.None;
@@ -160,7 +168,7 @@ internal sealed class EventMenu : MonoBehaviour
                     entries.Add(new Entry((_guideView == mode ? "> " : "  ") + GuideName(mode), () =>
                     { _guideView = captured; _page.scrollView.SetScrollPosition(0); }, control: true, height: 36));
                 }
-                Text($"Explore all {StageEffectSet.IndividualEffects.Count} events. Risk describes possible danger, not the chance of being selected.");
+                Text(EventGameLocalization.Format("Explore all {0} events. Risk describes possible danger, not the chance of being selected.", StageEffectSet.IndividualEffects.Count));
                 Text("Roll may kill enemies. Void may kill players. High-risk events can cause damage or loss of valuables.");
                 if (_guideView == GuideView.Eligibility)
                     Text("Configuration eligibility only. Stage resources and targets are checked when events are drawn. This page never runs an event or predicts a hidden draw.");
@@ -173,13 +181,13 @@ internal sealed class EventMenu : MonoBehaviour
                 if (!active) Text("Stage Flux events are disabled in General settings.");
                 Button("PRESETS", () => Switch(View.Presets));
                 Button("Draw eligibility", () => { _guideView = GuideView.Eligibility; Switch(View.Guide); });
-                Text($"Enabled events: {CountEnabled(enabled)}/{StageEffectSet.IndividualEffects.Count}");
+                Text(EventGameLocalization.Format("Enabled events: {0}/{1}", CountEnabled(enabled), StageEffectSet.IndividualEffects.Count));
                 if (enabled == StageEffect.None) Text("No events are enabled. Random selection has no candidates.");
                 foreach (StageEffect effect in StageEffectSet.IndividualEffects)
                 {
                     StageEffect captured = effect;
                     bool on = StageEffectSet.Contains(enabled, effect);
-                    Button($"[{(on ? "ON" : "OFF")}] {EventPresentation.Name(effect)}", () =>
+                    Button($"[{EventGameLocalization.Text(on ? "ON" : "OFF")}] {EventPresentation.Name(effect)}", () =>
                     {
                         // Re-read authority and state at the moment of the click.
                         if (EventMenuState.CanEdit && _settings.TryRead(out StageEffect current, out _))
@@ -196,12 +204,12 @@ internal sealed class EventMenu : MonoBehaviour
                     for (int slot = 0; slot < CustomEventPresets.Capacity; slot++)
                     {
                         int capturedSlot = slot;
-                        string name = "Custom " + (slot + 1);
+                        string name = EventGameLocalization.Format("Custom {0}", slot + 1);
                         string[]? saved = _settings.Presets.Get(slot);
-                        Text(name + " - " + (saved == null ? "Empty" : $"Enabled events: {_settings.CountPreset(saved)}/{StageEffectSet.IndividualEffects.Count}"), true);
-                        Button("Apply: " + name, () => { if (_settings.ApplyCustomPreset(capturedSlot)) Switch(View.Settings); }, saved != null);
+                        Text(name + " - " + (saved == null ? EventGameLocalization.Text("Empty") : EventGameLocalization.Format("Enabled events: {0}/{1}", _settings.CountPreset(saved), StageEffectSet.IndividualEffects.Count)), true);
+                        Button(EventGameLocalization.Format("Apply: {0}", name), () => { if (_settings.ApplyCustomPreset(capturedSlot)) Switch(View.Settings); }, saved != null);
                         bool confirm = saved != null && _presetOverwriteSlot == slot;
-                        Button((confirm ? "Confirm overwrite: " : saved == null ? "Save current: " : "Overwrite: ") + name, () =>
+                        Button(EventGameLocalization.Format(confirm ? "Confirm overwrite: {0}" : saved == null ? "Save current: {0}" : "Overwrite: {0}", name), () =>
                         {
                             if (!EventMenuState.CanEdit) return;
                             if (confirm && _presetOverwriteSlot != capturedSlot) return;
@@ -214,7 +222,7 @@ internal sealed class EventMenu : MonoBehaviour
                 foreach (string preset in new[] { "Defaults", "Low Risk", "All Off" })
                 {
                     string captured = preset;
-                    Button("Apply: " + preset, () => { _settings.ApplyPreset(captured); Switch(View.Settings); }, editable, separate: true);
+                    Button(EventGameLocalization.Format("Apply: {0}", EventGameLocalization.Text(preset)), () => { _settings.ApplyPreset(captured); Switch(View.Settings); }, editable, separate: true);
                 }
                 Text("Defaults: all events except Roll and Void. Low Risk: only events marked Low. All Off: exclude every event from future draws.");
                 break;
@@ -244,8 +252,8 @@ internal sealed class EventMenu : MonoBehaviour
                 Button("OPEN GITHUB ISSUES", ConfirmOpenIssues);
                 break;
         }
-        _page.headerTMP.text = _view switch { View.Current => "Current Events", View.Guide => "Event Guide", View.Settings => "Event Settings",
-            View.Presets => "Event Presets", View.Tools => "Tools", _ => "Bug Report" };
+        _page.headerTMP.text = EventGameLocalization.Text(_view switch { View.Current => "Current Events", View.Guide => "Event Guide", View.Settings => "Event Settings",
+            View.Presets => "Event Presets", View.Tools => "Tools", _ => "Bug Report" });
         UpdateNavigation();
         Apply(entries);
         _signature = Signature();
@@ -253,7 +261,7 @@ internal sealed class EventMenu : MonoBehaviour
 
     private void AddGuide(List<Entry> entries, StageEffect effect)
     {
-        entries.Add(new Entry(EventPresentation.Name(effect) + " - " + EventPresentation.Danger(effect) + " risk", icon: effect, height: EventMenuLayout.GuideTitleHeight));
+        entries.Add(new Entry(EventGameLocalization.Format("{0} - {1} risk", EventPresentation.Name(effect), EventGameLocalization.Text(EventPresentation.Danger(effect).ToString())), icon: effect, height: EventMenuLayout.GuideTitleHeight));
         if (_view != View.Guide || _guideView != GuideView.Eligibility) AddText(entries, EventGuideCatalog.Description(effect));
         if (_view == View.Guide && _guideView != GuideView.Overview)
         {
@@ -281,13 +289,14 @@ internal sealed class EventMenu : MonoBehaviour
             float padding = entry.Control ? 12f : 0;
             float inset = padding + (hasIcon ? iconSize + 10f : 0);
             TMP_Text text = row.Label.labelTMP;
+            EventGameLocalization.Apply(text);
             text.text = entry.Text; text.richText = false;
             text.fontSize = entry.FontSize;
             text.fontStyle = hasIcon || entry.Control ? FontStyles.Bold : FontStyles.Normal;
             text.textWrappingMode = TextWrappingModes.NoWrap; text.enableAutoSizing = entry.Control;
             text.fontSizeMin = 12; text.fontSizeMax = text.fontSize;
             text.overflowMode = hasIcon ? TextOverflowModes.Ellipsis : TextOverflowModes.Overflow;
-            text.alignment = TextAlignmentOptions.Left;
+            text.alignment = _language == EventLanguage.Arabic ? TextAlignmentOptions.Right : TextAlignmentOptions.Left;
             row.Visual.Configure(entry.Control, entry.Click != null, entry.Off);
             bool separate = entry.Separate || (_view != View.Presets && (entry.Control || hasIcon));
             bool consecutive = i > 0 && entry.Control && entries[i - 1].Control;
@@ -355,8 +364,10 @@ internal sealed class EventMenu : MonoBehaviour
 
     private void AddText(List<Entry> entries, string value, bool separate = false)
     {
+        value = EventGameLocalization.Text(value);
         if (_rows.Count == 0) _rows.Add(CreateRow(_page!));
         TMP_Text text = _rows[0].Label.labelTMP;
+        EventGameLocalization.Apply(text);
         float oldSize = text.fontSize; FontStyles oldStyle = text.fontStyle;
         TextWrappingModes oldWrap = text.textWrappingMode; bool oldAuto = text.enableAutoSizing;
         try
@@ -376,7 +387,7 @@ internal sealed class EventMenu : MonoBehaviour
     { int count = 0; foreach (StageEffect effect in StageEffectSet.IndividualEffects) if (StageEffectSet.Contains(mask, effect)) count++; return count; }
 
     private static string GuideName(GuideView view) => view switch
-    { GuideView.Overview => "Overview", GuideView.Details => "Details", _ => "Draw eligibility" };
+    { GuideView.Overview => EventGameLocalization.Text("Overview"), GuideView.Details => EventGameLocalization.Text("Details"), _ => EventGameLocalization.Text("Draw eligibility") };
 
     private void UpdateNavigation()
     {
@@ -384,14 +395,16 @@ internal sealed class EventMenu : MonoBehaviour
         {
             View selected = _view == View.Presets ? View.Settings : _view == View.Report ? View.Tools : _view;
             string title = pair.Key switch { View.Current => "CURRENT EVENTS", View.Guide => "EVENT GUIDE", View.Settings => "EVENT SETTINGS", _ => "TOOLS" };
-            pair.Value.labelTMP.text = (selected == pair.Key ? "> " : "  ") + title;
+            pair.Value.labelTMP.text = (selected == pair.Key ? "> " : "  ") + EventGameLocalization.Text(title);
+            EventGameLocalization.Apply(pair.Value.labelTMP);
             pair.Value.labelTMP.enableAutoSizing = true; pair.Value.labelTMP.fontSizeMin = 12; pair.Value.labelTMP.fontSizeMax = 20;
             bool enabled = pair.Key != View.Current || _currentEnabled;
             pair.Value.menuButton.enabled = enabled;
             pair.Value.labelTMP.color = enabled ? Color.white : new Color(0.35f, 0.35f, 0.35f, 0.75f);
             Button? unity = pair.Value.GetComponent<Button>(); if (unity != null) unity.interactable = enabled;
         }
-        if (_back != null) _back.labelTMP.text = "  Back";
+        if (_back != null) { _back.labelTMP.text = "  " + EventGameLocalization.Text("Back"); EventGameLocalization.Apply(_back.labelTMP); }
+        EventGameLocalization.Apply(_page!.headerTMP);
         _page!.headerTMP.enableAutoSizing = true; _page.headerTMP.fontSizeMin = 18; _page.headerTMP.fontSizeMax = 32;
     }
 
@@ -408,15 +421,16 @@ internal sealed class EventMenu : MonoBehaviour
             try { Application.OpenURL(EventBugReport.IssuesUrl); }
             catch (Exception exception) { _message = "Could not open the browser."; StagePhysicsEventsPlugin.ModLogger.LogError(exception); }
         }
-        MenuAPI.OpenPopup("OPEN EXTERNAL SITE", new Color(1, 0.65f, 0),
-            "Open GitHub Issues in your browser? Nothing is sent automatically.\n\n" + EventBugReport.IssuesUrl,
+        MenuAPI.OpenPopup(EventGameLocalization.Text("OPEN EXTERNAL SITE"), new Color(1, 0.65f, 0),
+            EventGameLocalization.Text("Open GitHub Issues in your browser? Nothing is sent automatically.") + "\n\n" + EventBugReport.IssuesUrl,
             () => Decide(true), () => Decide(false));
         _issuesDialog = AccessTools.Field(typeof(MenuManager), "currentMenuPage").GetValue(MenuManager.instance) as MenuPage;
         if (_issuesDialog == null) return;
         MenuPageTwoOptions dialog = _issuesDialog.GetComponent<MenuPageTwoOptions>();
         if (dialog == null) { _issuesDialog = null; return; }
-        dialog.option1Button.buttonTextString = "OPEN IN BROWSER";
-        dialog.option2Button.buttonTextString = "CANCEL";
+        dialog.option1Button.buttonTextString = EventGameLocalization.Text("OPEN IN BROWSER");
+        dialog.option2Button.buttonTextString = EventGameLocalization.Text("CANCEL");
+        foreach (TMP_Text label in _issuesDialog.GetComponentsInChildren<TMP_Text>(true)) EventGameLocalization.Apply(label);
         dialog.bodyTextMesh.textWrappingMode = TextWrappingModes.Normal;
         dialog.bodyTextMesh.enableAutoSizing = true; dialog.bodyTextMesh.fontSizeMin = 12; dialog.bodyTextMesh.fontSizeMax = 18;
     }

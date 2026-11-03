@@ -56,7 +56,7 @@ string guideSource = File.ReadAllText(Path.Combine(root, "EventGuideCatalog.cs")
 string reportSource = File.ReadAllText(Path.Combine(root, "EventBugReport.cs"));
 Check(reportSource.Contains("const string IssuesUrl = \"https://github.com/CapacityDown/StageFlux/issues/new\""), "Problem report targets the Stage Flux new-issue page without report data in its URL");
 Check(menuSource.Contains("\"OPEN GITHUB ISSUES\", ConfirmOpenIssues"), "GitHub action opens the native confirmation dialog first");
-Check(menuSource.Contains("MenuAPI.OpenPopup(\"OPEN EXTERNAL SITE\""), "External navigation uses the native modal confirmation");
+Check(menuSource.Contains("MenuAPI.OpenPopup(EventGameLocalization.Text(\"OPEN EXTERNAL SITE\")"), "External navigation uses the localized native modal confirmation");
 checks += EventMenuChecks.Run(root);
 Check(menuSource.Contains("Application.OpenURL(EventBugReport.IssuesUrl)"), "Confirmed action opens GitHub Issues");
 Check(!menuSource.Contains("thunderstore.io"), "Problem reports do not open Thunderstore");
@@ -191,6 +191,7 @@ Contract("PhysGrabObject", "OverrideMass", "Void", true, "Single", "Single");
 Contract("PhysGrabObject", "OverrideIndestructible", "Void", true, "Single");
 
 Game050Contracts.Run(root, args[1], Check, args.Skip(2).ToArray());
+checks += EventLocalizationChecks.Run(root);
 Console.WriteLine($"PASS: {checks} arithmetic, integration, resource, version and installed-game contract checks. Runtime multiplayer testing is separate.");
 
 sealed class SignatureNames : ISignatureTypeProvider<string, int>

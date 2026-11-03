@@ -132,7 +132,8 @@ internal sealed class EventHudEditor : MonoBehaviour
     private TextMeshProUGUI Label(Transform parent, string value, Vector2 position, Vector2 size, int fontSize)
     {
         GameObject obj = new("Label", typeof(RectTransform), typeof(TextMeshProUGUI)); obj.transform.SetParent(parent, false);
-        var text = obj.GetComponent<TextMeshProUGUI>(); text.font = _font; text.fontSize = fontSize; text.text = value; text.color = Color.white;
+        var text = obj.GetComponent<TextMeshProUGUI>(); text.font = _font; EventGameLocalization.Apply(text);
+        text.fontSize = fontSize; text.text = EventGameLocalization.Text(value); text.color = Color.white;
         text.richText = false; text.raycastTarget = false; text.textWrappingMode = TextWrappingModes.NoWrap; text.overflowMode = TextOverflowModes.Ellipsis;
         text.rectTransform.anchorMin = text.rectTransform.anchorMax = new Vector2(0, 1); text.rectTransform.pivot = new Vector2(0, 1);
         text.rectTransform.anchoredPosition = position; text.rectTransform.sizeDelta = size;
@@ -152,7 +153,8 @@ internal sealed class EventHudEditor : MonoBehaviour
         {
             bool hover = RectTransformUtility.RectangleContainsScreenPoint(button.Rect, pointer);
             button.Background.color = hover ? new Color(0.25f, 0.38f, 0.48f) : new Color(0.15f, 0.20f, 0.27f);
-            button.Label.text = button.Text();
+            EventGameLocalization.Apply(button.Label);
+            button.Label.text = EventGameLocalization.Text(button.Text());
             if (hover && Input.GetMouseButtonDown(0)) { button.Click(); return; }
         }
         if (Input.GetMouseButtonDown(0) && !RectTransformUtility.RectangleContainsScreenPoint(_toolbar, pointer) &&
@@ -180,7 +182,7 @@ internal sealed class EventHudEditor : MonoBehaviour
             try { _preview.ClampPreview(); _draft.Save(_config); file.Save(); }
             catch (Exception exception)
             {
-                before.Save(_config); _status.text = "Could not save. Retry or cancel.";
+                before.Save(_config); _status.text = EventGameLocalization.Text("Could not save. Retry or cancel.");
                 StagePhysicsEventsPlugin.ModLogger.LogError(exception); return;
             }
             finally { file.SaveOnConfigSet = automatic; }

@@ -41,6 +41,9 @@ Newer user instructions take precedence over the current version or profile.
 ## Validation and deployment
 
 - Follow [DEVELOPMENT.md](DEVELOPMENT.md) for dependencies, builds, and checks.
+  Use `node tools/build-stageflux.mjs` for main-project builds so successful and
+  failed attempts both advance the cumulative Events UI build number. Commit
+  the counter and sanitized ledger together; test-only builds do not count.
   Compile against installed R.E.P.O. v0.5.0 assemblies and require zero warnings
   and errors in Release. Run the regression suite for code changes; distinguish
   offline validation from live-game and vanilla-client multiplayer testing.
@@ -63,6 +66,9 @@ Newer user instructions take precedence over the current version or profile.
 - Keep technical implementation and verification notes in development documents,
   not the player-facing `package/README.md` or `package/CHANGELOG.md`.
 - Package README remains English followed by Japanese, without embedded images.
+  The Events menu follows the game's local language setting; event names,
+  configuration identifiers, the stage HUD and spoken notifications retain
+  their existing English naming. Do not change gameplay to localize the menu.
   CHANGELOG remains English only with no blank line between each version heading
   and its first bullet. Compatibility descriptions do not include other mod versions.
 - Direct questions, feedback, and bug reports to

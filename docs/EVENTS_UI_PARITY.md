@@ -19,7 +19,8 @@ Only StagePhysicsEvents sources were changed.
   helper were compared after identifier-only renaming and matched exactly.
 - Pause entry opens Current Events; lobby entry opens the guide and disables
   the current-events tab. Overview/Details/Draw eligibility use the same selected
-  mode convention. English is retained as previously requested.
+  mode convention. The initial alignment retained English; the later localization
+  update below supersedes that presentation choice.
 - Native two-option external-site confirmation, per-page callback checks, and
   Escape guards prevent actions from stale pages or closing the underlying page.
 - Scrolling moves three body rows (97.5 canvas units) per wheel notch and
@@ -75,3 +76,12 @@ profiles were not modified.
 Validated SHA-256:
 
 `FB4BD38B45F8CA2046264105A1CCCB620246009BCCFDCD7A432CA782408EDF2C`
+
+## Subsequent localization and cumulative build-number update
+
+See [EVENTS_LOCALIZATION_VALIDATION.md](EVENTS_LOCALIZATION_VALIDATION.md).
+Tools now shares Roles' y=112 position. All menu labels, explanations and
+HUD-editor controls follow the local game language with the same private font
+fallbacks and native text shaping. The native corner button stays `Events`.
+The version/footer now includes a cumulative UI-only build number; normal MOD
+version, configuration and package identity remain v5.0.0.

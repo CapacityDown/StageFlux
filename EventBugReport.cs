@@ -56,7 +56,7 @@ internal sealed class EventBugReport : ILogListener
     {
         RememberPlayers();
         var report = new StringBuilder("# Stage Flux problem report\n\n## What happened?\n\n## Steps to reproduce\n1. \n\n## Expected result / actual result\n\n## Environment\n");
-        report.AppendLine("Stage Flux: " + StagePhysicsEventsPlugin.PluginVersion);
+        report.AppendLine("Stage Flux: " + StagePhysicsEventsPlugin.PluginVersion + $" (build-{EventMenu.UiBuildNumber})");
         report.AppendLine("Game: " + Application.version + "\nUnity: " + Application.unityVersion);
         report.AppendLine("OS: " + SystemInfo.operatingSystem);
         report.AppendLine($"Resolution: {Screen.width} x {Screen.height}");

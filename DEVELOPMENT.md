@@ -18,7 +18,12 @@ Follow [WORKFLOW.md](WORKFLOW.md) for the version-branch workflow shared with Ro
 </Project>
 ```
 
-4. Run `dotnet restore StagePhysicsEvents.csproj` and `dotnet build StagePhysicsEvents.csproj -c Release`.
+4. Install Node.js, then run `dotnet restore StagePhysicsEvents.csproj` and
+   `node tools/build-stageflux.mjs -c Release --no-restore -t:Rebuild -warnaserror`.
+   Use the wrapper for every main-project build. It increments the UI-only
+   build number **before** invoking the compiler, including failed attempts,
+   and records the result in `docs/build-history.json`. Test-only builds do not
+   increment it. Never reset it when changing the package version.
 
 Only BepInEx and build tooling come from NuGet. Game, Unity, and Photon references come from the selected installation; there is no fallback to outdated game NuGet packages. The build publicizer creates an intermediate reference copy in `obj` and does not change the installed game. Never commit or distribute game assemblies, publicized references, decompiled source, or the local path configuration.
 
@@ -32,7 +37,7 @@ dotnet run --project tests/StageFlux.ExtendedEvents.Tests.csproj -c Release -- <
 
 The suite covers arithmetic, menu authority and display payloads, event resources, optional-mod references, and installed-game method signatures. The 0.5.0 audit also resolves Stage Flux/MenuLib member references, reflection targets, Harmony injection parameters, and vanilla RPC contracts against the original game DLLs. Additional dependency DLL paths can be appended to the test command. It does not replace Unity or multiplayer testing.
 
-The Events format follows the English Roles menu: selected navigation markers,
+The Events format follows the Roles menu: selected navigation markers,
 outlined hover controls, disabled icons, fixed body rows, and three body lines
 per wheel notch. The independent native-wheel harness also exercises both peer
 patch orders without requiring RoleShuffle:
@@ -59,7 +64,10 @@ Manual UI checks:
 - End a stage, leave a room, change host, and reopen the UI to check stale state handling.
 - Compare Roles and Events at 1080p and 1440p: navigation spacing, selected arrows,
   control borders/hover colors, OFF icons, dividers, 56-unit guide icons, and body
-  wrapping. Events remains English; event-specific HUD controls remain unchanged.
+  wrapping. The menu follows each local player's native game language. Test
+  Japanese, English, Chinese, Korean, Arabic and Thai at minimum, then switch
+  languages while the menu is open. Event names and configuration identifiers
+  remain English; the live event HUD and spoken notifications are unchanged.
 - Save/apply all three custom slots, confirm/cancel overwrites, restart the
   profile, and verify only ON/OFF settings change. Guests must not save/apply
   host selections. Test all-OFF, unknown older names, and unreadable preset files.
@@ -67,6 +75,15 @@ Manual UI checks:
   join an older host and confirm unavailable details never use guest-local values.
 - Test the native GitHub dialog with confirm, cancel, and Escape; the underlying
   Events page must remain open until explicitly closed.
+
+Localization resources, font provenance and checks are documented in
+[Assets/Localization/README.md](Assets/Localization/README.md) and
+[Assets/Fonts/Localization/README.md](Assets/Fonts/Localization/README.md).
+The initial build counter was reconstructed from available execution logs:
+240 confirmed main-project builds (219 successful, 21 failed). Two commands
+that never reached the build process were excluded. No claim is made about
+unavailable external build logs. Public history contains timestamps and hashed
+evidence identifiers only, never raw conversation or command output.
 
 ## Release
 

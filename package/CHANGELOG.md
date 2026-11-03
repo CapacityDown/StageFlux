@@ -1,6 +1,7 @@
 ## v5.0.0
 - Updated for R.E.P.O. v0.5.0.
 - Added a Roles-style Events menu with event descriptions, host-controlled event toggles, and selection presets.
+- Matched the Events menu appearance to Roles and added translations that follow the game's language setting.
 - Added Overview, host-configured Details, and configuration-based Draw eligibility views.
 - Added three custom event preset slots with overwrite confirmation.
 - Added a HUD editor, display refresh, and local problem reports with a link to GitHub Issues.

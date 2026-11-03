@@ -18,6 +18,8 @@ In the game, open **Events → Tools → Report a Problem**. Use **Copy Report**
 
 Open **Events** in the lobby or the pause menu. If RoleShuffle is installed, the button appears below **Roles**.
 
+The menu uses the same visual style as Roles and follows your R.E.P.O. language setting. Menu controls and event explanations support all 21 game languages. Event names and configuration identifiers remain English. The stage HUD and spoken announcements are unchanged.
+
 - **Current Events** shows the current stage's events and opens first from the pause menu. The lobby opens Event Guide instead.
 - **Event Guide** offers Overview, Details, and Draw eligibility. Overview explains every event with its icon and risk level; Details shows the host's current settings. Draw eligibility shows whether settings allow selection, not a prediction of the next draw. Stage conditions can still exclude an event. Unsupported hosts show details as unavailable.
 - **Event Settings** lets the host turn events on or off. Changes affect future draws; active events and already selected stage plans stay unchanged. Players with the mod can view the host's selection. Detailed settings remain available in REPOConfig.
@@ -585,6 +587,8 @@ Heavy Cargo also follows these filters, but cannot affect players, enemies or do
 ### Eventsメニュー
 
 ロビーまたはポーズメニューの **Events** から開きます。RoleShuffleを同時導入している場合は **Roles** の下に配置されます。
+
+メニューはRolesと同じ表示スタイルで、各プレイヤーのR.E.P.O.本体の言語設定に追従します。操作画面とイベント説明はゲームの全21言語に対応しています。イベント名と設定の識別名は英語のままです。ステージ中のHUDや音声通知は変更しません。以下の項目名は英語表示の場合です。
 
 - **Current Events**：現在のステージで発生しているイベントを確認できます。ポーズメニューではこのページが最初に開き、ロビーではEvent Guideが開きます。
 - **Event Guide**：Overview（概要）、Details（ホストの現在の設定）、Draw eligibility（設定上の抽選対象）を切り替えられます。全イベントのアイコンと危険度を確認でき、抽選対象でもステージの条件によって選ばれない場合があります。次回の抽選結果を予告するものではありません。未対応のホストでは詳細を未取得と表示します。
