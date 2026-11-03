@@ -584,6 +584,7 @@ internal sealed partial class StagePhysicsConfig
         config.Remove(new ConfigDefinition("UI", "OffsetY"));
         config.Remove(new ConfigDefinition("UI", "ScalePercent"));
         BindExtendedEvents(config);
+        BindSunstoneEvents(config);
         config.SaveOnConfigSet = saveOnConfigSet;
         config.Save();
 
@@ -1134,7 +1135,9 @@ internal sealed partial class StagePhysicsConfig
         DangerousValuablesEggEnabled.Value ||
         DangerousValuablesCarEnabled.Value ||
         DangerousValuablesPlaneEnabled.Value ||
-        DangerousValuablesBroomEnabled.Value;
+        DangerousValuablesBroomEnabled.Value ||
+        DangerousValuablesSnakeCanEnabled.Value ||
+        DangerousValuablesExplosiveTowerEnabled.Value;
 
     private int RollConfiguredCount(ConfigEntry<int> minimum, ConfigEntry<int> maximum, string name)
     {
@@ -1158,6 +1161,7 @@ internal sealed partial class StagePhysicsConfig
             if (IsPair(candidate, active, StageEffect.Freeze, StageEffect.Stun) ||
                 IsPair(candidate, active, StageEffect.Feather, StageEffect.HeavyCargo) ||
                 IsPair(candidate, active, StageEffect.Battery, StageEffect.BatteryDrain) ||
+                IsPair(candidate, active, StageEffect.RechargeCloud, StageEffect.BatteryDrain) ||
                 IsPair(candidate, active, StageEffect.EnemyArmor, StageEffect.EnemyVulnerability) ||
                 IsPair(candidate, active, StageEffect.EnemyRegen, StageEffect.EnemyPurge) ||
                 IsPair(candidate, active, StageEffect.EnemySpeedUp, StageEffect.EnemySpeedDown) ||
@@ -1198,6 +1202,8 @@ internal sealed partial class StagePhysicsConfig
         {
             StageEffect.ZeroGravity => EffectRisk.ForcedMovement | EffectRisk.ValuableRisk,
             StageEffect.Roll => EffectRisk.ForcedMovement | EffectRisk.ValuableRisk,
+            StageEffect.ArcaneBurst => EffectRisk.ForcedMovement | EffectRisk.AreaHazard | EffectRisk.ValuableRisk,
+            StageEffect.Rockfall => EffectRisk.LethalHazard | EffectRisk.AreaHazard | EffectRisk.ValuableRisk,
             StageEffect.Void => EffectRisk.ForcedMovement | EffectRisk.LethalHazard | EffectRisk.AreaHazard | EffectRisk.ValuableRisk,
             StageEffect.Levitation => EffectRisk.ForcedMovement | EffectRisk.ValuableRisk,
             StageEffect.Shockwave => EffectRisk.ForcedMovement | EffectRisk.AreaHazard | EffectRisk.ValuableRisk,

@@ -70,7 +70,10 @@ internal enum StageEffect : long
     EnemyVulnerability = 1L << 42,
     SupplyDrop = 1L << 43,
     PlayerSwap = 1L << 44,
-    SharedPain = 1L << 45
+    SharedPain = 1L << 45,
+    RechargeCloud = 1L << 46,
+    Rockfall = 1L << 47,
+    ArcaneBurst = 1L << 48
 }
 
 internal static class StageEffectSet
@@ -112,7 +115,7 @@ internal static class StageEffectSet
         StageEffect.DangerousValuables |
         StageEffect.EnemySpeedUp |
         StageEffect.EnemySpeedDown |
-        ExtendedEventCatalog.All;
+        ExtendedEventCatalog.All | SunstoneEventCatalog.All;
 
     internal static readonly IReadOnlyList<StageEffect> IndividualEffects = new[]
     {
@@ -161,7 +164,10 @@ internal static class StageEffectSet
         StageEffect.EnemyVulnerability,
         StageEffect.SupplyDrop,
         StageEffect.PlayerSwap,
-        StageEffect.SharedPain
+        StageEffect.SharedPain,
+        StageEffect.RechargeCloud,
+        StageEffect.Rockfall,
+        StageEffect.ArcaneBurst
     };
 
     internal static bool Contains(StageEffect effects, StageEffect effect) =>
@@ -215,6 +221,8 @@ internal static class StageEffectSet
                 StageEffect.SupplyDrop => "Supply Drop",
                 StageEffect.PlayerSwap => "Player Swap",
                 StageEffect.SharedPain => "Shared Pain",
+                StageEffect.RechargeCloud => "Recharge Cloud",
+                StageEffect.ArcaneBurst => "Arcane Burst",
                 StageEffect.Roll => "Roll",
                 _ => effect.ToString()
             });

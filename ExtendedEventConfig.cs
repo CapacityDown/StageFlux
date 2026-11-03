@@ -78,7 +78,8 @@ internal sealed partial class StagePhysicsConfig
 
     private int GetExtendedChance(StageEffect effect)
     {
-        if (effect == StageEffect.SupplyDrop && !SupplyDropHealthPacks.Value && !SupplyDropEquipment.Value)
+        if (effect == StageEffect.SupplyDrop && !SupplyDropHealthPacks.Value && !SupplyDropEquipment.Value &&
+            !SupplyDropHumanGun.Value && !SupplyDropAdventureCable.Value && !SupplyDropRechargeOrb.Value)
             return 0;
         return _extendedChances.TryGetValue(effect, out var entry) && entry.Enabled.Value ? entry.Chance.Value : 0;
     }

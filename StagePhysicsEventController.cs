@@ -72,6 +72,7 @@ internal sealed class StagePhysicsEventController : MonoBehaviourPunCallbacks
     private EnemyPlayerEventAdapter _enemyPlayerEvents = null!;
     private StageWorldEventAdapter _worldEvents = null!;
     private ExtendedEventAdapter _extendedEvents = null!;
+    private SunstoneEventAdapter _sunstoneEvents = null!;
     private ValuableIndestructibleProtection _valuableProtection = null!;
     private VanillaEventNotifier _notifier = null!;
 
@@ -153,6 +154,7 @@ internal sealed class StagePhysicsEventController : MonoBehaviourPunCallbacks
         _enemyPlayerEvents = new EnemyPlayerEventAdapter(config);
         _worldEvents = new StageWorldEventAdapter(config);
         _extendedEvents = new ExtendedEventAdapter(this, config, _stagePointSelector);
+        _sunstoneEvents = new SunstoneEventAdapter(this, config, _spawnResolver, _stagePointSelector);
         _valuableProtection = new ValuableIndestructibleProtection();
         _notifier = new VanillaEventNotifier(this, config);
         _state = EventRunState.Inactive;
@@ -181,6 +183,7 @@ internal sealed class StagePhysicsEventController : MonoBehaviourPunCallbacks
         _stageReady = true;
         _levelGeneratorInstanceId = instanceId;
         _extendedEvents.ResetStage();
+        _sunstoneEvents.ClearProtection();
         _stageGeneration++;
         _lastExtractionDirectorId = 0;
         _lastExtractionCompletionCount = -1;
@@ -205,6 +208,7 @@ internal sealed class StagePhysicsEventController : MonoBehaviourPunCallbacks
     internal void StageEnding()
     {
         _extendedEvents?.ResetStage();
+        _sunstoneEvents?.ClearProtection();
         if (!_stageReady && _state == EventRunState.Inactive)
         {
             if (gameObject.activeSelf)
@@ -419,6 +423,7 @@ internal sealed class StagePhysicsEventController : MonoBehaviourPunCallbacks
         }
         RefreshStageSlotLimit();
         _valuableProtection.Tick();
+        _sunstoneEvents.TickProtection();
         if (!_stageEffectsEnabled)
         {
             return;
@@ -498,6 +503,7 @@ internal sealed class StagePhysicsEventController : MonoBehaviourPunCallbacks
             _enemyPlayerEvents.Tick();
             _worldEvents.Tick();
             _extendedEvents.Tick();
+            _sunstoneEvents.Tick(remainingSeconds);
             if (_mode == EventMode.PersistentForStage)
             {
                 if (Time.time >= _stateEndsAt - PersistentRefreshLeadSeconds)
@@ -605,6 +611,7 @@ internal sealed class StagePhysicsEventController : MonoBehaviourPunCallbacks
                 StageEffect.Minefield => _minefield.EnsureAvailable(),
                 StageEffect.GumballHypnosis => _gumballHypnosis.EnsureAvailable(),
                 StageEffect.HealingAura => _healingAura.EnsureAvailable(),
+                StageEffect.RechargeCloud or StageEffect.Rockfall or StageEffect.ArcaneBurst => _sunstoneEvents.EnsureAvailable(effect),
                 StageEffect.StarBarrage => _starBarrage.EnsureAvailable(),
                 StageEffect.SpiderScare => _spiderScare.EnsureAvailable(),
                 StageEffect.TrafficShock => _trafficShock.EnsureAvailable(),
@@ -1230,6 +1237,11 @@ internal sealed class StagePhysicsEventController : MonoBehaviourPunCallbacks
             _extendedEvents.Begin(_effect & ExtendedEventCatalog.All, _activeTargetFilter);
             yield return null;
         }
+        if ((_effect & SunstoneEventCatalog.All) != StageEffect.None)
+        {
+            _sunstoneEvents.Begin(_effect, _activeTargetFilter, Mathf.Max(0f, _stateEndsAt - Time.time));
+            yield return null;
+        }
         CapturePlayerAliveStates();
         _nextDynamicTargetScanAt = Time.time + DynamicTargetScanIntervalSeconds;
         _effectApplicationCoroutine = null;
@@ -1490,6 +1502,7 @@ internal sealed class StagePhysicsEventController : MonoBehaviourPunCallbacks
         HasValuableProtection(StageEffect.ExplosionRain, _config.ExplosionRainProtectValuables.Value) ||
         HasValuableProtection(StageEffect.Minefield, _config.MinefieldProtectValuables.Value) ||
         HasValuableProtection(StageEffect.StarBarrage, _config.StarBarrageProtectValuables.Value) ||
+        HasValuableProtection(StageEffect.Rockfall, _config.RockfallProtectValuables.Value) ||
         HasValuableProtection(
             StageEffect.DangerousValuables,
             _config.DangerousValuablesProtectValuables.Value) ||
@@ -1576,6 +1589,7 @@ internal sealed class StagePhysicsEventController : MonoBehaviourPunCallbacks
         _enemyPlayerEvents?.Stop();
         _worldEvents?.Stop();
         _extendedEvents?.Stop();
+        _sunstoneEvents?.Stop();
         _activeTargetIds.Clear();
         _playerAliveStates.Clear();
         _nextDynamicTargetScanAt = 0f;

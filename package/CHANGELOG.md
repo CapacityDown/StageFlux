@@ -6,6 +6,10 @@
 - Added Restoration, Battery Drain, Heavy Cargo, and Butterfingers.
 - Added Enemy Blindness, Enemy Armor, and Enemy Vulnerability.
 - Added Supply Drop, Player Swap, and Shared Pain.
+- Added Recharge Cloud, Rockfall, and Arcane Burst.
+- Expanded Dangerous Valuables with snake cans and dynamite towers.
+- Added Human Gun, Human Adventure Cable, and Recharge Orb to Supply Drop.
+- Added a Pony option to Enemy Wave on supported stages.
 - Added settings and dedicated HUD icons for the new events.
 - Updated event combinations and the English and Japanese guides.
 

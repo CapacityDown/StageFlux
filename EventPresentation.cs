@@ -47,7 +47,7 @@ internal static class EventPresentation
                 StageEffect.HeavyCargo or
                 StageEffect.Butterfingers or
                 StageEffect.PlayerSwap => EventDanger.Medium,
-                StageEffect.EnemyArmor or StageEffect.SharedPain => EventDanger.High,
+                StageEffect.EnemyArmor or StageEffect.SharedPain or StageEffect.Rockfall or StageEffect.ArcaneBurst => EventDanger.High,
 
                 StageEffect.Fragility or
                 StageEffect.Roll or

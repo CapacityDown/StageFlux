@@ -83,6 +83,9 @@ DETAILS = {
     "Supply Drop": ("補給", "15秒ごとに1-2個。1ステージ合計10個。", "医療品や探索道具。終了後も残り、普通に回収できます。"),
     "Player Swap": ("プレイヤー", "15秒ごとに2人の位置を交換。", "2人以上が必要。手持ち・空中・しゃがみ・危険な移動先は除外。"),
     "Shared Pain": ("チームへの危険", "受けたダメージの25%を他の生存者へ。", "1人1回25まで。致死 OFFでも同時被弾などで死亡する場合あり。"),
+    "Recharge Cloud": ("局所充電", "10秒ごとに1-3個、各雲は10秒持続。", "約3m以内へアイテムを運ぶと充電。複数のアイテムは充電量を分け合います。"),
+    "Rockfall": ("落石", "10秒ごとに4-8個。貴重品保護 ON。", "落石地点があるステージ限定。岩の接近や衝突による死亡に注意。"),
+    "Arcane Burst": ("局所Roll", "10秒ごとに1-3か所。貴重品保護 ON。", "約3m以内の対象へ短時間Rollを付与。対象設定に従います。"),
 }
 
 
@@ -110,7 +113,7 @@ def load_events() -> list[Event]:
         fields = [s.strip() for s in line.strip("|").split("|")]
         if len(fields) == 5 and fields[1] in RISK:
             events.append(Event(*fields))
-    assert len(events) == 46, f"Expected 46 events, found {len(events)}"
+    assert len(events) == len(DETAILS), f"Expected {len(DETAILS)} events, found {len(events)}"
     assert {e.name for e in events} == set(DETAILS), "Catalog notes must match release events exactly"
     assert all(e.chance == "6%" for e in events)
     assert {e.name for e in events if e.enabled == "無効"} == {"Roll", "Void"}
@@ -204,9 +207,10 @@ def cover(c, events, total):
          M, 335, W - M * 2, 26, size=12, color=CYAN)
     c.setFillColor(PANEL)
     c.roundRect(M, 147, W - M * 2, 145, 8, fill=1, stroke=0)
-    sections = [("全46イベント", "02 - 13", "events"),
-                ("抽選・時間・対象の共通設定", "14", "settings"),
-                ("危険な組み合わせと安全設定", "15 - 16", "safety")]
+    last_event_page = 1 + math.ceil(len(events) / 4)
+    sections = [(f"全{len(events)}イベント", f"02 - {last_event_page:02d}", "events"),
+                ("抽選・時間・対象の共通設定", str(last_event_page + 1), "settings"),
+                ("危険な組み合わせと安全設定", f"{last_event_page + 2} - {last_event_page + 3}", "safety")]
     for i, (label, pages, dest) in enumerate(sections):
         y = 258 - i * 39
         line(c, label, M + 17, y, 13)
@@ -274,7 +278,7 @@ def box(c, title, body, top, height, color=CYAN, size=11):
 
 
 def settings(c, total):
-    start_page(c, "抽選と共通設定", "すべてREPOConfigで変更できます。数値は新規導入時の既定値。", 14, total, "settings")
+    start_page(c, "抽選と共通設定", "すべてREPOConfigで変更できます。数値は新規導入時の既定値。", total - 2, total, "settings")
     rows = [
         ("ステージで有効になる確率: 50%", "ステージ開始時に1回抽選します。外れたステージでは効果・専用HUD・開始通知は出ません。"),
         ("各イベント: 独立して6% / 同時に最大3個", "設定可能な同時数は1-5個。確率の合計が100%を超えても問題ありません。当選後、同時数と組み合わせ条件により候補を絞ります。"),
@@ -291,13 +295,14 @@ def settings(c, total):
 
 
 def safety(c, total):
-    start_page(c, "危険な組み合わせと安全設定", "既定では危険な組み合わせを許可しません。完全な安全を保証する設定ではありません。", 15, total, "safety")
+    start_page(c, "危険な組み合わせと安全設定", "既定では危険な組み合わせを許可しません。完全な安全を保証する設定ではありません。", total - 1, total, "safety")
     box(c, "危険な組み合わせ: OFF（許可しない）", "強制移動同士、致命的な効果同士、敵への対処を難しくする効果同士などは重なりません。操作や視界の妨害、貴重品損失の増幅にも制限があります。", H - 78, 91)
-    line(c, "常に同時発動しない8組", M, H - 194, 15, CYAN)
+    line(c, "常に同時発動しない9組", M, H - 194, 15, CYAN)
     pairs = [("Freeze", "Stun"), ("Enemy Speed Up", "Enemy Speed Down"),
              ("Enemy Regen", "Enemy Purge"), ("Indestructible", "Fragility"),
              ("Value Surge", "Value Crash"), ("Feather", "Heavy Cargo"),
-             ("Battery Charge", "Battery Drain"), ("Enemy Armor", "Enemy Vulnerability")]
+             ("Battery Charge", "Battery Drain"), ("Enemy Armor", "Enemy Vulnerability"),
+             ("Recharge Cloud", "Battery Drain")]
     for i, (a, b) in enumerate(pairs):
         y = H - 224 - i * 30
         c.setFillColor(PANEL if i % 2 == 0 else INNER)
@@ -306,14 +311,14 @@ def safety(c, total):
         line(c, "/", W / 2, y, 11, AMBER)
         line(c, b, W / 2 + 23, y, 11)
     box(c, "貴重品を守る設定", "対象の貴重品設定と、イベントごとの保護設定が両方ONなら保護します。保護設定はDangerous Valuablesのみ既定OFF、他はON。通常は終了後も2秒（設定1-5秒）保護。Butterfingersは落とした物だけ、落下時から2秒です。", 369, 120)
-    box(c, "知っておきたい注意点", "危険な組み合わせをONにしても上の8組と同時数の上限は残ります。<br/>貴重品に危険な効果は、既定で同時に2個まで。FragilityやValue Crashは、物を危険にさらす効果と重ならないよう選ばれます。", 237, 110, AMBER)
+    box(c, "知っておきたい注意点", "危険な組み合わせをONにしても上の9組と同時数の上限は残ります。<br/>貴重品に危険な効果は、既定で同時に2個まで。FragilityやValue Crashは、物を危険にさらす効果と重ならないよう選ばれます。", 237, 110, AMBER)
     text(c, "出現距離の3mは優先する目安です。地形や置ける場所により、狭いステージでは近くに現れる場合があります。",
          M, 105, W - M * 2, 52, size=11, color=MUTED)
     c.showPage()
 
 
 def groups(c, total):
-    start_page(c, "組み合わせ制限の読み方", "1つのイベントが複数のグループに入ることがあります。以下は同時抽選の制限です。", 16, total, "groups")
+    start_page(c, "組み合わせ制限の読み方", "1つのイベントが複数のグループに入ることがあります。以下は同時抽選の制限です。", total, total, "groups")
     # Complete group membership, automatically checked against the source below.
     risk_groups = [
         ("強制移動", "ForcedMovement", "同じグループ、致命的、広範囲、操作妨害と併用しません。"),
@@ -354,12 +359,11 @@ def main():
     pdfmetrics.registerFont(TTFont("BIZBold", r"C:\Windows\Fonts\BIZ-UDGothicB.ttc", subfontIndex=0))
     events = load_events()
     total = 1 + math.ceil(len(events) / 4) + 3
-    assert total == 16
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     c = canvas.Canvas(str(OUTPUT), pagesize=A4, pageCompression=1)
     c.setTitle(f"Stage Flux v{VERSION} - イベント一覧")
     c.setAuthor("CapackMods")
-    c.setSubject("46イベントのアイコン・効果・既定値・危険な組み合わせ")
+    c.setSubject(f"{len(events)}イベントのアイコン・効果・既定値・危険な組み合わせ")
     cover(c, events, total)
     event_pages(c, events, total)
     settings(c, total)

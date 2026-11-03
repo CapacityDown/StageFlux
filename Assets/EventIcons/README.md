@@ -25,6 +25,11 @@ The HUD loads `Runtime/<StageEffect enum name>.png`. The older export table belo
 Restoration, BatteryDrain, HeavyCargo, Butterfingers, EnemyBlindness, EnemyArmor,
 EnemyVulnerability, SupplyDrop, PlayerSwap and SharedPain.
 
+RechargeCloud, Rockfall and ArcaneBurst are included in `v5.0.0-generation.json`.
+They were created with the built-in image generator using Battery and Levitation as style references.
+The manifest records the complete prompts and source paths. Their transparent masters are in `masters/`,
+and the 512 x 512 HUD images are in `Runtime/`.
+
 | State / Event | Icon |
 |---|---|
 | Waiting | `256/Waiting.png` |

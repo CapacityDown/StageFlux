@@ -1,8 +1,8 @@
-param([string]$ProjectRoot = (Split-Path $PSScriptRoot -Parent))
+param([string]$ProjectRoot = (Split-Path $PSScriptRoot -Parent), [string]$ManifestName = 'v4.3.0-generation.json')
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 $assetRoot = Join-Path $ProjectRoot 'Assets/EventIcons'
-$manifest = Get-Content -LiteralPath (Join-Path $assetRoot 'v4.3.0-generation.json') -Raw | ConvertFrom-Json
+$manifest = Get-Content -LiteralPath (Join-Path $assetRoot $ManifestName) -Raw | ConvertFrom-Json
 foreach ($asset in $manifest.assets) {
     if ($asset.name -notmatch '^[A-Za-z]+$') { throw 'Invalid asset name' }
     $masterPath = Join-Path $assetRoot ('masters/' + $asset.name + '.png')

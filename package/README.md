@@ -4,7 +4,7 @@
 
 ### Overview
 
-Stage Flux adds 46 configurable, random stage-wide events to R.E.P.O. Events can change physics, support or endanger players, alter enemy behavior, activate stage objects, change valuable prices and fragility, and create vanilla hazards.
+Stage Flux adds 49 configurable, random stage events to R.E.P.O. Events can change physics, support or endanger players, alter enemy behavior, activate stage objects, change valuable prices and fragility, and create vanilla hazards.
 
 Only the host needs the mod for gameplay effects. Players without the mod are still affected and receive chat announcements. Players who also install the mod can use the event HUD.
 
@@ -28,7 +28,7 @@ The HUD editor only changes your own display. It does not start events. Guests w
 
 ### Event Catalog
 
-All 46 events are listed below with their risk, default state, default chance, and a short description.
+All 49 events are listed below with their risk, default state, default chance, and a short description.
 
 | Event | Risk | Default | Chance | Description |
 |---|---:|---:|---:|---|
@@ -78,6 +78,9 @@ All 46 events are listed below with their risk, default state, default chance, a
 | Supply Drop | Low | On | 6% | Places useful standard health packs and equipment around the stage. |
 | Player Swap | Medium | On | 6% | Exchanges two eligible living players' positions. |
 | Shared Pain | High | On | 6% | Shares part of one player's damage with other living players. |
+| Recharge Cloud | Low | On | 6% | Creates temporary crystal clouds that recharge nearby battery-powered items. |
+| Rockfall | High | On | 6% | Launches dangerous rocks from existing rockslide locations on supported stages. |
+| Arcane Burst | High | On | 6% | Creates purple crystal bursts that briefly roll nearby selected targets. |
 
 ### Gameplay warnings
 
@@ -90,6 +93,7 @@ All 46 events are listed below with their risk, default state, default chance, a
 - Star Barrage, Traffic Shock, and Dangerous Valuables can damage or kill players and damage valuables.
 - Spider Scare displays the vanilla spider screen effect and follows the game's arachnophobia setting.
 - Roll and Void remain disabled by default.
+- Rockfall and Arcane Burst can cause fatal collisions. Rockfall is only selected on stages with suitable rockslide locations.
 - Shared Pain can endanger the whole team. Its default safety cap uses the host's latest health information; simultaneous damage can still kill players.
 - Player Swap changes your location, not the stage or extraction progress. It skips players who are holding something, crouching, airborne, or tumbling, and skips obstructed destinations.
 - All other events are enabled by default. Review their behavior and risks before playing.
@@ -131,7 +135,7 @@ Update the required mods as well. Existing Stage Flux settings are retained; do 
 - When `AllowDangerousCombinations` is disabled, the selector avoids overlapping forced movement, lethal hazards, enemy pressure, control or visual disruption, and valuable-loss amplification.
 - Fragility and Value Crash no longer overlap events that can physically endanger valuables. No more than two ordinary valuable-risk events can activate together.
 - Freeze / Stun, Enemy Speed Up / Enemy Speed Down, Enemy Regen / Enemy Purge, Indestructible / Fragility, and Value Surge / Value Crash are always mutually exclusive.
-- Feather / Heavy Cargo, Battery Charge / Battery Drain, and Enemy Armor / Enemy Vulnerability are also always mutually exclusive.
+- Feather / Heavy Cargo, Battery Charge / Battery Drain, Recharge Cloud / Battery Drain, and Enemy Armor / Enemy Vulnerability are also always mutually exclusive.
 - In `RandomEachEvent`, a roll with no successful effect simply skips that event.
 - In `FixedForStage`, `FixedPerExtraction`, and `PersistentForStage`, a stage whose initial effect roll selects nothing remains inactive for that stage.
 - Except for `PersistentForStage`, every enabled stage begins with one full configured interval before the first event.
@@ -302,6 +306,8 @@ Activates only compatible vanilla hazard valuables that are already placed on th
 | `ActivationCountMin` / `ActivationCountMax` | `5` / `10` | `1`–`30` | Number of already-placed dangerous valuables selected for activation. |
 | `ReactivationIntervalSeconds` | `10` | `1`–`300` | Seconds between reactivation checks. |
 | `MaximumActiveInstances` | `15` | `1`–`30` | Maximum number of dangerous valuables active at once. |
+| `SnakeCanEnabled` | `true` | `true`, `false` | Allows already-placed snake cans to spring open briefly. |
+| `ExplosiveTowerEnabled` | `true` | `true`, `false` | Allows already-placed dynamite towers to start their trigger sequence. Pulling the handle back can still cancel it. |
 
 #### Roll
 
@@ -371,6 +377,7 @@ Activates additional vanilla enemies that already belong to the current level, t
 | `ReplenishIntervalSeconds` | `10` | `1`–`300` | Seconds between replenishment checks. |
 | `MinimumPlayerDistance` | `3` | `0`–`100` | Requested minimum placement distance from players. |
 | `DespawnOnEnd` | `true` | `true`, `false` | Despawns surviving enemies activated by this event when it ends. |
+| `PonyEnabled` | `true` | `true`, `false` | Includes Pony when an unused Pony is available on the stage. Does not add enemies unavailable on that stage. |
 
 #### Minefield
 
@@ -457,7 +464,7 @@ Enemy damage changes work alongside existing defenses; they do not remove immuni
 
 #### Supply Drop
 
-Creates usable standard health packs and trackers/tools at random suitable stage locations. Items remain after the event and can be collected normally. Weapons, explosives, upgrades and custom items are excluded. This event ignores `Targets`.
+Creates usable standard health packs and trackers/tools at random suitable stage locations. Human Gun, Human Adventure Cable and Recharge Orb are also available through individual switches. Items remain after the event and can be collected normally. Other weapons, explosives, upgrades and custom items are excluded. This event ignores `Targets`.
 
 | Key | Default | Range / Values | Description |
 |---|---:|---|---|
@@ -468,6 +475,30 @@ Creates usable standard health packs and trackers/tools at random suitable stage
 | `MaximumSpawnsPerStage` | `10` | `1`–`50` | Total items that may be created during a stage, including used or destroyed items. The limit also applies across repeated activations and persistent mode. |
 | `HealthPacksEnabled` | `true` | `true`, `false` | Allows standard health packs. |
 | `EquipmentEnabled` | `true` | `true`, `false` | Allows standard trackers and tools. At least one supply category must be enabled. |
+| `HumanGunEnabled` | `true` | `true`, `false` | Allows Human Gun, independently of EquipmentEnabled. |
+| `AdventureCableEnabled` | `true` | `true`, `false` | Allows Human Adventure Cable, independently of EquipmentEnabled. |
+| `RechargeOrbEnabled` | `true` | `true`, `false` | Allows Recharge Orb, independently of EquipmentEnabled. |
+
+#### Recharge Cloud / Rockfall / Arcane Burst
+
+Recharge Cloud places temporary charging crystals. Bring battery-powered items within about 3m to recharge them; more items share the available charge. Temporary crystals cannot be sold and disappear when their cloud or event ends. This event ignores `Targets`.
+
+Rockfall uses existing rockslide locations, with a warning before the rocks arrive. It is not selected on stages without these locations. The spawn-distance setting does not stop rocks from moving toward players afterwards. Only rocks created by this event are removed when it ends.
+
+Arcane Burst creates purple crystal bursts at random locations. Selected targets within about 3m briefly receive Roll. It respects `Targets`, excludes temporary objects created by supported mods, and does not refresh a target while its previous burst effect is still active. Burst effects normally last 5–15 seconds, limited by the remaining event time.
+
+| Key | Default | Range / Values | Description |
+|---|---:|---|---|
+| `Enabled` | `true` | `true`, `false` | Includes each event in independent rolls when available. |
+| `ChancePercent` | `6` | `0`–`100` | Independent chance for each event. |
+| `SpawnCountMin` / `SpawnCountMax` | `1` / `3`; Rockfall: `4` / `8` | `1`–`30` | Number created per wave; reversed limits are sorted. |
+| `SpawnIntervalSeconds` | `10` | `1`–`300` | Seconds between waves. |
+| `MaximumActiveInstances` | `10`; Rockfall: `30` | `1`–`30` | Limits simultaneous event sources. |
+| `MinimumPlayerDistance` | `3` | `0`–`100` | Minimum spawn distance in meters. Unsafe points are skipped. |
+| Recharge Cloud: `CloudDurationSeconds` | `10` | `1`–`300` | Cloud lifetime, limited by remaining event time. |
+| Rockfall / Arcane Burst: `ProtectValuables` | `true` | `true`, `false` | Protects applicable valuables and retains protection for the Safety release delay. Requires Targets.Valuables. |
+
+With dangerous combinations disabled, Rockfall and Arcane Burst avoid conflicting movement and lethal hazards. Recharge Cloud never combines with Battery Drain.
 
 #### Player Swap / Shared Pain
 
@@ -484,13 +515,13 @@ Shared Pain responds to damage, not a timer. There is no interval setting for it
 
 #### Valuable protection
 
-Each applicable event has its own `ProtectValuables` switch: Zero Gravity, Roll, Void, Levitation, Shockwave, Stun Blast, Explosion Rain, Minefield, Star Barrage, Dangerous Valuables, Quake, Heavy Cargo, and Butterfingers. Dangerous Valuables defaults to `false`; all other switches default to `true`. Protection is applied only when both the active event's switch and `Targets > Valuables` are enabled. If several effects run together, protection remains active when at least one of their switches is enabled. All protected events use `Safety > ValuableProtectionReleaseDelaySeconds`; Butterfingers protects only dropped valuables and counts the delay from each drop.
+Each applicable event has its own `ProtectValuables` switch: Zero Gravity, Roll, Void, Levitation, Shockwave, Stun Blast, Explosion Rain, Minefield, Star Barrage, Dangerous Valuables, Quake, Heavy Cargo, Butterfingers, Rockfall, and Arcane Burst. Dangerous Valuables defaults to `false`; all other switches default to `true`. Protection is applied only when both the active event's switch and `Targets > Valuables` are enabled. If several effects run together, protection remains active when at least one of their switches is enabled. All protected events use `Safety > ValuableProtectionReleaseDelaySeconds`; Butterfingers protects only dropped valuables and counts the delay from each drop. Arcane Burst protects only the valuables affected by its bursts, through the end of their Roll effect plus the release delay.
 
 #### Targets
 
 These filters control broad events that can affect multiple physical categories, such as Feather, Zero Gravity, Indestructible, Roll, and Quake. Events with an inherent fixed target ignore `Targets`: Battery Charge, Heal, Fragility, Gumball Hypnosis, Healing Aura, Spider Scare, Traffic Shock, Flicker, enemy control events, player events, Door Chaos, Value Surge, Value Crash, and Dangerous Valuables. Cosmetic Boxes remain independent from general items for broad events. `Valuables` still controls automatic valuable protection even when a valuable-only event ignores it for the event's primary effect.
 
-Heavy Cargo also follows these filters, but cannot affect players, enemies or doors. Restoration, Battery Drain, Butterfingers, Enemy Blindness, Enemy Armor, Enemy Vulnerability, Supply Drop, Player Swap and Shared Pain use their own fixed targets instead.
+Heavy Cargo also follows these filters, but cannot affect players, enemies or doors. Arcane Burst follows these filters within each burst's range. Restoration, Battery Drain, Butterfingers, Enemy Blindness, Enemy Armor, Enemy Vulnerability, Supply Drop, Player Swap, Shared Pain and Recharge Cloud use their own fixed targets instead. Rockfall creates physical hazards whose collisions are not restricted by these filters.
 
 | Key | Default | Description |
 |---|---:|---|
@@ -565,13 +596,13 @@ HUD編集は自分の表示のみを変更し、イベントを発動しませ�
 
 ### 概要
 
-Stage Fluxは、R.E.P.O.のステージ全体に46種類のランダムイベントを発生させるMODです。物理挙動、プレイヤー支援・危険、敵の行動、ステージ設備、貴重品の価格・壊れやすさ、バニラのハザードなどを変化させます。
+Stage Fluxは、R.E.P.O.のステージに49種類のランダムイベントを発生させるMODです。物理挙動、プレイヤー支援・危険、敵の行動、ステージ設備、貴重品の価格・壊れやすさ、バニラのハザードなどを変化させます。
 
 ゲームプレイ上の効果はホストが導入すれば利用できます。MOD未導入の参加者にも効果とチャット通知が適用されます。MOD導入済みの参加者はイベントHUDも利用できます。
 
 ### イベント一覧
 
-全46イベントについて、危険度、デフォルト状態、デフォルト確率、簡潔な動作を掲載しています。
+全49イベントについて、危険度、デフォルト状態、デフォルト確率、簡潔な動作を掲載しています。
 
 | イベント | 危険度 | デフォルト | 確率 | 内容 |
 |---|---:|---:|---:|---|
@@ -621,6 +652,9 @@ Stage Fluxは、R.E.P.O.のステージ全体に46種類のランダムイベン
 | Supply Drop | 低 | 有効 | 6% | バニラの回復アイテムや道具がステージ内に出現します。 |
 | Player Swap | 中 | 有効 | 6% | 条件を満たす生存プレイヤー2人の位置が入れ替わります。 |
 | Shared Pain | 高 | 有効 | 6% | 1人が受けたダメージの一部を、ほかの生存プレイヤーも受けます。 |
+| Recharge Cloud | 低 | 有効 | 6% | 近くの電池式アイテムを充電する、一時的なクリスタルの雲を発生させます。 |
+| Rockfall | 高 | 有効 | 6% | 対応ステージの落石地点から危険な岩を繰り返し発生させます。 |
+| Arcane Burst | 高 | 有効 | 6% | 紫水晶の魔法を噴出させ、近くの対象に短時間Rollを付与します。 |
 
 ### ゲームプレイ上の注意
 
@@ -633,6 +667,7 @@ Stage Fluxは、R.E.P.O.のステージ全体に46種類のランダムイベン
 - Star Barrage、Traffic Shock、Dangerous Valuablesはプレイヤーの死亡や貴重品の破損を引き起こす可能性があります。
 - Spider Scareはバニラの蜘蛛画面演出を表示し、ゲーム本体のクモ恐怖症設定に従います。
 - RollとVoidは引き続きデフォルトで無効です。
+- RockfallとArcane Burstは衝突や転落による死亡を引き起こす場合があります。Rockfallは対応する落石地点があるステージだけで抽選されます。
 - Shared Painはチーム全体を危険にさらします。デフォルトの致死回避はホストが把握している最新の体力を使用するため、同時に別のダメージを受けると死亡する可能性があります。
 - Player Swapは位置だけを交換し、ステージや納品状況を変更しません。物を持っている、しゃがんでいる、空中にいる、転倒しているプレイヤーや、移動先に障害物がある場合は対象から外します。
 - その他のイベントはすべてデフォルトで有効です。プレイ前に動作とリスクを確認してください。
@@ -674,7 +709,7 @@ Stage Fluxは、R.E.P.O.のステージ全体に46種類のランダムイベン
 - `AllowDangerousCombinations`が無効の場合、強制移動・致死性ハザード・敵の脅威・操作や視界の妨害・貴重品損失の増幅が重なる組み合わせを避けます。
 - FragilityとValue Crashは、貴重品を物理的に危険にするイベントと重なりません。通常の貴重品危険イベントも同時に2個までです。
 - Freeze / Stun、Enemy Speed Up / Enemy Speed Down、Enemy Regen / Enemy Purge、Indestructible / Fragility、Value Surge / Value Crashは設定に関係なく同時発生しません。
-- Feather / Heavy Cargo、Battery Charge / Battery Drain、Enemy Armor / Enemy Vulnerabilityも同時発生しません。
+- Feather / Heavy Cargo、Battery Charge / Battery Drain、Recharge Cloud / Battery Drain、Enemy Armor / Enemy Vulnerabilityも同時発生しません。
 - `RandomEachEvent`では、1つも当選しなかった回のイベントをスキップします。
 - `FixedForStage`、`FixedPerExtraction`、`PersistentForStage`では、初回のエフェクト抽選で1つも当選しなかった場合、そのステージではエフェクトとHUDを無効にします。
 - `PersistentForStage`を除き、イベントが有効なステージは最初のイベント前に必ず設定されたインターバルを1回挟みます。
@@ -845,6 +880,8 @@ Traffic Lightの赤信号効果を使用し、ランダムな生存プレイヤ�
 | `ActivationCountMin` / `ActivationCountMax` | `5` / `10` | `1`–`30` | 起動対象として選択する配置済みの危険な貴重品数です。 |
 | `ReactivationIntervalSeconds` | `10` | `1`–`300` | 再起動確認の間隔です。 |
 | `MaximumActiveInstances` | `15` | `1`–`30` | 同時に作動できる危険な貴重品の最大数です。 |
+| `SnakeCanEnabled` | `true` | `true`, `false` | 配置済みのヘビ缶を短時間飛び出させます。 |
+| `ExplosiveTowerEnabled` | `true` | `true`, `false` | 配置済みの爆薬タワーを起動候補に含めます。ハンドルを引き戻す通常の中断操作は可能です。 |
 
 #### Roll
 
@@ -914,6 +951,7 @@ Traffic Lightの赤信号効果を使用し、ランダムな生存プレイヤ�
 | `ReplenishIntervalSeconds` | `10` | `1`–`300` | 不足数を確認する間隔秒数です。 |
 | `MinimumPlayerDistance` | `3` | `0`–`100` | 配置時にプレイヤーから確保する最小距離の目安です。 |
 | `DespawnOnEnd` | `true` | `true`, `false` | イベントが出現させた生存中の敵を終了時に消します。 |
+| `PonyEnabled` | `true` | `true`, `false` | ステージに未出現のPonyがある場合に候補へ含めます。そのステージで利用できない敵は追加しません。 |
 
 #### Minefield
 
@@ -1000,7 +1038,7 @@ Heavy Cargoは貴重品、Cosmetic Boxes、アイテム、武器の`Targets`設�
 
 #### Supply Drop
 
-ステージ内の適切な場所に、バニラの回復アイテムやトラッカー・道具を生成します。通常のアイテムとして拾うことができ、イベント終了後も残ります。武器、爆発物、アップグレード、他MOD固有アイテムは生成しません。`Targets`を無視します。
+ステージ内の適切な場所に、バニラの回復アイテムやトラッカー・道具を生成します。Human Gun、Human Adventure Cable、Recharge Orbも個別設定で候補に含められます。通常のアイテムとして拾うことができ、イベント終了後も残ります。それ以外の武器、爆発物、アップグレード、他MOD固有アイテムは生成しません。`Targets`を無視します。
 
 | 設定 | デフォルト | 範囲 | 説明 |
 |---|---:|---|---|
@@ -1010,7 +1048,31 @@ Heavy Cargoは貴重品、Cosmetic Boxes、アイテム、武器の`Targets`設�
 | `IntervalSeconds` | `15` | `1`～`300` | 生成間隔の秒数です。 |
 | `MaximumSpawnsPerStage` | `10` | `1`～`50` | ステージ全体で生成する合計数の上限です。使用・破壊された分も数え、再発動や常時発動モードでも上限は共通です。 |
 | `HealthPacksEnabled` | `true` | `true`, `false` | バニラの回復アイテムを生成候補に含めます。 |
-| `EquipmentEnabled` | `true` | `true`, `false` | バニラのトラッカー・道具を含めます。少なくとも片方の種類を有効にしてください。 |
+| `EquipmentEnabled` | `true` | `true`, `false` | バニラのトラッカー・道具を含めます。少なくとも1種類の生成候補を有効にしてください。 |
+| `HumanGunEnabled` | `true` | `true`, `false` | Human Gunを含めます。EquipmentEnabledとは独立した設定です。 |
+| `AdventureCableEnabled` | `true` | `true`, `false` | Human Adventure Cableを含めます。EquipmentEnabledとは独立した設定です。 |
+| `RechargeOrbEnabled` | `true` | `true`, `false` | Recharge Orbを含めます。EquipmentEnabledとは独立した設定です。 |
+
+#### Recharge Cloud / Rockfall / Arcane Burst
+
+Recharge Cloudは一時的な充電クリスタルを配置します。電池を使うアイテムを約3m以内へ運ぶと充電でき、複数のアイテムがある場合は充電量を分け合います。充電クリスタルは売却できず、雲の寿命またはイベント終了時に消えます。`Targets`を無視します。
+
+Rockfallは、既存の落石地点から前兆音の後に岩を発生させます。落石地点がないステージでは抽選されません。発生距離を離しても、その後の岩の接近を防ぐものではありません。終了時に消すのは、このイベントが生成した岩だけです。
+
+Arcane Burstはランダム地点で紫水晶の魔法を噴出させ、約3m以内の対象に短時間Rollを付与します。`Targets`に従い、対応MODの内部オブジェクトを除外します。前回の魔法が継続中の対象へ重ねがけは行いません。効果は通常5～15秒ですが、イベントの残り時間を超えないよう短縮します。
+
+| 設定 | デフォルト | 範囲 | 内容 |
+|---|---:|---|---|
+| `Enabled` | `true` | `true`, `false` | 利用可能なステージで、各イベントを抽選に含めます。 |
+| `ChancePercent` | `6` | `0`～`100` | 各イベントの独立発生確率です。 |
+| `SpawnCountMin` / `SpawnCountMax` | `1` / `3`、Rockfallは`4` / `8` | `1`～`30` | 1回で発生させる数です。逆転時は小さい順に扱います。 |
+| `SpawnIntervalSeconds` | `10` | `1`～`300` | 繰り返し発生する間隔の秒数です。 |
+| `MaximumActiveInstances` | `10`、Rockfallは`30` | `1`～`30` | 同時に存在する発生源の上限です。 |
+| `MinimumPlayerDistance` | `3` | `0`～`100` | プレイヤーから発生地点までの最短距離です。安全な地点がない場合は生成を見送ります。 |
+| Recharge Cloud: `CloudDurationSeconds` | `10` | `1`～`300` | 充電雲の継続秒数です。イベントの残り時間を上限とします。 |
+| Rockfall / Arcane Burst: `ProtectValuables` | `true` | `true`, `false` | 対象貴重品を保護します。解除後もSafetyの設定秒数だけ保護を維持します。Targets.Valuablesが必要です。 |
+
+危険な組み合わせが無効の場合、RockfallとArcane Burstは競合する強制移動や致死的なハザードとの同時発生を避けます。Recharge CloudとBattery Drainは同時発生しません。
 
 #### Player Swap / Shared Pain
 
@@ -1027,13 +1089,13 @@ Shared Painは被弾に反応するため、発生間隔の設定はありませ
 
 #### 貴重品の保護
 
-対象イベントごとに`ProtectValuables`を設定できます。対象はZero Gravity、Roll、Void、Levitation、Shockwave、Stun Blast、Explosion Rain、Minefield、Star Barrage、Dangerous Valuables、Quake、Heavy Cargo、Butterfingersです。Dangerous Valuablesはデフォルト`false`、その他はデフォルト`true`です。イベント側の設定と`Targets > Valuables`の両方が有効な場合だけ保護します。複数エフェクトの同時発生時は、いずれか1つの保護設定が有効なら保護を維持します。すべての保護対象イベントで`Safety > ValuableProtectionReleaseDelaySeconds`を使用します。Butterfingersは落とした貴重品だけを対象に、落とすたびにその時点から保護時間を数えます。
+対象イベントごとに`ProtectValuables`を設定できます。対象はZero Gravity、Roll、Void、Levitation、Shockwave、Stun Blast、Explosion Rain、Minefield、Star Barrage、Dangerous Valuables、Quake、Heavy Cargo、Butterfingers、Rockfall、Arcane Burstです。Dangerous Valuablesはデフォルト`false`、その他はデフォルト`true`です。イベント側の設定と`Targets > Valuables`の両方が有効な場合だけ保護します。複数エフェクトの同時発生時は、いずれか1つの保護設定が有効なら保護を維持します。すべての保護対象イベントで`Safety > ValuableProtectionReleaseDelaySeconds`を使用します。Butterfingersは落とした貴重品だけを対象に、落とすたびにその時点から保護時間を数えます。Arcane Burstは魔法が当たった貴重品だけを、Rollの終了とその後の設定秒数まで保護します。
 
 #### Targets
 
 各設定は、Feather、Zero Gravity、Indestructible、Roll、Quakeなど、複数の物理カテゴリへ適用できるイベントの対象を選択します。固有対象を持つBattery Charge、Heal、Fragility、Gumball Hypnosis、Healing Aura、Spider Scare、Traffic Shock、Flicker、敵制御イベント、プレイヤーイベント、Door Chaos、Value Surge、Value Crash、Dangerous Valuablesは`Targets`を無視します。Cosmetic Boxesは複数対象イベントでは一般アイテムと別に指定できます。`Valuables`は貴重品専用イベントの主効果には影響しませんが、貴重品の自動保護は引き続き制御します。
 
-Heavy Cargoもこの設定に従いますが、プレイヤー、敵、扉には適用しません。Restoration、Battery Drain、Butterfingers、Enemy Blindness、Enemy Armor、Enemy Vulnerability、Supply Drop、Player Swap、Shared Painは固有対象へ適用します。
+Heavy Cargoもこの設定に従いますが、プレイヤー、敵、扉には適用しません。Arcane Burstは噴出範囲内でこの設定に従います。Restoration、Battery Drain、Butterfingers、Enemy Blindness、Enemy Armor、Enemy Vulnerability、Supply Drop、Player Swap、Shared Pain、Recharge Cloudは固有対象へ適用します。Rockfallが発生させた岩の衝突は、この設定では制限しません。
 
 | 設定キー | デフォルト | 内容 |
 |---|---:|---|

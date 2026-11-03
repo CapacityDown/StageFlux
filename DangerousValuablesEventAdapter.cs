@@ -9,6 +9,9 @@ namespace REPOJP.StagePhysicsEvents;
 
 internal sealed class DangerousValuablesEventAdapter
 {
+    private static readonly Dictionary<SnakeInACanValuable, float> SnakeHoldUntil = new();
+    internal static bool HoldSnakeOpen(SnakeInACanValuable snake) =>
+        SnakeHoldUntil.TryGetValue(snake, out float until) && Time.time < until;
     private static readonly MethodInfo? CarUpdateStateMethod =
         AccessTools.Method(typeof(ValuableCar), "UpdateState", new[] { typeof(ValuableCar.State) });
     private static readonly MethodInfo? PlaneUpdateStateMethod =
@@ -68,6 +71,7 @@ internal sealed class DangerousValuablesEventAdapter
         // Activated stage valuables remain in their current dangerous state
         // after the event. Dangerous Valuables never creates new valuables.
         _instances.Clear();
+        SnakeHoldUntil.Clear();
         _nextReactivationAt = 0f;
     }
 
@@ -80,6 +84,19 @@ internal sealed class DangerousValuablesEventAdapter
         }
         switch (instance.Kind)
         {
+            case DangerousValuableKind.SnakeCan:
+                SnakeInACanValuable? snake = instance.Source.GetComponentInChildren<SnakeInACanValuable>(true);
+                if (snake == null || snake.snakeOut || !snake.CollisionFree()) return false;
+                SnakeHoldUntil[snake] = Time.time + 1.5f;
+                snake.SnakeOut();
+                break;
+            case DangerousValuableKind.ExplosiveTower:
+                ValuableDesertExplosiveTower? tower = instance.Source.GetComponentInChildren<ValuableDesertExplosiveTower>(true);
+                if (tower == null || tower.stateCurrent != ValuableDesertExplosiveTower.State.Idle) return false;
+                // Same press as a player: the handle can still be pulled back to cancel.
+                tower.triggeredByGrabber = true;
+                tower.StateSet(ValuableDesertExplosiveTower.State.Trigger);
+                break;
             case DangerousValuableKind.IceSaw:
                 instance.Source.GetComponentInChildren<IceSawValuable>(true)?.TrapActivate();
                 break;
@@ -185,6 +202,8 @@ internal sealed class DangerousValuablesEventAdapter
                         break;
                     case DangerousValuableKind.Egg:
                     case DangerousValuableKind.Broom:
+                    case DangerousValuableKind.SnakeCan:
+                    case DangerousValuableKind.ExplosiveTower:
                         Activate(instance);
                         break;
                 }
@@ -318,6 +337,10 @@ internal sealed class DangerousValuablesEventAdapter
             return true;
         }
         kind = default;
+        effect = source.GetComponentInChildren<SnakeInACanValuable>(true);
+        if (effect != null) { kind = DangerousValuableKind.SnakeCan; return true; }
+        effect = source.GetComponentInChildren<ValuableDesertExplosiveTower>(true);
+        if (effect != null) { kind = DangerousValuableKind.ExplosiveTower; return true; }
         effect = null;
         return false;
     }
@@ -370,6 +393,8 @@ internal sealed class DangerousValuablesEventAdapter
         DangerousValuableKind.Car => _config.DangerousValuablesCarEnabled.Value,
         DangerousValuableKind.Plane => _config.DangerousValuablesPlaneEnabled.Value,
         DangerousValuableKind.Broom => _config.DangerousValuablesBroomEnabled.Value,
+        DangerousValuableKind.SnakeCan => _config.DangerousValuablesSnakeCanEnabled.Value,
+        DangerousValuableKind.ExplosiveTower => _config.DangerousValuablesExplosiveTowerEnabled.Value,
         _ => false
     };
 
@@ -434,4 +459,14 @@ internal sealed class DangerousValuablesEventAdapter
         internal LevitationActivationKind Activation { get; }
         internal Component? Effect { get; }
     }
+}
+
+// The normal can immediately retracts when nobody is holding it. Preserve a brief
+// visible surprise for event-triggered cans only; all normal can behavior remains.
+[HarmonyPatch(typeof(SnakeInACanValuable), "SnakeIn")]
+internal static class DangerousSnakeCanHoldPatch
+{
+    [HarmonyPrefix]
+    private static bool Prefix(SnakeInACanValuable __instance) =>
+        !DangerousValuablesEventAdapter.HoldSnakeOpen(__instance);
 }

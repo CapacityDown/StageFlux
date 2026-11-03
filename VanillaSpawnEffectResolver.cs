@@ -37,7 +37,9 @@ internal enum DangerousValuableKind
     Egg,
     Car,
     Plane,
-    Broom
+    Broom,
+    SnakeCan,
+    ExplosiveTower
 }
 
 internal enum LevitationActivationKind
@@ -80,6 +82,8 @@ internal sealed class VanillaSpawnEffectResolver
             StageEffect.Levitation => TryResolveLevitation(out resolved),
             StageEffect.GumballHypnosis => TryResolveGumball(out resolved),
             StageEffect.HealingAura => TryResolveHealingAura(out resolved),
+            StageEffect.RechargeCloud => TryResolveValuableComponent<ValuableDesertEnergyCrystalChunk>(out resolved),
+            StageEffect.ArcaneBurst => TryResolveValuableComponent<ValuableWizardCrystal>(out resolved),
             StageEffect.StarBarrage => TryResolveStarProjectile(out resolved),
             StageEffect.SpiderScare => TryResolveValuableComponent<ValuableSpiderPotion>(out resolved),
             StageEffect.TrafficShock => TryResolveValuableComponent<TrafficLightValuable>(out resolved),
@@ -416,7 +420,7 @@ internal sealed class VanillaSpawnEffectResolver
         return TryGetVanillaPrefab(item.prefab, out resolved);
     }
 
-    private static bool TryGetVanillaPrefab(PrefabRef prefabRef, out ResolvedSpawnPrefab resolved)
+    internal static bool TryGetVanillaPrefab(PrefabRef prefabRef, out ResolvedSpawnPrefab resolved)
     {
         try
         {

@@ -127,7 +127,7 @@ internal sealed class EventMenu : MonoBehaviour
                 }
                 break;
             case View.Guide:
-                Text("Explore all 46 events. Risk describes possible danger, not the chance of being selected.");
+                Text($"Explore all {StageEffectSet.IndividualEffects.Count} events. Risk describes possible danger, not the chance of being selected.");
                 Text("Roll may kill enemies. Void may kill players. High-risk events can cause damage or loss of valuables.");
                 foreach (StageEffect effect in StageEffectSet.IndividualEffects) AddGuide(entries, effect);
                 break;

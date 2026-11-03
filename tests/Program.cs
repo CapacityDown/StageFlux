@@ -42,9 +42,9 @@ Check(EventMenuPolicy.CanEdit(true, false, false, false), "Single player can edi
 Check(EventMenuPolicy.CanEdit(true, true, true, true), "Host can edit");
 Check(!EventMenuPolicy.CanEdit(true, true, true, false), "Guests cannot edit");
 Check(!EventMenuPolicy.CanEdit(true, true, false, true), "Disconnected multiplayer cannot edit");
-long allEventBits = (1L << 46) - 1;
+long allEventBits = (1L << 49) - 1;
 Check(EventMenuPolicy.TryDecode(EventMenuPolicy.Encode(3, allEventBits, true), 3, out long enabledMask, out bool enabled) &&
-    enabled && enabledMask == allEventBits, "All 46 event settings round-trip without truncation");
+    enabled && enabledMask == allEventBits, "All 49 event settings round-trip without truncation");
 Check(EventMenuPolicy.TryDecode("1:3:0:0", 3, out enabledMask, out enabled) && enabledMask == 0 && !enabled, "All-off is distinct from unavailable");
 foreach (string? bad in new[] { null, "", "2:3:1:1", "1:2:1:1", "1:3:-1:1", "1:3:1:2", "1:3:NaN:1", "1:3:9223372036854775808:1", "1:3:1:1:extra" })
     Check(!EventMenuPolicy.TryDecode(bad, 3, out _, out _), "Reject malformed, foreign-host or unsupported settings: " + bad);
@@ -63,7 +63,7 @@ using (var manifest = System.Text.Json.JsonDocument.Parse(File.ReadAllText(Path.
 string playerReadme = File.ReadAllText(Path.Combine(root, "package/README.md"));
 Check(playerReadme.Contains("### Questions and bug reports"), "English guide explains where to report problems");
 Check(playerReadme.Contains("### お問い合わせ・不具合報告"), "Japanese guide explains where to report problems");
-Check(System.Text.RegularExpressions.Regex.Matches(guideSource, @"StageEffect\.\w+ =>").Count == 46, "Guide has all 46 event descriptions");
+Check(System.Text.RegularExpressions.Regex.Matches(guideSource, @"StageEffect\.\w+ =>").Count == 49, "Guide has all 49 event descriptions");
 string dll = Path.Combine(root, "bin/Release/netstandard2.1/StagePhysicsEvents.dll");
 using var pe = new PEReader(File.OpenRead(dll));
 MetadataReader md = pe.GetMetadataReader();
@@ -93,7 +93,8 @@ foreach (System.Text.RegularExpressions.Match match in System.Text.RegularExpres
     string effectName = match.Groups[1].Value;
     var display = System.Text.RegularExpressions.Regex.Match(models, "StageEffect\\." + effectName + " => \"([^\"]+)\"");
     string section = display.Success ? display.Groups[1].Value : effectName;
-    Check(originalConfig.Contains("\"" + section + "\", \"Enabled\"") || events.Contains(effectName), "Menu binds an existing setting: " + section);
+    Check(originalConfig.Contains("\"" + section + "\", \"Enabled\"") || events.Contains(effectName) ||
+        new[] { "RechargeCloud", "Rockfall", "ArcaneBurst" }.Contains(effectName), "Menu binds an existing setting: " + section);
 }
 foreach (string pair in new[] { "StageEffect.Feather, StageEffect.HeavyCargo", "StageEffect.Battery, StageEffect.BatteryDrain", "StageEffect.EnemyArmor, StageEffect.EnemyVulnerability" })
     Check(originalConfig.Contains("IsPair(candidate, active, " + pair + ")"), "Logical exclusion: " + pair);
@@ -110,9 +111,50 @@ Check(hooks.Contains("Record(__instance, __state, !hurtByHeal)"), "Local shared 
 var effectType = md.GetTypeDefinition(md.TypeDefinitions.Single(handle => md.GetString(md.GetTypeDefinition(handle).Name) == "StageEffect"));
 var bits = effectType.GetFields().Select(md.GetFieldDefinition).Where(field => !field.GetDefaultValue().IsNil)
     .Select(field => md.GetBlobReader(md.GetConstant(field.GetDefaultValue()).Value).ReadInt64()).Where(value => value != 0).ToList();
-Check(bits.Count == 46 && bits.Distinct().Count() == 46 && bits.All(value => (value & (value - 1)) == 0), "All 46 event bits are distinct");
-Check(File.ReadAllText(Path.Combine(root, "package/README.md")).Contains("All 46 events"), "English catalog count");
-Check(File.ReadAllText(Path.Combine(root, "package/README.md")).Contains("全46イベント"), "Japanese catalog count");
+Check(bits.Count == 49 && bits.Distinct().Count() == 49 && bits.All(value => (value & (value - 1)) == 0), "All 49 event bits are distinct");
+Check(File.ReadAllText(Path.Combine(root, "package/README.md")).Contains("All 49 events"), "English catalog count");
+Check(File.ReadAllText(Path.Combine(root, "package/README.md")).Contains("全49イベント"), "Japanese catalog count");
+
+foreach (bool player in new[] { false, true })
+for (int remaining = 0; remaining <= 300; remaining++)
+{
+    float payload = SunstoneEventPolicy.RollPayloadDuration(15, remaining, player);
+    Check(payload * (player ? 2 : 1) == Math.Min(15, remaining), "Native Roll timer must end no later than the event");
+}
+Check(SunstoneEventPolicy.RollPayloadDuration(float.NaN, 10, true) == 0, "Reject invalid Roll duration");
+Check(SunstoneEventPolicy.RollPayloadDuration(10, -1, false) == 0, "Expired event cannot apply Roll");
+Check(SunstoneEventPolicy.RollPayloadDuration(10, float.PositiveInfinity, true) == 0, "Reject infinite event timer");
+for (int active = 0; active <= 35; active++)
+for (int requested = 0; requested <= 30; requested++)
+    Check(SunstoneEventPolicy.WaveCapacity(requested, 10, active) == Math.Min(requested, Math.Max(0, 10 - active)), "Wave respects remaining capacity");
+string sunstone = File.ReadAllText(Path.Combine(root, "SunstoneEventAdapter.cs"));
+string sunstoneConfig = File.ReadAllText(Path.Combine(root, "SunstoneEventConfig.cs"));
+foreach (string name in new[] { "RechargeCloud", "Rockfall", "ArcaneBurst" })
+{
+    Check(md.ManifestResources.Any(h => md.GetString(md.GetManifestResource(h).Name).EndsWith("Runtime." + name + ".png")), name + " icon embedded");
+    Check(sunstoneConfig.Contains("StageEffect." + name), name + " configurable");
+    Check(controller.Contains("StageEffect." + name), name + " availability wired");
+}
+Check(sunstone.Contains("generation == _generation") && sunstone.Contains("finally { if (generation == _generation) _pending.Remove(effect); }"), "Cancelled wave cannot erase a later wave reservation");
+Check(sunstone.Contains("RpcTarget.AllViaServer"), "Native source activation follows network instantiation");
+Check(sunstone.Contains("onDestroy.RemoveListener(crystal.Destroyed)"), "Only event carriers replace unfiltered native crystal target selection");
+Check(sunstone.Contains("PhysGrabObjectRegistry.Snapshot(_targets)") && sunstone.Contains("IsTricksterDecoy(target)"), "Arcane targets exclude internal carriers and decoys");
+Check(sunstone.Contains("valuable.dollarValueSet = true; valuable.dollarValueOriginal = 0f; valuable.dollarValueCurrent = 0f"), "Event crystals cannot generate sale value");
+Check(sunstone.Contains("FarEnough(position, minimumDistance)"), "Rockfall never relaxes configured minimum distance");
+Check(sunstoneConfig.Contains("DefaultEventChancePercent") && sunstoneConfig.Contains("10, 1, 300"), "New events share chance defaults and integer interval limits");
+Check(controller.Contains("_sunstoneEvents?.Stop()"), "New events cleaned up at event and stage end");
+Check(controller.Contains("_sunstoneEvents.TickProtection()") && controller.Contains("_sunstoneEvents?.ClearProtection()"), "Arcane protection tail ticks across intervals and clears between stages");
+Check(sunstone.Contains("FindObjectsByType<SemiAffectTorque>"), "Arcane Burst preserves existing native Roll effects");
+string pluginSource = File.ReadAllText(Path.Combine(root, "StagePhysicsEventsPlugin.cs"));
+Check(pluginSource.Contains("PatchAll(typeof(RechargeCloudCarrierTargetsPatch))") && pluginSource.Contains("PatchAll(typeof(DangerousSnakeCanHoldPatch))"), "New native adapters' patches are registered");
+Check(sunstone.Contains("GetComponentInParent<RechargeCloudSourceMarker>() == null) return true"), "Recharge patch cannot change normal crystals or external carriers");
+string waveSource = File.ReadAllText(Path.Combine(root, "EnemyWaveEventAdapter.cs"));
+Check(waveSource.Contains("EnemyWavePonyEnabled.Value") && waveSource.Contains("GetComponentInChildren<EnemySnatcher>(true)"), "Pony toggle covers inactive stage hierarchies");
+Check(waveSource.Contains("_externallyNotifiedLeaseKeys.Add(key)"), "EEV external spawn notification remains once per lease");
+string dangerousSource = File.ReadAllText(Path.Combine(root, "DangerousValuablesEventAdapter.cs"));
+Check(dangerousSource.Contains("DangerousValuableKind.SnakeCan") && dangerousSource.Contains("DangerousValuableKind.ExplosiveTower"), "New dangerous valuable kinds are selectable");
+Check(!dangerousSource.Contains("PhotonNetwork.Instantiate") && !dangerousSource.Contains("Object.Instantiate"), "Dangerous Valuables cannot create new valuables");
+Check(dangerousSource.Contains("CanActivateValuableEffect(instance.Effect)"), "Engineer gate remains immediately before dangerous activation");
 
 // Verify methods against the installed, non-publicized game assembly, not only stubs.
 using var gamePe = new PEReader(File.OpenRead(args[1]));

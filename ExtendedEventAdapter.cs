@@ -229,9 +229,16 @@ internal sealed class ExtendedEventAdapter
         HashSet<string> paths = new(StringComparer.Ordinal);
         foreach (Item item in VanillaSpawnEffectResolver.EnumerateItems())
         {
+            if (!VanillaSpawnEffectResolver.TryGetVanillaPrefab(item, out ResolvedSpawnPrefab prefab)) continue;
+            bool humanGun = prefab.Prefab.GetComponentInChildren<ItemGunRevolver>(true) != null;
+            bool adventureCable = prefab.Prefab.GetComponentInChildren<ItemMeleeWhip>(true) != null;
+            bool rechargeOrb = prefab.Prefab.GetComponentInChildren<ItemOrbBattery>(true) != null;
             bool allowed = (_config.SupplyDropHealthPacks.Value && item.itemType == SemiFunc.itemType.healthPack) ||
                 (_config.SupplyDropEquipment.Value && (item.itemType == SemiFunc.itemType.tracker || item.itemType == SemiFunc.itemType.tool));
-            if (allowed && VanillaSpawnEffectResolver.TryGetVanillaPrefab(item, out ResolvedSpawnPrefab prefab) &&
+            if (humanGun) allowed = _config.SupplyDropHumanGun.Value;
+            else if (adventureCable) allowed = _config.SupplyDropAdventureCable.Value;
+            else if (rechargeOrb) allowed = _config.SupplyDropRechargeOrb.Value;
+            if (allowed &&
                 prefab.Prefab.GetComponentInChildren<PhotonView>(true) != null &&
                 prefab.Prefab.GetComponentInChildren<ItemAttributes>(true) != null && paths.Add(prefab.ResourcePath))
                 result.Add(prefab);

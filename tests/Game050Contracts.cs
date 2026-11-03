@@ -111,6 +111,12 @@ internal static class Game050Contracts
         Rpc("ValuablePlane", "UpdateStateRPC", "Int32");
         Rpc("ScreamDollValuable", "SetStateRPC", "States");
         Rpc("TrafficLightValuable", "SetStateRPC", "States");
+        Rpc("ValuableDesertEnergyCrystalChunk", "ChargeCloudStartRPC", "Single");
+        Rpc("ValuableWizardCrystal", "CrystalDestroyedEffectRPC", "Int32[]", "Single[]", "Single[]", "Single[]", "Single[]", "Vector3");
+        Rpc("RockSlide", "RockSlideRPC", "Vector3");
+        Rpc("RockSlideRock", "LaunchRPC", "Vector3", "Single");
+        Rpc("SnakeInACanValuable", "SnakeOutRPC");
+        Rpc("ValuableDesertExplosiveTower", "StateSetRPC", "State");
 
         using var manifest = System.Text.Json.JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "package/manifest.json")));
         Verify(manifest.RootElement.GetProperty("version_number").GetString() == "5.0.0", "Manifest release version");

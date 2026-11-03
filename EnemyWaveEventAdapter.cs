@@ -30,7 +30,7 @@ internal sealed class EnemyWaveEventAdapter
         _config = config;
     }
 
-    internal bool EnsureAvailable() => EnemyDirector.instance != null && SpawnMethod != null;
+    internal bool EnsureAvailable() => EnemyDirector.instance != null && SpawnMethod != null && CollectDormantEnemies().Count > 0;
 
     internal void Begin(int targetCount)
     {
@@ -127,9 +127,21 @@ internal sealed class EnemyWaveEventAdapter
                 break;
             }
             EnemyParent selected = candidates[index];
+            if (selected == null)
+            {
+                _pendingSpawnCount = Mathf.Max(0, _pendingSpawnCount - 1);
+                continue;
+            }
             int key = EnemyKey(selected);
             try
             {
+                // A native wave or another mod may have claimed this enemy after selection.
+                if (selected == null || IsSpawned(selected) || !IsSetupDone(selected))
+                {
+                    _pendingLeaseKeys.Remove(key);
+                    _pendingSpawnCount = Mathf.Max(0, _pendingSpawnCount - 1);
+                    continue;
+                }
                 SpawnMethod!.Invoke(selected, Array.Empty<object>());
                 _leasedEnemies[key] = selected;
                 if (_externallyNotifiedLeaseKeys.Add(key))
@@ -207,6 +219,8 @@ internal sealed class EnemyWaveEventAdapter
         foreach (EnemyParent enemyParent in Resources.FindObjectsOfTypeAll<EnemyParent>())
         {
             if (enemyParent == null || !enemyParent.gameObject.scene.IsValid() || !IsSetupDone(enemyParent) ||
+                StagePhysicsEffectCarrierUtility.IsInternalCarrier(enemyParent) ||
+                (!_config.EnemyWavePonyEnabled.Value && enemyParent.GetComponentInChildren<EnemySnatcher>(true) != null) ||
                 IsSpawned(enemyParent) || _leasedEnemies.ContainsKey(EnemyKey(enemyParent)) ||
                 _pendingLeaseKeys.Contains(EnemyKey(enemyParent)))
             {

@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Mono.Cecil" Version="0.11.4" />
     <Compile Include="../ExtendedEventPolicy.cs" Link="ExtendedEventPolicy.cs" />
+    <Compile Include="../SunstoneEventPolicy.cs" Link="SunstoneEventPolicy.cs" />
     <Compile Include="../EventMenuPolicy.cs" Link="EventMenuPolicy.cs" />
   </ItemGroup>
 </Project>

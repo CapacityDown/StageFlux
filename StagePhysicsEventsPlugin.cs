@@ -55,6 +55,8 @@ public sealed class StagePhysicsEventsPlugin : BaseUnityPlugin
             _harmony.PatchAll(typeof(NotificationEnemyReactionPatches));
             _harmony.PatchAll(typeof(EnemySpeedPatches));
             _harmony.PatchAll(typeof(ExtendedEventPatches));
+            _harmony.PatchAll(typeof(RechargeCloudCarrierTargetsPatch));
+            _harmony.PatchAll(typeof(DangerousSnakeCanHoldPatch));
             _harmony.PatchAll(typeof(EventMenuScroll));
             SceneManager.activeSceneChanged += ActiveSceneChanged;
             Logger.LogInfo($"{PluginName} {PluginVersion} loaded.");

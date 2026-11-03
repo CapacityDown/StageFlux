@@ -64,6 +64,9 @@
     <Compile Include="StagePhysicsEventsPlugin.cs" />
     <Compile Include="StagePhysicsConfig.cs" />
     <Compile Include="ExtendedEventConfig.cs" />
+    <Compile Include="SunstoneEventConfig.cs" />
+    <Compile Include="SunstoneEventAdapter.cs" />
+    <Compile Include="SunstoneEventPolicy.cs" />
     <Compile Include="ExtendedEventPolicy.cs" />
     <Compile Include="ExtendedEventAdapter.cs" />
     <Compile Include="ExtendedEventPatches.cs" />
