@@ -133,7 +133,7 @@ internal sealed class EventHudEditor : MonoBehaviour
     {
         GameObject obj = new("Label", typeof(RectTransform), typeof(TextMeshProUGUI)); obj.transform.SetParent(parent, false);
         var text = obj.GetComponent<TextMeshProUGUI>(); text.font = _font; text.fontSize = fontSize; text.text = value; text.color = Color.white;
-        text.richText = false; text.raycastTarget = false; text.enableWordWrapping = false; text.overflowMode = TextOverflowModes.Ellipsis;
+        text.richText = false; text.raycastTarget = false; text.textWrappingMode = TextWrappingModes.NoWrap; text.overflowMode = TextOverflowModes.Ellipsis;
         text.rectTransform.anchorMin = text.rectTransform.anchorMax = new Vector2(0, 1); text.rectTransform.pivot = new Vector2(0, 1);
         text.rectTransform.anchoredPosition = position; text.rectTransform.sizeDelta = size;
         return text;

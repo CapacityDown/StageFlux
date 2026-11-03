@@ -191,7 +191,7 @@ internal sealed class MinefieldEventAdapter
                 physObject.Teleport(placementPosition, placementRotation);
                 if (physObject.rb != null)
                 {
-                    physObject.rb.velocity = Vector3.zero;
+                    physObject.rb.linearVelocity = Vector3.zero;
                     physObject.rb.angularVelocity = Vector3.zero;
                 }
                 // Newly instantiated items may still be settling or falling. Keep the mine

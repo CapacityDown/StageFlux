@@ -96,13 +96,15 @@ All 46 events are listed below with their risk, default state, default chance, a
 
 ### Requirements
 
-- BepInExPack 5.4.2305 or a later compatible version
-- REPOConfig 1.2.6 or a later compatible version
-- MenuLib 2.5.2 or a later compatible version
+- R.E.P.O. v0.5.0
+- BepInExPack
+- REPOConfig and MenuLib compatible with your game
 
 ### Installation
 
 Install with a compatible mod manager, or place `StagePhysicsEvents.dll` in the profile's `BepInEx/plugins` directory.
+
+Update the required mods as well. Existing Stage Flux settings are retained; do not delete your configuration when updating.
 
 ### Multiplayer
 
@@ -637,12 +639,15 @@ Stage Fluxは、R.E.P.O.のステージ全体に46種類のランダムイベン
 
 ### 必須MOD
 
-- BepInExPack 5.4.2305以降の互換バージョン
-- REPOConfig 1.2.6以降の互換バージョン
+- R.E.P.O. v0.5.0
+- BepInExPack
+- ゲームに対応したREPOConfigとMenuLib
 
 ### 導入方法
 
 対応するMODマネージャーから導入するか、`StagePhysicsEvents.dll`をプロファイルの`BepInEx/plugins`フォルダーへ配置してください。
+
+必須MODもあわせて更新してください。既存のStage Flux設定は引き継がれるため、更新時に設定ファイルを削除する必要はありません。
 
 ### マルチプレイ
 

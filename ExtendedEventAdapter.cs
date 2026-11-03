@@ -23,10 +23,6 @@ internal sealed class ExtendedEventAdapter
     internal static readonly FieldInfo? HealthValue = AccessTools.Field(typeof(PlayerHealth), "health");
     internal static readonly FieldInfo? HealthMaximum = AccessTools.Field(typeof(PlayerHealth), "maxHealth");
     internal static readonly FieldInfo? HealthReady = AccessTools.Field(typeof(PlayerHealth), "healthSet");
-    private static readonly MethodInfo? BatterySyncLogic = AccessTools.Method(typeof(ItemBattery), "BatteryFullPercentChangeLogic", new[] { typeof(int), typeof(bool) });
-    private static readonly FieldInfo? BatteryPreviousBars = AccessTools.Field(typeof(ItemBattery), "batteryLifeCountBarsPrev");
-    private static readonly FieldInfo? BatteryPreviousLife = AccessTools.Field(typeof(ItemBattery), "batteryLifePrev");
-    private static readonly FieldInfo? ItemInstanceName = AccessTools.Field(typeof(ItemAttributes), "instanceName");
 
     private readonly MonoBehaviour _owner;
     private readonly StagePhysicsConfig _config;
@@ -57,7 +53,6 @@ internal sealed class ExtendedEventAdapter
     internal bool EnsureAvailable(StageEffect effect) => effect switch
     {
         StageEffect.Restoration => HealLogic != null && ValuableOriginal != null && ValuableCurrent != null && ValuableReady != null,
-        StageEffect.BatteryDrain => BatterySyncLogic != null && BatteryPreviousBars != null && BatteryPreviousLife != null,
         StageEffect.PlayerSwap => LivingPlayers().Count >= 2 && PlayerGrounded != null,
         StageEffect.SharedPain => LivingPlayers().Count >= 2 && HealthValue != null && HealthReady != null,
         StageEffect.SupplyDrop => ResolveSupplies().Count > 0 && _suppliesThisStage < _config.SupplyDropMaximumPerStage.Value,
@@ -140,7 +135,7 @@ internal sealed class ExtendedEventAdapter
 
     private void RestoreValuables()
     {
-        foreach (ValuableObject valuable in UnityEngine.Object.FindObjectsOfType<ValuableObject>())
+        foreach (ValuableObject valuable in UnityEngine.Object.FindObjectsByType<ValuableObject>(FindObjectsSortMode.InstanceID))
         {
             if (!IsStageObject(valuable) || ValuableReady?.GetValue(valuable) is not true)
                 continue;
@@ -170,7 +165,7 @@ internal sealed class ExtendedEventAdapter
 
     private void DrainBatteries()
     {
-        foreach (ItemBattery battery in UnityEngine.Object.FindObjectsOfType<ItemBattery>())
+        foreach (ItemBattery battery in UnityEngine.Object.FindObjectsByType<ItemBattery>(FindObjectsSortMode.InstanceID))
         {
             if (!IsStageObject(battery))
                 continue;
@@ -183,18 +178,11 @@ internal sealed class ExtendedEventAdapter
                 PhotonView? view = battery.GetComponent<PhotonView>();
                 if (SemiFunc.IsMultiplayer() && (view == null || view.ViewID == 0))
                     return;
-                int bars = Mathf.Clamp(Mathf.RoundToInt(charge * battery.batteryBars / 100f), 0, battery.batteryBars);
-                BatterySyncLogic!.Invoke(battery, new object[] { bars, false });
-                if (SemiFunc.IsMultiplayer())
-                    view!.RPC("BatteryFullPercentChangeRPC", RpcTarget.Others, bars, false);
-                // Vanilla bar synchronization snaps charge to a whole bar. Keep the
-                // host's exact percentage and minimum; peers receive vanilla bar visuals.
+                // 0.5.0 synchronizes the exact charge snapshot as well as the bars.
+                // Use its authority-checked entry point, including its bar rounding,
+                // saved battery state and vanilla-client RPC payload.
                 battery.batteryLife = charge;
-                BatteryPreviousBars!.SetValue(battery, bars);
-                BatteryPreviousLife!.SetValue(battery, charge);
-                ItemAttributes? attributes = battery.GetComponent<ItemAttributes>();
-                if (attributes != null && ItemInstanceName?.GetValue(attributes) is string name && !string.IsNullOrEmpty(name))
-                    SemiFunc.StatSetBattery(name, Mathf.RoundToInt(charge));
+                battery.BatteryFullPercentChange(battery.BatteryBarsGet(), false);
             });
         }
     }

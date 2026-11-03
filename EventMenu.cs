@@ -219,7 +219,7 @@ internal sealed class EventMenu : MonoBehaviour
             text.text = entry.Text; text.richText = false;
             text.fontSize = entry.Control || hasIcon ? 20 : 18;
             text.fontStyle = hasIcon ? FontStyles.Bold : FontStyles.Normal;
-            text.enableWordWrapping = true; text.enableAutoSizing = false;
+            text.textWrappingMode = TextWrappingModes.Normal; text.enableAutoSizing = false;
             text.overflowMode = TextOverflowModes.Truncate;
             float height = Mathf.Max(hasIcon ? 58f : entry.Control ? 40f : 30f,
                 text.GetPreferredValues(entry.Text, width - inset - 12, 0).y + 14f);

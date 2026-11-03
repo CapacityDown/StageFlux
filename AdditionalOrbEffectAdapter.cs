@@ -306,7 +306,6 @@ internal sealed class AdditionalOrbEffectAdapter
             {
                 break;
             }
-            float chargeRate = _config.BatteryChargeAmount.Value * 10f;
             foreach (PhysGrabObject target in _targets)
             {
                 if (target == null || !target.gameObject.activeInHierarchy)
@@ -320,10 +319,11 @@ internal sealed class AdditionalOrbEffectAdapter
                 }
                 try
                 {
-                    // ChargeBattery applies the supplied rate for 0.1 seconds. Multiplying
-                    // the configured per-tick amount by ten restores that amount per tick
-                    // while preserving the vanilla charge visuals and synchronization.
-                    battery.ChargeBattery(_coroutineOwner.gameObject, chargeRate);
+                    // 0.5.0's continuous chargers multiply their rate by two and
+                    // depend on frame timing. Use its exact-amount charge API so
+                    // the configured amount stays unchanged, including on peers.
+                    if (battery.ReceiveCharge(_config.BatteryChargeAmount.Value) > 0f)
+                        battery.BatteryFullPercentChange(battery.BatteryBarsGet(), true);
                 }
                 catch (Exception exception)
                 {
@@ -356,7 +356,7 @@ internal sealed class AdditionalOrbEffectAdapter
         if (physObject != null && physObject.rb != null)
         {
             physObject.rb.position = position;
-            physObject.rb.velocity = Vector3.zero;
+            physObject.rb.linearVelocity = Vector3.zero;
             physObject.rb.angularVelocity = Vector3.zero;
         }
     }
@@ -376,7 +376,7 @@ internal sealed class AdditionalOrbEffectAdapter
         {
             rigidbody.isKinematic = true;
             rigidbody.detectCollisions = false;
-            rigidbody.velocity = Vector3.zero;
+            rigidbody.linearVelocity = Vector3.zero;
             rigidbody.angularVelocity = Vector3.zero;
         }
     }

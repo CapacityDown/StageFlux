@@ -410,7 +410,7 @@ internal sealed class FeatherOrbEffectAdapter
         {
             if (!physObject.rb.isKinematic)
             {
-                physObject.rb.velocity = Vector3.zero;
+                physObject.rb.linearVelocity = Vector3.zero;
                 physObject.rb.angularVelocity = Vector3.zero;
             }
             physObject.rb.isKinematic = true;

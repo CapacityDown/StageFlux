@@ -10,7 +10,7 @@ A host-only R.E.P.O. mod with 46 configurable stage events and an in-game Events
 
 Only the host needs Stage Flux for gameplay effects. Players who install the mod can also use the event HUD and Events menu. RoleShuffle and Elite Enemy Variants remain optional.
 
-Source version: **4.3.0**.
+Source version: **5.0.0**, for **R.E.P.O. v0.5.0**.
 
 ## Questions and bug reports / お問い合わせ・不具合報告
 

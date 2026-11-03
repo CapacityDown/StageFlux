@@ -253,7 +253,7 @@ internal sealed class GumballHypnosisEventAdapter
             physObject.OverrideIndestructible(CarrierOverrideSeconds);
             physObject.rb.position = position;
             physObject.rb.rotation = rotation;
-            physObject.rb.velocity = Vector3.zero;
+            physObject.rb.linearVelocity = Vector3.zero;
             physObject.rb.angularVelocity = Vector3.zero;
             physObject.rb.detectCollisions = false;
         }

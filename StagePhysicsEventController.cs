@@ -554,7 +554,7 @@ internal sealed class StagePhysicsEventController : MonoBehaviourPunCallbacks
             }
             viewDirection.Normalize();
 
-            Vector3 horizontalVelocity = Vector3.ProjectOnPlane(rigidbody.velocity, Vector3.up);
+            Vector3 horizontalVelocity = Vector3.ProjectOnPlane(rigidbody.linearVelocity, Vector3.up);
             Vector3 desiredVelocity = viewDirection * RollPlayerSteeringSpeed;
             Vector3 requiredAcceleration = (desiredVelocity - horizontalVelocity) /
                 Mathf.Max(Time.fixedDeltaTime, 0.001f);

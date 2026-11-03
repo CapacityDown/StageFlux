@@ -8,12 +8,12 @@ using UnityEngine.SceneManagement;
 namespace REPOJP.StagePhysicsEvents;
 
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
-[BepInDependency("nickklmao.menulib", BepInDependency.DependencyFlags.HardDependency)]
+[BepInDependency("nickklmao.menulib", "2.6.0")]
 public sealed class StagePhysicsEventsPlugin : BaseUnityPlugin
 {
     public const string PluginGuid = "REPOJP.StagePhysicsEvents";
     public const string PluginName = "Stage Flux";
-    public const string PluginVersion = "4.3.0";
+    public const string PluginVersion = "5.0.0";
 
     private Harmony? _harmony;
     private GameObject? _controllerObject;

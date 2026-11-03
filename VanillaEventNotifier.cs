@@ -321,7 +321,7 @@ internal sealed class VanillaEventNotifier
                         $"Notification tracking was skipped for player view " +
                         $"{player.photonView.ViewID}: {DescribeException(exception)}");
                 }
-                player.ChatMessageSend(message);
+                player.ChatMessageSend(message, "en-US");
                 sent++;
             }
             catch (Exception exception)

@@ -3,10 +3,20 @@
 ## Build
 
 1. Install the .NET SDK (the regression test runner targets .NET 9).
-2. Install MenuLib through the R.E.P.O. mod manager, then copy its `MenuLib.dll` into this project's `lib` directory. The dependency is not bundled in this repository or the Stage Flux release DLL.
-3. Run `dotnet restore StagePhysicsEvents.csproj` and `dotnet build StagePhysicsEvents.csproj -c Release`.
+2. Install R.E.P.O. **0.5.0** (Unity 6), MenuLib **2.6.0**, and REPOConfig **1.2.7**. Copy MenuLib's `MenuLib.dll` into this project's `lib` directory. These dependencies are not bundled in this repository or the Stage Flux release DLL.
+3. Set `RepoGameManagedDir` to the installed game's `REPO_Data/Managed` directory. Use `-p:RepoGameManagedDir="..."` on build commands, or create the Git-ignored `Directory.Repo.props` locally:
 
-The project obtains its compile-time BepInEx, Unity and game libraries through its configured NuGet feeds. Never commit copies of the installed game's assemblies.
+```xml
+<Project>
+  <PropertyGroup>
+    <RepoGameManagedDir>C:/Path/To/REPO/REPO_Data/Managed</RepoGameManagedDir>
+  </PropertyGroup>
+</Project>
+```
+
+4. Run `dotnet restore StagePhysicsEvents.csproj` and `dotnet build StagePhysicsEvents.csproj -c Release`.
+
+Only BepInEx and build tooling come from NuGet. Game, Unity, and Photon references come from the selected installation; there is no fallback to outdated game NuGet packages. The build publicizer creates an intermediate reference copy in `obj` and does not change the installed game. Never commit or distribute game assemblies, publicized references, decompiled source, or the local path configuration.
 
 ## Verification
 
@@ -16,7 +26,9 @@ Run the regression suite with the project path and your installed game's managed
 dotnet run --project tests/StageFlux.ExtendedEvents.Tests.csproj -c Release -- <project-directory> <REPO_Data/Managed/Assembly-CSharp.dll>
 ```
 
-The suite covers arithmetic, menu authority and display payloads, event resources, optional-mod references, and installed-game method signatures. It does not replace Unity or multiplayer testing.
+The suite covers arithmetic, menu authority and display payloads, event resources, optional-mod references, and installed-game method signatures. The 0.5.0 audit also resolves Stage Flux/MenuLib member references, reflection targets, Harmony injection parameters, and vanilla RPC contracts against the original game DLLs. Additional dependency DLL paths can be appended to the test command. It does not replace Unity or multiplayer testing.
+
+Migration notes and the required in-game acceptance checks are in [docs/GAME_0_5_MIGRATION.md](docs/GAME_0_5_MIGRATION.md).
 
 Manual UI checks:
 

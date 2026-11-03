@@ -660,7 +660,7 @@ internal sealed class StagePhysicsEventHud : MonoBehaviour
         text.outlineColor = new Color(0f, 0f, 0f, 0.95f);
         text.outlineWidth = 0.15f;
         text.raycastTarget = false;
-        text.enableWordWrapping = false;
+        text.textWrappingMode = TextWrappingModes.NoWrap;
         if (_previewFont != null) text.font = _previewFont;
         _fontTargets.Add(text);
         return text;

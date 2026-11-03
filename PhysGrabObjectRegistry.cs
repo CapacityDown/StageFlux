@@ -18,7 +18,7 @@ internal static class PhysGrabObjectRegistry
 
     internal static void SeedFromScene()
     {
-        foreach (PhysGrabObject physObject in Object.FindObjectsOfType<PhysGrabObject>())
+        foreach (PhysGrabObject physObject in Object.FindObjectsByType<PhysGrabObject>(FindObjectsSortMode.InstanceID))
         {
             Register(physObject);
         }
@@ -61,7 +61,7 @@ internal static class PhysGrabObjectRegistry
 
         if (filter.Enemies && discoverEnemies)
         {
-            foreach (EnemyRigidbody enemyRigidbody in Object.FindObjectsOfType<EnemyRigidbody>())
+            foreach (EnemyRigidbody enemyRigidbody in Object.FindObjectsByType<EnemyRigidbody>(FindObjectsSortMode.InstanceID))
             {
                 if (enemyRigidbody == null || !enemyRigidbody.gameObject.activeInHierarchy)
                 {

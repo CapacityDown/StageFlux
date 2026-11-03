@@ -214,7 +214,10 @@ internal sealed class TrafficShockEventAdapter
             playerView != null && playerView.ViewID != 0)
         {
             RpcTarget target = RpcTarget.AllViaServer;
-            tumbleView.RPC(nameof(PlayerTumble.TumbleRequestRPC), target, true, false);
+            // The 0.5.0 request RPC includes a state revision and is master-only.
+            // We are the master: let the native setter publish the revised state
+            // before sending forces, rather than sending a legacy request payload.
+            tumble.TumbleSet(_isTumbling: true, _playerInput: false);
             tumbleView.RPC(nameof(PlayerTumble.TumbleForceRPC), target, tumbleForce);
             tumbleView.RPC(nameof(PlayerTumble.TumbleTorqueRPC), target, tumbleTorque);
             tumbleView.RPC(nameof(PlayerTumble.TumbleOverrideTimeRPC), target, 3f);

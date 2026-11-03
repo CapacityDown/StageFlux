@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="Directory.Repo.props" Condition="Exists('Directory.Repo.props')" />
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -7,7 +8,7 @@
     <AssemblyName>StagePhysicsEvents</AssemblyName>
     <RootNamespace>REPOJP.StagePhysicsEvents</RootNamespace>
     <Authors>Codex</Authors>
-    <Version>4.3.0</Version>
+    <Version>5.0.0</Version>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
     <CopyFilesToPluginOutputDirectoryOnBuild>false</CopyFilesToPluginOutputDirectoryOnBuild>
@@ -25,9 +26,27 @@
   <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
     <PackageReference Include="BepInEx.Core" Version="5.*" ExcludeAssets="runtime" />
-    <PackageReference Include="UnityEngine.Modules" Version="2022.3.62" IncludeAssets="compile" PrivateAssets="all" />
-    <PackageReference Include="R.E.P.O.GameLibs.Steam" Version="*-*" PrivateAssets="all" />
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all" ExcludeAssets="contentFiles" />
   </ItemGroup>
+
+  <!-- R.E.P.O. 0.5.0 uses Unity 6. Compile against the installed game, never the
+       older 0.4.x NuGet libraries. Publicizing only creates an intermediate copy. -->
+  <ItemGroup>
+    <Reference Include="$(RepoGameManagedDir)/Assembly-CSharp.dll" Private="false" />
+    <Reference Include="$(RepoGameManagedDir)/Assembly-CSharp-firstpass.dll" Private="false" />
+    <Reference Include="$(RepoGameManagedDir)/UnityEngine*.dll" Private="false" />
+    <Reference Include="$(RepoGameManagedDir)/Unity.TextMeshPro.dll" Private="false" />
+    <Reference Include="$(RepoGameManagedDir)/Unity.InputSystem.dll" Private="false" />
+    <Reference Include="$(RepoGameManagedDir)/Photon*.dll" Private="false" />
+    <Reference Include="$(RepoGameManagedDir)/Facepunch.Steamworks.Win64.dll" Private="false" />
+    <Reference Include="$(RepoGameManagedDir)/Klattersynth.dll" Private="false" />
+    <Publicize Include="Assembly-CSharp" />
+  </ItemGroup>
+
+  <Target Name="ValidateGameReferences" BeforeTargets="ResolveReferences">
+    <Error Condition="'$(RepoGameManagedDir)' == '' Or !Exists('$(RepoGameManagedDir)/Assembly-CSharp.dll')"
+           Text="Set RepoGameManagedDir to the R.E.P.O. 0.5.0 REPO_Data/Managed directory (in Directory.Repo.props or with -p:RepoGameManagedDir=...)." />
+  </Target>
 
   <ItemGroup>
     <Reference Include="MenuLib"><HintPath>lib\MenuLib.dll</HintPath><Private>false</Private></Reference>

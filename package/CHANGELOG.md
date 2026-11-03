@@ -1,4 +1,5 @@
-## v4.3.0
+## v5.0.0
+- Updated for R.E.P.O. v0.5.0.
 - Added an Events menu with event descriptions, host-controlled event toggles, and selection presets.
 - Added a HUD editor, display refresh, and local problem reports with a link to GitHub Issues.
 - Placed the Events button below Roles when RoleShuffle is installed.

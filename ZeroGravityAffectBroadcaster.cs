@@ -22,7 +22,11 @@ internal sealed class StaffAffectBroadcaster
     private static readonly FieldInfo? SingleplayerPlayersField =
         AccessTools.Field(typeof(SemiAreaOfEffect), "playerAvatars");
     private static readonly MethodInfo? CreateAffectsMethod =
-        AccessTools.Method(typeof(SemiAreaOfEffect), "CreateAffectsRPC");
+        AccessTools.Method(typeof(SemiAreaOfEffect), "CreateAffectsRPC", new[]
+        {
+            typeof(int[]), typeof(float[]), typeof(int[]), typeof(double[]),
+            typeof(Vector3), typeof(Vector3), typeof(PhotonMessageInfo)
+        });
     private readonly MonoBehaviour _coroutineOwner;
     private readonly VanillaEffectResolver _resolver;
     private readonly StaffAffectKind _kind;
@@ -192,13 +196,7 @@ internal sealed class StaffAffectBroadcaster
             {
                 foreach (int viewId in viewIds)
                 {
-                    areaView.RPC(
-                        "CreateAffectsRPC",
-                        RpcTarget.All,
-                        new[] { viewId },
-                        new[] { affectTime },
-                        hiddenPosition,
-                        RandomHorizontalDirection());
+                    SendAffects(areaView, new[] { viewId }, affectTime, hiddenPosition, RandomHorizontalDirection());
                 }
                 StagePhysicsEventsPlugin.ModLogger.LogDebug(
                     $"{EffectLabel} RPC batch sent: targets={viewIds.Count}, effectTimer={affectTime:0.##}s, direction=random-horizontal, view={areaView.ViewID}.");
@@ -206,9 +204,7 @@ internal sealed class StaffAffectBroadcaster
             else
             {
                 int[] ids = viewIds.ToArray();
-                float[] times = new float[ids.Length];
-                Array.Fill(times, affectTime);
-                areaView.RPC("CreateAffectsRPC", RpcTarget.All, ids, times, hiddenPosition, direction);
+                SendAffects(areaView, ids, affectTime, hiddenPosition, direction);
                 StagePhysicsEventsPlugin.ModLogger.LogDebug(
                     $"{EffectLabel} RPC batch sent: targets={ids.Length}, effectTimer={affectTime:0.##}s, direction={direction}, view={areaView.ViewID}.");
             }
@@ -218,6 +214,23 @@ internal sealed class StaffAffectBroadcaster
         {
             StagePhysicsEventsPlugin.ModLogger.LogWarning($"{EffectLabel} RPC batch failed: {exception.Message}");
         }
+    }
+
+    private static void SendAffects(PhotonView view, int[] ids, float affectTime, Vector3 position, Vector3 direction)
+    {
+        // Match the vanilla 0.5.0 payload: each target has a game-issued effect ID
+        // and a synchronized expiry. Never invent IDs that can collide with items.
+        float[] times = new float[ids.Length];
+        int[] affectIds = new int[ids.Length];
+        double[] endTimes = new double[ids.Length];
+        double endTime = PhotonNetwork.Time + affectTime;
+        for (int i = 0; i < ids.Length; i++)
+        {
+            times[i] = affectTime;
+            affectIds[i] = PunManager.instance != null ? PunManager.instance.SemiAffectNetworkIDGet() : 0;
+            endTimes[i] = endTime;
+        }
+        view.RPC("CreateAffectsRPC", RpcTarget.All, ids, times, affectIds, endTimes, position, direction);
     }
 
     private void ApplySingleplayer(
@@ -277,6 +290,8 @@ internal sealed class StaffAffectBroadcaster
             {
                 Array.Empty<int>(),
                 Array.Empty<float>(),
+                Array.Empty<int>(),
+                Array.Empty<double>(),
                 hiddenPosition,
                 direction,
                 default(PhotonMessageInfo)

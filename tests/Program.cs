@@ -67,7 +67,7 @@ Check(System.Text.RegularExpressions.Regex.Matches(guideSource, @"StageEffect\.\
 string dll = Path.Combine(root, "bin/Release/netstandard2.1/StagePhysicsEvents.dll");
 using var pe = new PEReader(File.OpenRead(dll));
 MetadataReader md = pe.GetMetadataReader();
-Check(md.GetAssemblyDefinition().Version == new Version(4, 3, 0, 0), "Release version");
+Check(md.GetAssemblyDefinition().Version == new Version(5, 0, 0, 0), "Release version");
 string[] forbidden = { "StageRoles", "RoleShuffle", "EliteEnemyVariants" };
 foreach (AssemblyReferenceHandle reference in md.AssemblyReferences)
     Check(!forbidden.Contains(md.GetString(md.GetAssemblyReference(reference).Name)), "No mandatory optional-mod references");
@@ -135,14 +135,18 @@ Contract("PlayerHealth", "UpdateHealthRPC", "Void", true, "Int32", "Int32", "Boo
 Contract("PlayerHealth", "HurtOther", "Void", true, "Int32", "Vector3", "Boolean", "Int32", "Boolean");
 Contract("PhysGrabObjectImpactDetector", "HealLogic", "Void", false, "Single", "Vector3");
 Contract("PhysGrabObjectImpactDetector", "HealRPC", "Void", false, "Single", "Vector3", "PhotonMessageInfo");
-Contract("ItemBattery", "BatteryFullPercentChangeLogic", "Void", false, "Int32", "Boolean");
-Contract("ItemBattery", "BatteryFullPercentChangeRPC", "Void", false, "Int32", "Boolean", "PhotonMessageInfo");
-Contract("PlayerAvatar", "Spawn", "Void", true, "Vector3", "Quaternion");
-Contract("PlayerAvatar", "SpawnRPC", "Void", false, "Vector3", "Quaternion", "PhotonMessageInfo");
+Contract("ItemBattery", "BatteryBarsGet", "Int32", false);
+Contract("ItemBattery", "ReceiveCharge", "Single", true, "Single");
+Contract("ItemBattery", "BatteryFullPercentChange", "Void", false, "Int32", "Boolean", "Boolean");
+Contract("ItemBattery", "BatteryFullPercentChangeLogic", "Void", false, "Int32", "Boolean", "Single", "Boolean");
+Contract("ItemBattery", "BatteryFullPercentChangeRPC", "Void", false, "Int32", "Boolean", "Single", "Boolean", "PhotonMessageInfo");
+Contract("PlayerAvatar", "Spawn", "Void", true, "Vector3", "Quaternion", "Boolean");
+Contract("PlayerAvatar", "SpawnRPC", "Void", false, "Vector3", "Quaternion", "Boolean", "PhotonMessageInfo");
 Contract("PhysGrabber", "OverrideGrabRelease", "Void", true, "Int32", "Single");
 Contract("PhysGrabObject", "OverrideMass", "Void", true, "Single", "Single");
 Contract("PhysGrabObject", "OverrideIndestructible", "Void", true, "Single");
 
+Game050Contracts.Run(root, args[1], Check, args.Skip(2).ToArray());
 Console.WriteLine($"PASS: {checks} arithmetic, integration, resource, version and installed-game contract checks. Runtime multiplayer testing is separate.");
 
 sealed class SignatureNames : ISignatureTypeProvider<string, int>
