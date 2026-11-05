@@ -29,8 +29,6 @@ internal sealed class StageWorldEventAdapter
         internal float Multiplier { get; }
     }
 
-    private static readonly MethodInfo? HingeOpenMethod = AccessTools.Method(typeof(PhysGrabHinge), "OpenImpulse");
-    private static readonly MethodInfo? HingeCloseMethod = AccessTools.Method(typeof(PhysGrabHinge), "CloseImpulse");
     private static readonly FieldInfo? HingeJointField = AccessTools.Field(typeof(PhysGrabHinge), "joint");
     private static readonly FieldInfo? HingePhysObjectField =
         AccessTools.Field(typeof(PhysGrabHinge), "physGrabObject");
@@ -367,11 +365,13 @@ internal sealed class StageWorldEventAdapter
             hinge.GetComponent<HingeJoint>();
         if (open)
         {
-            HingeOpenMethod?.Invoke(hinge, null);
+            hinge.OpenImpulse();
         }
         else
         {
-            HingeCloseMethod?.Invoke(hinge, new object[] { false });
+            // Current native close requires both flags and forwards them to vanilla
+            // clients. A one-argument reflection call fails before the torque below.
+            hinge.CloseImpulse(heavy: false, _sound: true);
         }
         if (body == null || joint == null || body.isKinematic)
         {

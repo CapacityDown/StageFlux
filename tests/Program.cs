@@ -191,6 +191,7 @@ Contract("PhysGrabObject", "OverrideMass", "Void", true, "Single", "Single");
 Contract("PhysGrabObject", "OverrideIndestructible", "Void", true, "Single");
 
 Game050Contracts.Run(root, args[1], Check, args.Skip(2).ToArray());
+Game051Contracts.Run(root, args[1], Check);
 checks += EventLocalizationChecks.Run(root);
 EventConfigOrderChecks.Run(root, args.Skip(2).ToArray(), Check);
 Console.WriteLine($"PASS: {checks} arithmetic, integration, resource, version and installed-game contract checks. Runtime multiplayer testing is separate.");

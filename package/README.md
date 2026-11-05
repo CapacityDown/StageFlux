@@ -102,7 +102,7 @@ All 49 events are listed below with their risk, default state, default chance, a
 
 ### Requirements
 
-- R.E.P.O. v0.5.0
+- R.E.P.O. v0.5.1
 - BepInExPack
 - REPOConfig and MenuLib compatible with your game
 
@@ -680,7 +680,7 @@ Stage Fluxは、R.E.P.O.のステージに49種類のランダムイベントを
 
 ### 必須MOD
 
-- R.E.P.O. v0.5.0
+- R.E.P.O. v0.5.1
 - BepInExPack
 - ゲームに対応したREPOConfigとMenuLib
 

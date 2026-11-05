@@ -7,7 +7,7 @@ Follow [WORKFLOW.md](WORKFLOW.md) for the version-branch workflow shared with Ro
 ## Build
 
 1. Install the .NET SDK (the regression test runner targets .NET 9).
-2. Install R.E.P.O. **0.5.0** (Unity 6), MenuLib **2.6.0**, and REPOConfig **1.2.7**. Copy MenuLib's `MenuLib.dll` into this project's `lib` directory. These dependencies are not bundled in this repository or the Stage Flux release DLL.
+2. Install R.E.P.O. **0.5.1** (Unity 6), MenuLib **2.6.0**, and REPOConfig **1.2.7**. Copy MenuLib's `MenuLib.dll` into this project's `lib` directory. These dependencies are not bundled in this repository or the Stage Flux release DLL.
 3. Set `RepoGameManagedDir` to the installed game's `REPO_Data/Managed` directory. Use `-p:RepoGameManagedDir="..."` on build commands, or create the Git-ignored `Directory.Repo.props` locally:
 
 ```xml
@@ -32,10 +32,10 @@ Only BepInEx and build tooling come from NuGet. Game, Unity, and Photon referenc
 Run the regression suite with the project path and your installed game's managed assembly path:
 
 ```text
-dotnet run --project tests/StageFlux.ExtendedEvents.Tests.csproj -c Release -- <project-directory> <REPO_Data/Managed/Assembly-CSharp.dll>
+dotnet run --project tests/StageFlux.ExtendedEvents.Tests.csproj -c Release -- <project-directory> <REPO_Data/Managed/Assembly-CSharp.dll> <profile/BepInEx/plugins/REPOModding-REPOConfig/REPOConfig.dll>
 ```
 
-The suite covers arithmetic, menu authority and display payloads, event resources, optional-mod references, and installed-game method signatures. The 0.5.0 audit also resolves Stage Flux/MenuLib member references, reflection targets, Harmony injection parameters, and vanilla RPC contracts against the original game DLLs. Additional dependency DLL paths can be appended to the test command. It does not replace Unity or multiplayer testing.
+The suite covers arithmetic, menu authority and display payloads, event resources, optional-mod references, and installed-game method signatures. The 0.5.x audit also resolves Stage Flux/MenuLib member references, reflection targets, Harmony injection parameters, and vanilla RPC contracts against the original game DLLs. The REPOConfig path is required for its display-order contract audit; further dependency DLL paths can be appended. The 0.5.1 audit additionally verifies reflected field types, complete method signatures, and the native Door Chaos close path. These tests do not replace Unity or multiplayer testing.
 
 The Events format follows the Roles menu: selected navigation markers,
 outlined hover controls, disabled icons, fixed body rows, and three body lines
@@ -52,6 +52,7 @@ event draws, RNG, or effect availability initialization. Eligibility is explicit
 configuration-based; it does not promise live target/resource availability.
 
 Migration notes and the required in-game acceptance checks are in [docs/GAME_0_5_MIGRATION.md](docs/GAME_0_5_MIGRATION.md).
+The current patch-level audit is in [docs/GAME_0_5_1_VALIDATION.md](docs/GAME_0_5_1_VALIDATION.md).
 
 Manual UI checks:
 

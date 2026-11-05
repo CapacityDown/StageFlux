@@ -42,7 +42,7 @@
     <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all" ExcludeAssets="contentFiles" />
   </ItemGroup>
 
-  <!-- R.E.P.O. 0.5.0 uses Unity 6. Compile against the installed game, never the
+  <!-- R.E.P.O. 0.5.1 uses Unity 6. Compile against the installed game, never the
        older 0.4.x NuGet libraries. Publicizing only creates an intermediate copy. -->
   <ItemGroup>
     <Reference Include="$(RepoGameManagedDir)/Assembly-CSharp.dll" Private="false" />
@@ -58,7 +58,7 @@
 
   <Target Name="ValidateGameReferences" BeforeTargets="ResolveReferences">
     <Error Condition="'$(RepoGameManagedDir)' == '' Or !Exists('$(RepoGameManagedDir)/Assembly-CSharp.dll')"
-           Text="Set RepoGameManagedDir to the R.E.P.O. 0.5.0 REPO_Data/Managed directory (in Directory.Repo.props or with -p:RepoGameManagedDir=...)." />
+           Text="Set RepoGameManagedDir to the R.E.P.O. 0.5.1 REPO_Data/Managed directory (in Directory.Repo.props or with -p:RepoGameManagedDir=...)." />
   </Target>
 
   <ItemGroup>

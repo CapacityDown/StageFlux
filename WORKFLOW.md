@@ -44,7 +44,7 @@ Newer user instructions take precedence over the current version or profile.
   Use `node tools/build-stageflux.mjs` for main-project builds so successful and
   failed attempts both advance the cumulative Events UI build number. Commit
   the counter and sanitized ledger together; test-only builds do not count.
-  Compile against installed R.E.P.O. v0.5.0 assemblies and require zero warnings
+  Compile against installed R.E.P.O. v0.5.1 assemblies and require zero warnings
   and errors in Release. Run the regression suite for code changes; distinguish
   offline validation from live-game and vanilla-client multiplayer testing.
 - Back up replaced package/deployment files. Update `package/StagePhysicsEvents.dll`
