@@ -7,7 +7,7 @@ Follow [WORKFLOW.md](WORKFLOW.md) for the version-branch workflow shared with Ro
 ## Build
 
 1. Install the .NET SDK (the regression test runner targets .NET 9).
-2. Install R.E.P.O. **0.5.1** (Unity 6), MenuLib **2.6.0**, and REPOConfig **1.2.7**. Copy MenuLib's `MenuLib.dll` into this project's `lib` directory. These dependencies are not bundled in this repository or the Stage Flux release DLL.
+2. Install R.E.P.O. **0.5.1** (Unity 6), MenuLib **2.6.2**, and REPOConfig **1.2.7**. Copy MenuLib's `MenuLib.dll` into this project's `lib` directory. These dependencies are not bundled in this repository or the Stage Flux release DLL.
 3. Set `RepoGameManagedDir` to the installed game's `REPO_Data/Managed` directory. Use `-p:RepoGameManagedDir="..."` on build commands, or create the Git-ignored `Directory.Repo.props` locally:
 
 ```xml

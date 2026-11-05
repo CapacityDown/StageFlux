@@ -5,7 +5,7 @@
   "description": "【HostOnlyMOD】Shake up every run with random stage-wide effects—only the host needs the mod! ホスト導入だけで、ランダムな全体エフェクトが毎回の探索に変化を加えます！",
   "dependencies": [
     "BepInEx-BepInExPack-5.4.2305",
-    "REPOModding-MenuLib-2.6.0",
+    "REPOModding-MenuLib-2.6.2",
     "REPOModding-REPOConfig-1.2.7"
   ]
 }

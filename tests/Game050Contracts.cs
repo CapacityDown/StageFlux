@@ -121,7 +121,7 @@ internal static class Game050Contracts
         using var manifest = System.Text.Json.JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "package/manifest.json")));
         Verify(manifest.RootElement.GetProperty("version_number").GetString() == "5.0.0", "Manifest release version");
         string[] required = manifest.RootElement.GetProperty("dependencies").EnumerateArray().Select(e => e.GetString()!).ToArray();
-        Verify(required.Contains("REPOModding-MenuLib-2.6.0") && required.Contains("REPOModding-REPOConfig-1.2.7"),
+        Verify(required.Contains("REPOModding-MenuLib-2.6.2") && required.Contains("REPOModding-REPOConfig-1.2.7"),
             "Manifest requires Unity 6 compatible menu dependencies");
         Verify(!required.Any(d => d.Contains("RoleShuffle") || d.Contains("EliteEnemyVariants")), "Integration mods remain optional");
         var plugin = mod.GetTypes().Single(t => t.Name == "StagePhysicsEventsPlugin");
@@ -129,7 +129,13 @@ internal static class Game050Contracts
         Verify((string)identity.ConstructorArguments[0].Value == "REPOJP.StagePhysicsEvents", "Keep the configuration/plugin identity");
         Verify((string)identity.ConstructorArguments[2].Value == "5.0.0", "Plugin release version");
         var menuDependency = plugin.CustomAttributes.Single(a => a.AttributeType.FullName == "BepInEx.BepInDependency");
-        Verify((string)menuDependency.ConstructorArguments[1].Value == "2.6.0", "Refuse incompatible old MenuLib at load time");
+        Verify((string)menuDependency.ConstructorArguments[0].Value == "nickklmao.menulib" &&
+            (string)menuDependency.ConstructorArguments[1].Value == "2.6.2", "Require the updated MenuLib at load time");
+        using var menuLibrary = ModuleDefinition.ReadModule(Path.Combine(root, "lib/MenuLib.dll"), parameters);
+        var menuIdentity = menuLibrary.GetTypes().SelectMany(type => type.CustomAttributes)
+            .Single(attribute => attribute.AttributeType.FullName == "BepInEx.BepInPlugin");
+        Verify((string)menuIdentity.ConstructorArguments[0].Value == "nickklmao.menulib" &&
+            (string)menuIdentity.ConstructorArguments[2].Value == "2.6.2", "Build reference is the actual MenuLib 2.6.2 plugin");
 
         Verify(FindType("MenuScrollBox")?.Fields.Any(f => f.Name == "scrollWheelStep" && f.FieldType.Name == "Single") == true,
             "Native wheel-step setting exists");

@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 namespace REPOJP.StagePhysicsEvents;
 
 [BepInPlugin(PluginGuid, PluginName, PluginVersion)]
-[BepInDependency("nickklmao.menulib", "2.6.0")]
+[BepInDependency("nickklmao.menulib", "2.6.2")]
 public sealed class StagePhysicsEventsPlugin : BaseUnityPlugin
 {
     public const string PluginGuid = "REPOJP.StagePhysicsEvents";
